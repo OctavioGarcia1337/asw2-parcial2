@@ -29,7 +29,18 @@
         </nav>
     </header>
     <main>
-        <h1>Body</h1>
+        <div class="search-wrapper">
+            <label for="search">Search Items</label>
+            <input type="search" id="search" data-search>
+        </div>
+        <div class="item-cards" data-item-cards-container></div>
+        <template data-item-template>
+            <div class="card">
+                <div class="header" data-header></div>
+                <div class="image" data-image></div> <!-- Falta implementar imagenes -->
+                <div class="body" data-body></div>
+            </div>
+        </template>
     </main>
 </body>
 </html>

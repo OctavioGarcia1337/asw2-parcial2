@@ -83,7 +83,7 @@ const authorQuery = { //example
   
     if (response && response.docs) {
       response.docs.forEach((doc) => {
-        console.log(doc);
+        console.log(doc); // devuelve la busqueda
       })
     }
   });
