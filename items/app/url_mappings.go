@@ -1,15 +1,15 @@
 package app
 
 import (
-	productController "mvc-go/controllers/product"
+	itemController "items/controllers/item"
 
 	log "github.com/sirupsen/logrus"
 )
 
 func mapUrls() {
 	// Products Mapping
-	router.GET("/items/:item_id", productController.GetProductById)
-	router.POST("/product", productController.InsertProduct)
+	router.GET("/items/:item_id", itemController.GetItemById)
+	router.POST("/item", itemController.InsertItem)
 
 	log.Info("Finishing mappings configurations")
 }

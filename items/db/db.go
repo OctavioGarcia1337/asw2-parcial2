@@ -1,54 +1,39 @@
 package db
 
 import (
-	addressClient "mvc-go/clients/address"
-	categoryClient "mvc-go/clients/category"
-	orderClient "mvc-go/clients/order"
-	orderDetailClient "mvc-go/clients/order_detail"
-	productClient "mvc-go/clients/product"
-	userClient "mvc-go/clients/user"
-	"mvc-go/model"
-
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
-	log "github.com/sirupsen/logrus"
+	"context"
+	"fmt"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var (
-	db  *gorm.DB
-	err error
-)
+var MongoDb *mongo.Database
+var client *mongo.Client
 
-func init() {
-	// DB Connections Paramters
-	DBName := "cart"
-	DBUser := "root"
-	DBPass := ""
-	DBHost := "dbmysql"
-	// ------------------------
+func Disconect_db() {
 
-	db, err = gorm.Open("mysql", DBUser+":"+DBPass+"@tcp("+DBHost+":3306)/"+DBName+"?charset=utf8&parseTime=True")
-
-	if err != nil {
-		log.Info("Connection Failed to Open")
-		log.Fatal(err)
-	} else {
-		log.Info("Connection Established")
-	}
-
-	// We need to add all CLients that we build
-	userClient.Db = db
-	productClient.Db = db
-	orderClient.Db = db
-	orderDetailClient.Db = db
-	categoryClient.Db = db
-	addressClient.Db = db
-
+	client.Disconnect(context.TODO())
 }
 
-func StartDbEngine() {
-	// We need to migrate all classes model.
-	db.AutoMigrate(&model.User{}, &model.Product{}, &model.Order{}, &model.OrderDetail{}, &model.Category{}, &model.Address{})
+func Init_db() error {
 
-	log.Info("Finishing Migration Database Tables")
+	clientOpts := options.Client().ApplyURI("mongodb://root:root@localhost:27017/?authSource=admin&authMechanism=SCRAM-SHA-256")
+	cli, err := mongo.Connect(context.TODO(), clientOpts)
+	client = cli
+	if err != nil {
+		return err
+	}
+
+	dbNames, err := client.ListDatabaseNames(context.TODO(), bson.M{})
+	if err != nil {
+		return err
+	}
+
+	MongoDb = client.Database("publicaciones")
+
+	fmt.Println("Available datatabases:")
+	fmt.Println(dbNames)
+
+	return nil
 }

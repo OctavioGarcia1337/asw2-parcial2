@@ -6,6 +6,9 @@ import (
 )
 
 func main() {
-	db.StartDbEngine()
+	err := db.Init_db()
+	if err != nil {
+		return
+	}
 	app.StartRoute()
 }
