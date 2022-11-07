@@ -13,6 +13,8 @@ var (
 	itemService = service.NewItemServiceImpl(
 		client.NewItemInterface("localhost", 27017, "items"),
 		client.NewMemcachedInterface("localhost", 11211),
+		client.NewQueueClient("user", "password", "localhost", 5672),
+		client.NewSolrClient("localhost", 8983, "items"),
 	)
 )
 

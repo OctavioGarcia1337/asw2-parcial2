@@ -10,28 +10,31 @@ import (
 type ItemServiceImpl struct {
 	item      *client.ItemClient
 	memcached *client.MemcachedClient
+	queue     *client.QueueClient
+	solr      *client.SolrClient
 }
 
 func NewItemServiceImpl(
 	item *client.ItemClient,
 	memcached *client.MemcachedClient,
+	queue *client.QueueClient,
+	solr *client.SolrClient,
 ) *ItemServiceImpl {
 	return &ItemServiceImpl{
 		item:      item,
 		memcached: memcached,
+		queue:     queue,
+		solr:      solr,
 	}
 }
 
 func (s *ItemServiceImpl) GetItemById(id string) (dto.ItemDto, e.ApiError) {
 
 	var itemDto dto.ItemDto
-	var source string
 	itemDto, err := s.memcached.GetItemById(id)
-	source = "memcached"
 	if err != nil {
 		log.Debug("Error getting item from memcached")
 		itemDto, err2 := s.item.GetItemById(id)
-		source = "mongo"
 		if err2 != nil {
 			log.Debug("Error getting item from mongo")
 			return itemDto, err2
@@ -39,14 +42,16 @@ func (s *ItemServiceImpl) GetItemById(id string) (dto.ItemDto, e.ApiError) {
 		if itemDto.ItemId == "000000000000000000000000" {
 			return itemDto, e.NewBadRequestApiError("item not found")
 		}
-		itemDto, err3 := s.memcached.InsertItem(itemDto)
+		_, err3 := s.memcached.InsertItem(itemDto)
 		if err3 != nil {
 			log.Debug("Error inserting in memcached")
 		}
-
+		log.Debug("mongo")
+		return itemDto, nil
+	} else {
+		log.Debug("memcached")
+		return itemDto, nil
 	}
-	log.Debug(source)
-	return itemDto, nil
 }
 
 func (s *ItemServiceImpl) InsertItem(itemDto dto.ItemDto) (dto.ItemDto, e.ApiError) {
@@ -68,6 +73,11 @@ func (s *ItemServiceImpl) InsertItem(itemDto dto.ItemDto) (dto.ItemDto, e.ApiErr
 	itemDto, err2 := s.memcached.InsertItem(insertItem)
 	if err2 != nil {
 		return itemDto, e.NewBadRequestApiError("Error inserting in memcached")
+	}
+
+	err = s.solr.Update(itemDto, "add")
+	if err != nil {
+		return itemDto, e.NewBadRequestApiError("Error inserting in solar")
 	}
 	return itemDto, nil
 }
