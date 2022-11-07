@@ -9,7 +9,7 @@ import (
 func mapUrls() {
 	// Products Mapping
 	router.GET("/items/:item_id", itemController.GetItemById)
-	router.POST("/item", itemController.InsertItem)
+	router.POST("/solr", itemController.InsertItem)
 
 	log.Info("Finishing mappings configurations")
 }

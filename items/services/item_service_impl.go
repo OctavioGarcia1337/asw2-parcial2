@@ -33,14 +33,14 @@ func (s *ItemServiceImpl) GetItemById(id string) (dto.ItemDto, e.ApiError) {
 	var itemDto dto.ItemDto
 	itemDto, err := s.memcached.GetItemById(id)
 	if err != nil {
-		log.Debug("Error getting item from memcached")
+		log.Debug("Error getting solr from memcached")
 		itemDto, err2 := s.item.GetItemById(id)
 		if err2 != nil {
-			log.Debug("Error getting item from mongo")
+			log.Debug("Error getting solr from mongo")
 			return itemDto, err2
 		}
 		if itemDto.ItemId == "000000000000000000000000" {
-			return itemDto, e.NewBadRequestApiError("item not found")
+			return itemDto, e.NewBadRequestApiError("solr not found")
 		}
 		_, err3 := s.memcached.InsertItem(itemDto)
 		if err3 != nil {
@@ -62,7 +62,7 @@ func (s *ItemServiceImpl) InsertItem(itemDto dto.ItemDto) (dto.ItemDto, e.ApiErr
 
 	insertItem, err := s.item.InsertItem(itemDto)
 	if err != nil {
-		return itemDto, e.NewBadRequestApiError("error inserting item")
+		return itemDto, e.NewBadRequestApiError("error inserting solr")
 	}
 
 	if insertItem.ItemId == "000000000000000000000000" {

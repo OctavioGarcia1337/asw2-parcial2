@@ -18,14 +18,14 @@ func (m *ItemClientInterface) GetItemById(id string) model.Item {
 func TestGetItemById(t *testing.T) {
 	//mockItemClient := new(ItemClientInterface)
 	//
-	//var item model.Item
-	//item.ItemId = 1
-	//item.Name = "Test_Product"
-	//item.Description = "Test_Desc"
-	//item.Price = 500
-	//item.CurrencyId = "ARS"
-	//item.Stock = 5
-	//item.Picture = "test.png"
+	//var solr model.Item
+	//solr.ItemId = 1
+	//solr.Name = "Test_Product"
+	//solr.Description = "Test_Desc"
+	//solr.Price = 500
+	//solr.CurrencyId = "ARS"
+	//solr.Stock = 5
+	//solr.Picture = "test.png"
 	//
 	//var itemDto dto.ItemDto
 	//itemDto.ItemId = 1
@@ -36,7 +36,7 @@ func TestGetItemById(t *testing.T) {
 	//itemDto.Stock = 5
 	//itemDto.Picture = "test.png"
 	//
-	//mockItemClient.On("GetItemById", 1).Return(item)
+	//mockItemClient.On("GetItemById", 1).Return(solr)
 	//service := initItemService(mockItemClient)
 	//res, err := service.GetItemById("1")
 	//assert.Nil(t, err, "Error should be nil")

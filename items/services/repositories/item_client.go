@@ -44,17 +44,17 @@ func NewItemInterface(host string, port int, collection string) *ItemClient {
 func (s *ItemClient) GetItemById(id string) (dto.ItemDto, e.ApiError) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
-		return dto.ItemDto{}, e.NewBadRequestApiError(fmt.Sprintf("error getting item %s invalid id", id))
+		return dto.ItemDto{}, e.NewBadRequestApiError(fmt.Sprintf("error getting solr %s invalid id", id))
 	}
 	result := s.Database.Collection(s.Collection).FindOne(context.TODO(), bson.M{
 		"_id": objectID,
 	})
 	if result.Err() == mongo.ErrNoDocuments {
-		return dto.ItemDto{}, e.NewNotFoundApiError(fmt.Sprintf("item %s not found", id))
+		return dto.ItemDto{}, e.NewNotFoundApiError(fmt.Sprintf("solr %s not found", id))
 	}
 	var item model.Item
 	if err := result.Decode(&item); err != nil {
-		return dto.ItemDto{}, e.NewInternalServerApiError(fmt.Sprintf("error getting item %s", id), err)
+		return dto.ItemDto{}, e.NewInternalServerApiError(fmt.Sprintf("error getting solr %s", id), err)
 	}
 	return dto.ItemDto{
 		ItemId:     id,
@@ -78,7 +78,7 @@ func (s *ItemClient) InsertItem(item dto.ItemDto) (dto.ItemDto, e.ApiError) {
 	})
 
 	if err != nil {
-		return item, e.NewInternalServerApiError(fmt.Sprintf("error inserting item %s", item.ItemId), err)
+		return item, e.NewInternalServerApiError(fmt.Sprintf("error inserting solr %s", item.ItemId), err)
 	}
 	item.ItemId = fmt.Sprintf(result.InsertedID.(primitive.ObjectID).Hex())
 	return item, nil
