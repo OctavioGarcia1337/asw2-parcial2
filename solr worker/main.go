@@ -21,7 +21,7 @@ var (
 
 func init() {
 	router = gin.Default()
-
+	log.SetLevel(log.DebugLevel)
 	router.Use(cors.Default())
 }
 

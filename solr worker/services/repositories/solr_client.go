@@ -1,11 +1,11 @@
 package repositories
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	logger "github.com/sirupsen/logrus"
 	"github.com/stevenferrer/solr-go"
+	"net/http"
 	"wesolr/dto"
 	e "wesolr/utils/errors"
 )
@@ -26,28 +26,17 @@ func NewSolrClient(host string, port int, collection string) *SolrClient {
 
 func (sc *SolrClient) GetQuery(query string, field string) (dto.ItemsDto, e.ApiError) {
 	var itemsDto dto.ItemsDto
-	q := solr.NewQuery(solr.NewDisMaxQueryParser().
-		Query(query).BuildParser()).
-		Queries(solr.M{}).
-		Limit(10).
-		Fields(field)
+	q, err := http.Get("http://localhost:8983/solr/items/select?q=" + field + "%3A" + query)
 
-	// Send the query
-	queryResponse, err := sc.Client.Query(context.TODO(), sc.Collection, q)
 	if err != nil {
-		return itemsDto, e.NewBadRequestApiError("Error processing query")
+		return itemsDto, e.NewBadRequestApiError("error getting from solr")
 	}
-	for item := range queryResponse.Response.Documents {
-		var itemDto dto.ItemDto
-		str, err := json.Marshal(queryResponse.Response.Documents[item])
-		if err != nil {
-			return itemsDto, e.NewBadRequestApiError("Failed marshal process")
-		}
-		err = json.Unmarshal(str, &itemDto)
-		if err != nil {
-			return itemsDto, e.NewBadRequestApiError("Failed unmarshal process")
-		}
-		itemsDto = append(itemsDto, itemDto)
-	}
+
+	var test []byte
+	logger.Debug(q.Body.Read(test))
+	q.Body.Read(test)
+	err = json.Unmarshal(test, &itemsDto)
+	logger.Debug(itemsDto)
+
 	return itemsDto, nil
 }
