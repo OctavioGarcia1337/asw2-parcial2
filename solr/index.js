@@ -54,8 +54,9 @@ var client = new SolrNode({
 
 // Search
 // Create const searchBarQuery ***
-const authorQuery = { //example
-    author: 'Pollo'
+const searchBarQuery = { //example
+    author: 'Pollo',
+    title: 'Pollo'
   };
   
   // const genderQuery = {      
@@ -64,7 +65,7 @@ const authorQuery = { //example
   
   // Build a search query var
   const searchQuery = client.query()
-    .q(authorQuery)
+    .q(searchBarQuery)
     .addParams({
       wt: 'json',
       indent: true

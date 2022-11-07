@@ -12,7 +12,7 @@ const SolrNode = ('solr-node');
 var client = new SolrNode({
     host: '127.0.0.1',
     port: '8983',
-    core: 'books',
+    core: 'items',
     protocol: 'http'
 });
 
@@ -69,8 +69,6 @@ if (response && response.docs) {
 }
 });
 // solr-finish
-
-
 
 // ACA HAY QUE CAMBIAR muchas cosas
 fetch("https://jsonplaceholder.typicode.com/users") //aca tendriamos que poner la base de datos o el solr, tipo le esta tirando un fetch a eso
