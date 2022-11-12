@@ -66,7 +66,7 @@ func (s *ItemClient) GetItemById(id string) (dto.ItemDto, e.ApiError) {
 		Barrio:      item.Barrio,
 		Descripcion: item.Descripcion,
 		Dormitorios: item.Dormitorios,
-		Baños:       item.Baños,
+		Banos:       item.Banos,
 		Mts2:        item.Mts2,
 		Ambientes:   item.Ambientes,
 		Url_Img:     item.Url_Img,
@@ -77,7 +77,7 @@ func (s *ItemClient) GetItemById(id string) (dto.ItemDto, e.ApiError) {
 
 func (s *ItemClient) InsertItem(item dto.ItemDto) (dto.ItemDto, e.ApiError) {
 	result, err := s.Database.Collection(s.Collection).InsertOne(context.TODO(), model.Item{
-		ItemId:      primitive.NewObjectID().Hex(),
+		ItemId:      primitive.NewObjectID(),
 		Titulo:      item.Titulo,
 		Tipo:        item.Tipo,
 		Ubicacion:   item.Ubicacion,
@@ -86,7 +86,7 @@ func (s *ItemClient) InsertItem(item dto.ItemDto) (dto.ItemDto, e.ApiError) {
 		Barrio:      item.Barrio,
 		Descripcion: item.Descripcion,
 		Dormitorios: item.Dormitorios,
-		Baños:       item.Baños,
+		Banos:       item.Banos,
 		Mts2:        item.Mts2,
 		Ambientes:   item.Ambientes,
 		Url_Img:     item.Url_Img,
@@ -94,7 +94,7 @@ func (s *ItemClient) InsertItem(item dto.ItemDto) (dto.ItemDto, e.ApiError) {
 	})
 
 	if err != nil {
-		return item, e.NewInternalServerApiError(fmt.Sprintf("error inserting solr %s", item.ItemId), err)
+		return item, e.NewInternalServerApiError(fmt.Sprintf("error inserting to mongo %s", item.ItemId), err)
 	}
 	item.ItemId = fmt.Sprintf(result.InsertedID.(primitive.ObjectID).Hex())
 

@@ -42,7 +42,10 @@ services:
     image: solr
     ports:
       - "8983:8983"
-    command:
+    volumes:
+      - ./managed-schema:/opt/solr/server/solr/configsets/_default/conf/managed-schema
+    entrypoint:
+      - docker-entrypoint.sh
       - solr-precreate
       - items
   items:

@@ -24,10 +24,13 @@ func NewSolrServiceImpl(
 		solr: solr,
 	}
 }
+
 func (s *SolrService) GetQuery(query string) (dto.ItemsDto, e.ApiError) {
 	var itemsDto dto.ItemsDto
 	queryParams := strings.Split(query, "_")
-	query, field := queryParams[0], queryParams[1]
+	field, query := queryParams[0], queryParams[1]
+	log.Debug(field)
+	log.Debug(query)
 	itemsDto, err := s.solr.GetQuery(query, field)
 	if err != nil {
 		return itemsDto, e.NewBadRequestApiError("Solr failed")
@@ -48,7 +51,6 @@ func (s *SolrService) AddFromId(id string) e.ApiError {
 	}
 	var body []byte
 	body, _ = io.ReadAll(resp.Body)
-	//resp.Body.Read(body)
 	log.Debugf("%s", body)
 	err = json.Unmarshal(body, &itemDto)
 	if err != nil {

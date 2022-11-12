@@ -2,6 +2,7 @@ package solrController
 
 import (
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 	"net/http"
 	"wesolr/config"
 	"wesolr/dto"
@@ -22,7 +23,9 @@ func GetQuery(c *gin.Context) {
 
 	itemsDto, err := Solr.GetQuery(query)
 	if err != nil {
+		log.Debug(itemsDto)
 		c.JSON(http.StatusBadRequest, itemsDto)
+		return
 	}
 
 	c.JSON(http.StatusOK, itemsDto)
@@ -34,6 +37,7 @@ func AddFromId(c *gin.Context) {
 	err := Solr.AddFromId(id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
+		return
 	}
 
 	c.JSON(http.StatusCreated, err)

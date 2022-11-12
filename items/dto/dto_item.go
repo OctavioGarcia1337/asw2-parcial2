@@ -10,7 +10,7 @@ type ItemDto struct {
 	Barrio      string `json:"Barrio"`
 	Descripcion string `json:"Descripcion"`
 	Dormitorios int    `json:"Dormitorios"`
-	Baños       int    `json:"Baños"`
+	Banos       int    `json:"Banos"`
 	Mts2        int    `json:"Mts2"`
 	Ambientes   int    `json:"Ambientes"`
 	Url_Img     string `json:"Url_Img"`

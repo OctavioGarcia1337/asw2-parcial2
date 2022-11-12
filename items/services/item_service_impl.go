@@ -88,7 +88,6 @@ func (s *ItemServiceImpl) QueueItems(itemsDto dto.ItemsDto) e.ApiError {
 			err = s.queue.SendMessage("solr", item.ItemId)
 			log.Debug(err)
 		}()
-
 	}
 	return nil
 }
