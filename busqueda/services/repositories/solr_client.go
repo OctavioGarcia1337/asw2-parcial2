@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"fmt"
 	logger "github.com/sirupsen/logrus"
 	"github.com/stevenferrer/solr-go"
 	"net/http"
@@ -15,15 +14,6 @@ import (
 type SolrClient struct {
 	Client     *solr.JSONClient
 	Collection string
-}
-
-func NewSolrClient(host string, port int, collection string) *SolrClient {
-	logger.Debug(fmt.Sprintf("%s:%d", host, port))
-	Client := solr.NewJSONClient(fmt.Sprintf("http://%s:%d", host, port))
-	return &SolrClient{
-		Client:     Client,
-		Collection: collection,
-	}
 }
 
 func (sc *SolrClient) GetQuery(query string, field string) (dto.ItemsDto, e.ApiError) {
@@ -37,6 +27,10 @@ func (sc *SolrClient) GetQuery(query string, field string) (dto.ItemsDto, e.ApiE
 	var body []byte
 	q.Body.Read(body)
 	err = json.Unmarshal(body, &itemsDto)
+
+	if err != nil {
+		return itemsDto, e.NewBadRequestApiError("error in unmarshal")
+	}
 
 	return itemsDto, nil
 }

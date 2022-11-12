@@ -11,20 +11,17 @@ type ItemServiceImpl struct {
 	item      *client.ItemClient
 	memcached *client.MemcachedClient
 	queue     *client.QueueClient
-	solr      *client.SolrClient
 }
 
 func NewItemServiceImpl(
 	item *client.ItemClient,
 	memcached *client.MemcachedClient,
 	queue *client.QueueClient,
-	solr *client.SolrClient,
 ) *ItemServiceImpl {
 	return &ItemServiceImpl{
 		item:      item,
 		memcached: memcached,
 		queue:     queue,
-		solr:      solr,
 	}
 }
 
@@ -75,7 +72,6 @@ func (s *ItemServiceImpl) InsertItem(itemDto dto.ItemDto) (dto.ItemDto, e.ApiErr
 		return itemDto, e.NewBadRequestApiError("Error inserting in memcached")
 	}
 
-	err = s.solr.Update(itemDto, "add")
 	if err != nil {
 		return itemDto, e.NewBadRequestApiError("Error inserting in solar")
 	}

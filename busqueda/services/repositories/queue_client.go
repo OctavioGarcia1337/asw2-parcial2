@@ -2,7 +2,6 @@ package repositories
 
 import (
 	"context"
-	"fmt"
 	amqp "github.com/rabbitmq/amqp091-go"
 	"log"
 	"time"
@@ -11,16 +10,6 @@ import (
 
 type QueueClient struct {
 	Connection *amqp.Connection
-}
-
-func NewQueueClient(user string, pass string, host string, port int) *QueueClient {
-	Connection, err := amqp.Dial(fmt.Sprintf("amqp://%s:%s@%s:%d/", user, pass, host, port))
-	if err != nil {
-		log.Panic("Failed to connect to RabbitMQ")
-	}
-	return &QueueClient{
-		Connection: Connection,
-	}
 }
 
 func (qc *QueueClient) SendMessage(qname string, message string) e.ApiError {
@@ -70,11 +59,12 @@ func (qc *QueueClient) ProcessMessages(qname string, process func(string)) e.Api
 		return e.NewBadRequestApiError("Failed to register a consumer")
 	}
 
+	var forever chan struct{}
 	go func() {
-		for true {
-			d := <-message
+		for d := range message {
 			process(string(d.Body))
 		}
 	}()
+	<-forever
 	return nil
 }

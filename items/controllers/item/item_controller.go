@@ -3,6 +3,7 @@ package productController
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"items/config"
 	"items/dto"
 	service "items/services"
 	client "items/services/repositories"
@@ -11,10 +12,9 @@ import (
 
 var (
 	itemService = service.NewItemServiceImpl(
-		client.NewItemInterface("localhost", 27017, "items"),
-		client.NewMemcachedInterface("localhost", 11211),
-		client.NewQueueClient("user", "password", "localhost", 5672),
-		client.NewSolrClient("localhost", 8983, "items"),
+		client.NewItemInterface(config.MONGOHOST, config.MONGOPORT, config.MONGOCOLLECTION),
+		client.NewMemcachedInterface(config.MEMCACHEDHOST, config.MEMCACHEDPORT),
+		client.NewQueueClient(config.RABBITUSER, config.RABBITPASSWORD, config.RABBITHOST, config.RABBITPORT),
 	)
 )
 

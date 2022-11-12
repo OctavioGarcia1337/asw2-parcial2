@@ -1,11 +1,11 @@
-FROM golang:1.17
+FROM golang:1.18
 
 ADD . /backend
 
 WORKDIR /backend
-RUN go mod init mvc-go
+RUN go mod init items
 RUN go mod tidy
-RUN go build -o mvc-go .
+RUN go build -o items .
 RUN chmod +x /backend
 
-ENTRYPOINT ["/backend/mvc-go"]
+ENTRYPOINT ["/backend/items"]
