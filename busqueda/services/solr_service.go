@@ -14,17 +14,14 @@ import (
 )
 
 type SolrService struct {
-	solr  *client.SolrClient
-	queue *client.QueueClient
+	solr *client.SolrClient
 }
 
 func NewSolrServiceImpl(
 	solr *client.SolrClient,
-	queue *client.QueueClient,
 ) *SolrService {
 	return &SolrService{
-		solr:  solr,
-		queue: queue,
+		solr: solr,
 	}
 }
 func (s *SolrService) GetQuery(query string) (dto.ItemsDto, e.ApiError) {
@@ -42,23 +39,22 @@ func (s *SolrService) Add(itemDto dto.ItemDto) {
 	s.solr.Update(itemDto, "add")
 }
 
-func (s *SolrService) QueueWorker(qname string) {
-	s.queue.ProcessMessages(qname, func(id string) {
-		var itemDto dto.ItemDto
-		resp, err := http.Get(fmt.Sprintf("http://%s:%d/items/%s", config.ITEMSHOST, config.ITEMSPORT, id))
-		if err != nil {
-			log.Debugf("error getting item %s", id)
-			return
-		}
-		var body []byte
-		body, _ = io.ReadAll(resp.Body)
-		//resp.Body.Read(body)
-		log.Debugf("%s", body)
-		err = json.Unmarshal(body, &itemDto)
-		if err != nil {
-			log.Debugf("error in unmarshal of item %s", id)
-			return
-		}
-		s.Add(itemDto)
-	})
+func (s *SolrService) AddFromId(id string) e.ApiError {
+	var itemDto dto.ItemDto
+	resp, err := http.Get(fmt.Sprintf("http://%s:%d/items/%s", config.ITEMSHOST, config.ITEMSPORT, id))
+	if err != nil {
+		log.Debugf("error getting item %s", id)
+		return e.NewBadRequestApiError("error getting item " + id)
+	}
+	var body []byte
+	body, _ = io.ReadAll(resp.Body)
+	//resp.Body.Read(body)
+	log.Debugf("%s", body)
+	err = json.Unmarshal(body, &itemDto)
+	if err != nil {
+		log.Debugf("error in unmarshal of item %s", id)
+		return e.NewBadRequestApiError("error in unmarshal of item")
+	}
+	s.Add(itemDto)
+	return nil
 }

@@ -58,9 +58,17 @@ services:
       - "8090:8090"
 
   busqueda:
+    container_name: busqueda
     build: ./busqueda
     depends_on:
       solr:
         condition: service_started
       items:
+        condition: service_started
+    ports:
+      - "8000:8000"
+  worker:
+    build: ./worker
+    depends_on:
+      busqueda:
         condition: service_started

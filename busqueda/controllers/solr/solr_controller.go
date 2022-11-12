@@ -13,7 +13,6 @@ import (
 var (
 	Solr = services.NewSolrServiceImpl(
 		(*client.SolrClient)(con.NewSolrClient(config.SOLRHOST, config.SOLRPORT, config.SOLRCOLLECTION)),
-		(*client.QueueClient)(con.NewQueueClient(config.RABBITUSER, config.RABBITPASSWORD, config.RABBITHOST, config.RABBITPORT)),
 	)
 )
 
@@ -28,4 +27,14 @@ func GetQuery(c *gin.Context) {
 
 	c.JSON(http.StatusOK, itemsDto)
 
+}
+
+func AddFromId(c *gin.Context) {
+	id := c.Param("id")
+	err := Solr.AddFromId(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err)
+	}
+
+	c.JSON(http.StatusCreated, err)
 }

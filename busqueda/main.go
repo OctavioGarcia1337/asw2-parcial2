@@ -10,6 +10,7 @@ import (
 func mapUrls() {
 	// Products Mapping
 	router.GET("/search=:searchQuery", solr_controller.GetQuery)
+	router.GET("/items/:id", solr_controller.AddFromId)
 
 	log.Info("Finishing mappings configurations")
 
@@ -28,7 +29,6 @@ func init() {
 func main() {
 	mapUrls()
 	log.Info("Starting server")
-	solr_controller.Solr.QueueWorker("solr")
 	router.Run(":8000")
 
 }
