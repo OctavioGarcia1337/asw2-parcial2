@@ -1,7 +1,7 @@
 package model
 
 type Item struct {
-	ItemId      string `bson:"Item_id"`
+	ItemId      string `bson:"id"`
 	Titulo      string `bson:"Titulo"`
 	Tipo        string `bson:"Tipo"`
 	Ubicacion   string `bson:"Ubicacion"`

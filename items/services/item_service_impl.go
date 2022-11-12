@@ -55,8 +55,6 @@ func (s *ItemServiceImpl) InsertItem(itemDto dto.ItemDto) (dto.ItemDto, e.ApiErr
 
 	var insertItem dto.ItemDto
 
-	insertItem.Name = itemDto.Name
-
 	insertItem, err := s.item.InsertItem(itemDto)
 	if err != nil {
 		return itemDto, e.NewBadRequestApiError("error inserting solr")

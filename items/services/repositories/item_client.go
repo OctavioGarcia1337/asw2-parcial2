@@ -57,24 +57,40 @@ func (s *ItemClient) GetItemById(id string) (dto.ItemDto, e.ApiError) {
 		return dto.ItemDto{}, e.NewInternalServerApiError(fmt.Sprintf("error getting solr %s", id), err)
 	}
 	return dto.ItemDto{
-		ItemId:     id,
-		Name:       item.Name,
-		Price:      item.Price,
-		CurrencyId: item.CurrencyId,
-		Stock:      item.Stock,
-		Picture:    item.Picture,
+		ItemId:      id,
+		Titulo:      item.Titulo,
+		Tipo:        item.Tipo,
+		Ubicacion:   item.Ubicacion,
+		Precio_base: item.Precio_base,
+		Vendedor:    item.Vendedor,
+		Barrio:      item.Barrio,
+		Descripcion: item.Descripcion,
+		Dormitorios: item.Dormitorios,
+		Baños:       item.Baños,
+		Mts2:        item.Mts2,
+		Ambientes:   item.Ambientes,
+		Url_Img:     item.Url_Img,
+		Expensas:    item.Expensas,
 	}, nil
 
 }
 
 func (s *ItemClient) InsertItem(item dto.ItemDto) (dto.ItemDto, e.ApiError) {
 	result, err := s.Database.Collection(s.Collection).InsertOne(context.TODO(), model.Item{
-		ItemId:     primitive.NewObjectID(),
-		Name:       item.Name,
-		Price:      item.Price,
-		CurrencyId: item.CurrencyId,
-		Stock:      item.Stock,
-		Picture:    item.Picture,
+		ItemId:      primitive.NewObjectID().Hex(),
+		Titulo:      item.Titulo,
+		Tipo:        item.Tipo,
+		Ubicacion:   item.Ubicacion,
+		Precio_base: item.Precio_base,
+		Vendedor:    item.Vendedor,
+		Barrio:      item.Barrio,
+		Descripcion: item.Descripcion,
+		Dormitorios: item.Dormitorios,
+		Baños:       item.Baños,
+		Mts2:        item.Mts2,
+		Ambientes:   item.Ambientes,
+		Url_Img:     item.Url_Img,
+		Expensas:    item.Expensas,
 	})
 
 	if err != nil {
