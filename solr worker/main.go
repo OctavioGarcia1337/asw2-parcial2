@@ -28,6 +28,7 @@ func init() {
 func main() {
 	mapUrls()
 	log.Info("Starting server")
+	solr_controller.Solr.QueueWorker("solr")
 	router.Run(":8000")
 
 }

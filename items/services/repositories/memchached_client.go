@@ -3,9 +3,9 @@ package repositories
 import (
 	"fmt"
 	"github.com/bradfitz/gomemcache/memcache"
-	e "github.com/emikohmann/ucc-arqsoft-2/ej-books/utils/errors"
 	json "github.com/json-iterator/go"
 	"items/dto"
+	e "items/utils/errors"
 )
 
 type MemcachedClient struct {

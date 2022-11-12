@@ -1,6 +1,8 @@
 package repositories
 
 import (
+	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	logger "github.com/sirupsen/logrus"
@@ -32,11 +34,28 @@ func (sc *SolrClient) GetQuery(query string, field string) (dto.ItemsDto, e.ApiE
 		return itemsDto, e.NewBadRequestApiError("error getting from solr")
 	}
 
-	var test []byte
-	logger.Debug(q.Body.Read(test))
-	q.Body.Read(test)
-	err = json.Unmarshal(test, &itemsDto)
-	logger.Debug(itemsDto)
+	var body []byte
+	q.Body.Read(body)
+	err = json.Unmarshal(body, &itemsDto)
 
 	return itemsDto, nil
+}
+
+func (sc *SolrClient) Update(itemDto dto.ItemDto, command string) e.ApiError {
+	var addItemDto dto.AddDto
+	addItemDto.Add = dto.DocDto{Doc: itemDto}
+	data, err := json.Marshal(addItemDto)
+
+	reader := bytes.NewReader(data)
+	if err != nil {
+		return e.NewBadRequestApiError("Error getting json")
+	}
+	resp, err := sc.Client.Update(context.TODO(), sc.Collection, solr.JSON, reader)
+	logger.Debug(resp.Error)
+	if err != nil {
+		return e.NewBadRequestApiError("Error in solr")
+	}
+
+	sc.Client.Commit(context.TODO(), sc.Collection)
+	return nil
 }

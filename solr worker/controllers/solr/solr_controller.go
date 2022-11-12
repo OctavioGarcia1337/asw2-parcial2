@@ -12,13 +12,13 @@ import (
 )
 
 var (
-	solr = services.NewSolrServiceImpl(
+	Solr = services.NewSolrServiceImpl(
 		client.NewSolrClient("localhost", 8983, "items"),
+		client.NewQueueClient("user", "password", "localhost", 5672),
 	)
 )
 
 func GetQuery(c *gin.Context) {
-
 	var itemsDto dto.ItemsDto
 	query := c.Param("searchQuery")
 	strs := strings.Split(query, "_")
@@ -26,11 +26,11 @@ func GetQuery(c *gin.Context) {
 	q, _ := http.Get("http://localhost:8983/solr/items/select?q=" + strs[0] + "%3A" + strs[1])
 	body, _ := ioutil.ReadAll(q.Body)
 
-	var test dto.SolrResponseDto
-	err := json.Unmarshal(body, &test)
+	var resp dto.SolrResponseDto
+	err := json.Unmarshal(body, &resp)
 
-	itemsDto = test.Response.Docs
-	// itemsDto, err := solr.GetQuery(strs[1], strs[0])
+	itemsDto = resp.Response.Docs
+	// itemsDto, err := Solr.GetQuery(strs[1], strs[0])
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 	}

@@ -4,7 +4,6 @@ go 1.18
 
 require (
 	github.com/bradfitz/gomemcache v0.0.0-20221031212613-62deef7fc822
-	github.com/emikohmann/ucc-arqsoft-2/ej-books v0.0.0-20220919192722-3d1b8dca5214
 	github.com/gin-contrib/cors v1.4.0
 	github.com/gin-gonic/gin v1.8.1
 	github.com/json-iterator/go v1.1.12

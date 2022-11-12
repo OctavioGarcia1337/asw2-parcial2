@@ -32,17 +32,17 @@ func NewSolrClient(host string, port int, collection string) *SolrClient {
 	}
 }
 
-type docTest struct {
+type DocDto struct {
 	Doc dto.ItemDto `json:"doc"`
 }
 
-type test struct {
-	Add docTest `json:"add"`
+type AddDto struct {
+	Add DocDto `json:"add"`
 }
 
 func (sc *SolrClient) Update(itemDto dto.ItemDto, command string) e.ApiError {
-	var addItemDto test
-	addItemDto.Add = docTest{itemDto}
+	var addItemDto AddDto
+	addItemDto.Add = DocDto{itemDto}
 	data, err := json.Marshal(addItemDto)
 
 	reader := bytes.NewReader(data)

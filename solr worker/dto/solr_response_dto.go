@@ -9,4 +9,12 @@ type SolrResponseDto struct {
 	Response ResponseDto `json:"response"`
 }
 
+type DocDto struct {
+	Doc ItemDto `json:"doc"`
+}
+
+type AddDto struct {
+	Add DocDto `json:"add"`
+}
+
 type SolrResponsesDto []SolrResponseDto

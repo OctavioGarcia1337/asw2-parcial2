@@ -53,3 +53,25 @@ func InsertItem(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, itemDto)
 }
+
+func QueueItems(c *gin.Context) {
+	var itemsDto dto.ItemsDto
+	err := c.BindJSON(&itemsDto)
+
+	// Error Parsing json param
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	er := itemService.QueueItems(itemsDto)
+
+	// Error Queueing
+	if er != nil {
+		c.JSON(er.Status(), er)
+		return
+	}
+
+	c.JSON(http.StatusCreated, itemsDto)
+}

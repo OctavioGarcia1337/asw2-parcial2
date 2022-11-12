@@ -81,5 +81,6 @@ func (s *ItemClient) InsertItem(item dto.ItemDto) (dto.ItemDto, e.ApiError) {
 		return item, e.NewInternalServerApiError(fmt.Sprintf("error inserting solr %s", item.ItemId), err)
 	}
 	item.ItemId = fmt.Sprintf(result.InsertedID.(primitive.ObjectID).Hex())
+
 	return item, nil
 }
