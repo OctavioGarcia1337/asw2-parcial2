@@ -57,7 +57,7 @@ func (s *ItemServiceImpl) InsertItem(itemDto dto.ItemDto) (dto.ItemDto, e.ApiErr
 
 	insertItem, err := s.item.InsertItem(itemDto)
 	if err != nil {
-		return itemDto, e.NewBadRequestApiError("error inserting solr")
+		return itemDto, e.NewBadRequestApiError("error inserting item")
 	}
 
 	if insertItem.ItemId == "000000000000000000000000" {
@@ -68,10 +68,6 @@ func (s *ItemServiceImpl) InsertItem(itemDto dto.ItemDto) (dto.ItemDto, e.ApiErr
 	itemDto, err2 := s.memcached.InsertItem(insertItem)
 	if err2 != nil {
 		return itemDto, e.NewBadRequestApiError("Error inserting in memcached")
-	}
-
-	if err != nil {
-		return itemDto, e.NewBadRequestApiError("Error inserting in solar")
 	}
 	return itemDto, nil
 }
