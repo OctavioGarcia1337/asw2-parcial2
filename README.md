@@ -3,7 +3,7 @@
         El trabajo pide desarrollar un sistema de publicación de clasificados, mediante el cual las empresas inmobiliarias puedan cargar sus bases de datos con el posteo de un archivo json de la información relacionada a los inmuebles. Los navegantes pueden buscar esos clasificados desde la home del sitio en base a una oración y traiga los resultados priorizados que permitan ver el detalle de la publicación.
 
 ## Para esto, se piden desarrollar 3 microservicios:
-### **1) BÚSQUEDA:**
+### *1) BÚSQUEDA:*
 
         Se pidio utilizar un motor de búsqueda que permita una indexación y búsqueda de los ítems por sus características (título, descripción, atributos, ciudad, estado, etc), que se nutra mediante notificaciones del servicio de Items y busque la información de ese servicio.
 
