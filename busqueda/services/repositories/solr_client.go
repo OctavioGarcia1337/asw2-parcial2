@@ -41,6 +41,37 @@ func (sc *SolrClient) GetQuery(query string, field string) (dto.ItemsDto, e.ApiE
 	return itemsDto, nil
 }
 
+func (sc *SolrClient) GetQueryAllFields(query string) (dto.ItemsDto, e.ApiError) {
+	var response dto.SolrResponseDto
+	var itemsDto dto.ItemsDto
+
+	q, err := http.Get(
+		fmt.Sprintf("http://%s:%d/solr/items/select?q=Titulo%s%s%sTipo%s%s%sUbicacion%s%s%sVendedor%s%s%sDescripcion%s%s%sBarrio%s%s",
+			config.SOLRHOST, config.SOLRPORT,
+			"%3A", query, "%0A",
+			"%3A", query, "%0A",
+			"%3A", query, "%0A",
+			"%3A", query, "%0A",
+			"%3A", query, "%0A",
+			"%3A", query))
+	if err != nil {
+		return itemsDto, e.NewBadRequestApiError("error getting from solr")
+	}
+
+	var body []byte
+	body, err = io.ReadAll(q.Body)
+	if err != nil {
+		return itemsDto, e.NewBadRequestApiError("error reading body")
+	}
+	err = json.Unmarshal(body, &response)
+	if err != nil {
+		return itemsDto, e.NewBadRequestApiError("error in unmarshal")
+	}
+
+	itemsDto = response.Response.Docs
+	return itemsDto, nil
+}
+
 func (sc *SolrClient) Update(itemDto dto.ItemDto, command string) e.ApiError {
 	var addItemDto dto.AddDto
 	addItemDto.Add = dto.DocDto{Doc: itemDto}

@@ -4,14 +4,14 @@ import logo from "./images/logo.svg"
 import loadinggif from "./images/loading.gif"
 import usersvg from "./images/user.svg"
 import Cookies from "universal-cookie";
+import {HOST, PORT} from "./config/config";
 
 
-
-const HOST = "http://localhost:8000";
+const URL = HOST + ":" + PORT
 const Cookie = new Cookies();
 
 async function getItems(){
-  return await fetch(HOST + "/search=*_*", {
+  return await fetch(URL + "/search=*_*", {
     method: "GET",
     headers: {
       "Content-Type": "application/json"
@@ -29,7 +29,7 @@ function retry() {
 }
 
 
-function showItems(items, setCartItems){
+function showItems(items){
   return items.map((item) =>
 
    <div obj={item} key={item.id} className="item">
@@ -63,49 +63,25 @@ function showItems(items, setCartItems){
 }
 
 
-function search(){
-  let input, filter, a, i;
-  input = document.getElementById("search");
-  filter = input.value.toUpperCase();
-  a = document.getElementsByClassName("item");
-  for (i = 0; i < a.length; i++) {
-    let txtValue = a[i].children[1].textContent || a[i].children[1].innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      a[i].style.display = "inherit";
-    } else {
-      a[i].style.display = "none";
-    }
-  }
-  if(input.value.toUpperCase().length <= 0){
-    for(i = 0; i < a.length; i++){
-      a[i].style.display = "inherit";
-    }
-  }
-
-}
-
-function deleteCategory(){
-  Cookie.set("category", 0, {path: "/"})
-  goto("/")
-}
-
-async function getProductBySearch(field, query){
-  return fetch( HOST + "/search=" + field + "_" + query, {
+async function getItemsBySearch(field, query){
+  return fetch( URL + "/search=" + field + "_" + query, {
     method: "GET",
     header: "Content-Type: application/json"
   }).then(response=>response.json())
 }
 
+async function getItemsBySearchAll(query){
+  return fetch( URL + "/searchAll=" + query, {
+    method: "GET",
+    header: "Content-Type: application/json"
+  }).then(response=>response.json())
+}
 
 function Home() {
   const [isLogged, setIsLogged] = useState(false)
   const [user, setUser] = useState({})
-  const [categories, setCategories] = useState([])
   const [items, setItems] = useState([])
   const [needItems, setNeedItems] = useState(true)
-  const [category, setCategory] = useState("")
-  const [needCategories, setNeedCategories] = useState(true)
-  const [cartItems, setCartItems] = useState("")
   const [failedSearch, setFailedSearch] = useState(false)
 
   if(!items.length && needItems){
@@ -113,10 +89,12 @@ function Home() {
     setNeedItems(false)
   }
 
-  async function searchQuery(field, query){
+  async function searchQueryAll(query){
 
-    await getProductBySearch(field, query).then(response=>{
-      console.log(query)
+    await getItemsBySearchAll(query).then(response=>{
+      if(query == ""){
+        query = "*"
+      }
       if(response != null){
         if(response.length > 0){
           setItems(response)
@@ -139,9 +117,7 @@ function Home() {
 
     <span>
     <img src={usersvg} onClick={()=>goto("/user")} id="user" width="48px" height="48px"/>
-    {/* <img src={cart} onClick={()=>goto("/cart ")} id="cart" width="48px" height="48px"/> */}
-    <span className="cartNumber">{cartItems > 0 ? cartItems : 0}</span>
-    {/* <a id="logout" onClick={logout}> <span> Welcome in {user.first_name} </span> </a> */}
+    {/*<a id="logout" onClick={logout}> <span> Welcome in {user.first_name} </span> </a>*/}
     </span>
   )
 
@@ -159,21 +135,18 @@ function Home() {
         <div>
           <img src={logo} width="80px" height="80px" id="logo" onClick={()=>goto("/")} /> <p>3 Random Words Shop</p>
         </div>
-        <input type="text" id="search" placeholder="Search..." onKeyDown={(e) => e.keyCode === 13 ? searchQuery("*",e.target.value) : void(0)}/>
+        <input type="text" id="search" placeholder="Search..." onKeyDown={(e) => e.keyCode === 13 ? searchQueryAll(e.target.value) : void(0)}/>
         {isLogged ? login : <a id="login" onClick={()=>goto("/login")}>Login</a>}
       </div>
 
 
       <div id="mySidenav" className="sidenav">
 
-         {/* {categories.length > 0 ? showCategories(categories, setItems, setCategory) : <a onClick={retry}> Loading Failed. Click to retry </a>} */}
       </div>
 
       <div id="main">
         {failedSearch ? renderFailedSearch : void(0)}
-        {Cookie.get("category") > 0 ? <a className="categoryFilter"> {category.name} <button className="delete" onClick={deleteCategory}>X</button> </a> : <a/>}
-        {items.length > 0 || failedSearch ? showItems(items, setCartItems) : loading}
-
+        {items.length > 0 || failedSearch ? showItems(items) : loading}
 
       </div>
     </div>

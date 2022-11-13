@@ -29,8 +29,6 @@ func (s *SolrService) GetQuery(query string) (dto.ItemsDto, e.ApiError) {
 	var itemsDto dto.ItemsDto
 	queryParams := strings.Split(query, "_")
 	field, query := queryParams[0], queryParams[1]
-	log.Debug(field)
-	log.Debug(query)
 	itemsDto, err := s.solr.GetQuery(query, field)
 	if err != nil {
 		return itemsDto, e.NewBadRequestApiError("Solr failed")
@@ -38,8 +36,13 @@ func (s *SolrService) GetQuery(query string) (dto.ItemsDto, e.ApiError) {
 	return itemsDto, nil
 }
 
-func (s *SolrService) Add(itemDto dto.ItemDto) {
-	s.solr.Update(itemDto, "add")
+func (s *SolrService) GetQueryAllFields(query string) (dto.ItemsDto, e.ApiError) {
+	var itemsDto dto.ItemsDto
+	itemsDto, err := s.solr.GetQueryAllFields(query)
+	if err != nil {
+		return itemsDto, e.NewBadRequestApiError("Solr failed")
+	}
+	return itemsDto, nil
 }
 
 func (s *SolrService) AddFromId(id string) e.ApiError {
@@ -57,6 +60,6 @@ func (s *SolrService) AddFromId(id string) e.ApiError {
 		log.Debugf("error in unmarshal of item %s", id)
 		return e.NewBadRequestApiError("error in unmarshal of item")
 	}
-	s.Add(itemDto)
+	s.solr.Update(itemDto, "add")
 	return nil
 }

@@ -26,7 +26,7 @@ func (s *WorkerService) QueueWorker(qname string) {
 		log.Debug("Item sent " + id)
 		if err != nil {
 			log.Debug("error in get request")
-			log.Debug(resp.Body)
+			log.Debug(resp)
 		}
 	})
 }

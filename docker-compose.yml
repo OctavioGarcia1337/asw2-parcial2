@@ -7,7 +7,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
-
+      MONGO_DATA_DIR: /data/db
+      MONGO_INITDB_DAABASE: items
     ports:
       - "27017:27017"
 
@@ -75,3 +76,20 @@ services:
     depends_on:
       busqueda:
         condition: service_started
+
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    depends_on:
+      busqueda:
+        condition: service_started
+
+    ports:
+      - "3000:3000"
+  lb:
+    build: ./lb
+    depends_on:
+      busqueda:
+        condition: service_started
+    ports:
+      - "80:80"
