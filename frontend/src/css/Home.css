@@ -1,4 +1,5 @@
 .topnavHOME {
+  z-index: 10;
   overflow: hidden;
   background-color: #090909;
   text-align: right;
@@ -6,28 +7,6 @@
   top: 0;
 }
 
-/* Style the links inside the navigation bar */
-.topnavHOME a {
-  display: inline-block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 19px;
-}
-
-/* Change the color of links on hover */
-.topnavHOME a:hover {
-  background-color: #ddd;
-  color: black;
-  cursor: pointer;
-}
-
-/* Style the "active" element to highlight the current page */
-.topnavHOME a.active {
-  background-color: #2196F3;
-  color: white;
-}
 
 .topnavHOME img {
   float: left;
@@ -45,7 +24,29 @@
   font-size: 22px;
   color: white;
 }
+.topnavHOME .options-div {
+  position: fixed;
+  margin-top: 3%;
+  background-color: lightblue;
+  z-index: 5;
+  display: block;
+  margin-left: 33%;
+  width: 30%;
+}
 
+.topnavHOME .options-div a {
+  border: 2px solid darkslategray;
+  padding: 20px 20px;
+  display: block;
+  text-align: left;
+  color: gray;
+}
+
+.topnavHOME .options-div span {
+  text-align: left;
+  margin-right: 2%;
+  color: black;
+}
 /* Style the search box inside the navigation bar */
 .topnavHOME input[type=text] {
   display: inline-block;
@@ -294,4 +295,18 @@ img:hover {
   transition: .1s;
   opacity: 70%;
 
+}
+
+.options-div a {
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 19px;
+}
+
+.options-div a:hover {
+  background-color: #ddd;
+  color: black;
+  cursor: pointer;
 }

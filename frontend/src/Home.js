@@ -91,6 +91,7 @@ function Home() {
   const [needItems, setNeedItems] = useState(true)
   const [failedSearch, setFailedSearch] = useState(false)
   const [querying, setQuerying] = useState(false)
+  const [query, setQuery] = useState("")
 
   if(!items.length && needItems){
     getItems().then(response => setItems(response))
@@ -98,41 +99,58 @@ function Home() {
   }
 
 
-  async function searchQueryAll(query){
-    if(query == ""){
+  async function searchQueryAll(query) {
+    if (query == "") {
       query = "*"
     }
-    await getItemsBySearchAll(query).then(response=>{
-      if(response != null){
-        if(response.length > 0){
+    await getItemsBySearchAll(query).then(response => {
+      if (response != null) {
+        if (response.length > 0) {
           setItems(response)
           setFailedSearch(false)
-        }else{
+        } else {
           setItems([])
           setFailedSearch(true)
         }
-      }
-      else{
+      } else {
         setFailedSearch(false)
-        getItems().then(response=>setItems(response))
+        getItems().then(response => setItems(response))
       }
     })
   }
-
-
+    async function searchQuery(field, query){
+      if(query == ""){
+        query = "*"
+      }
+      await getItemsBySearch(field, query).then(response=>{
+        if(response != null){
+          if(response.length > 0){
+            setItems(response)
+            setFailedSearch(false)
+          }else{
+            setItems([])
+            setFailedSearch(true)
+          }
+        }
+        else{
+          setFailedSearch(false)
+          getItems().then(response=>setItems(response))
+        }
+      })
+    }
 
   const options= (
-
-      <div>
-        hola
+      <div className="options-div">
+        <div>
+          <a onClick={()=>searchQuery("titulo", query)}>Titulo: <span>{query}</span></a>
+          <a onClick={()=>searchQuery("titulo", query)}>Tipo: <span>{query}</span></a>
+          <a onClick={()=>searchQuery("titulo", query)}>Descripcion: <span>{query}</span></a>
+          <a onClick={()=>searchQuery("titulo", query)}>Ubicacion: <span>{query}</span></a>
+          <a onClick={()=>searchQuery("titulo", query)}>Barrio: <span>{query}</span></a>
+          <a onClick={()=>searchQuery("titulo", query)}>Vendedor: <span>{query}</span></a>
+        </div>
       </div>
   )
-
-  function showOptions(query) {
-    console.log(query)
-    var f = query.toLowerCase();
-    return options
-  }
 
   const login = (
 
@@ -150,13 +168,30 @@ function Home() {
     <a>No results :(</a>
   )
 
+  if(query == "" && items.length <= 0){
+    searchQuery("*","*")
+  }
+
   return (
     <div className="home">
       <div className="topnavHOME">
         <div>
           <img src={logo} width="80px" height="80px" id="logo" onClick={()=>goto("/")} /> <p>3 Random Words Shop</p>
         </div>
-        <input type="text" id="search" placeholder="Search..." onKeyDown={(e) => e.key === "Enter" ? searchQueryAll(e.target.value) : void(0)} onKeyUp={(e)=>showOptions(e.target.value)}/>
+
+        <div>
+          <input type="text" id="search" placeholder="Search..." onKeyDown={(e) => e.key === "Enter" ? searchQueryAll(e.target.value) : void(0)} onKeyUp={
+            (e)=>{
+              setQuery(e.target.value)
+              if(e.target.value == ""){
+                setQuerying(false)
+              }else{
+                setQuerying(true)}
+            }
+          }/>
+          {querying ? options : void(0)}
+        </div>
+
       </div>
 
 
