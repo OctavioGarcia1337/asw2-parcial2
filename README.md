@@ -10,11 +10,13 @@ Se pidio utilizar un motor de búsqueda que permita una indexación y búsqueda 
 Documentacion especifica del servicio BÚSQUEDA implementado por nuestro grupo:
 
 Para este microservicio se implemento el motor de busqueda con SOLR a traves de la siguiente imagen de docker:
+    
     | docker run -d -p 8983:8983 solr solr-precreate items |
 
 El servico tiene implementado un unico http request - GET Query - Que recibe un string y ejecuta una busqueda a traves del motor de busqueda implementado (SOLR) y devuelve dichos items en un archivo .json. 
 
-A su vez el servicio indexa los items en el motor de busqueda a medida que los items se van cargando en la base de datos implementada por el servicio de ITEMs. Esto se logra utilizando una implementacion de ColasMQTT de RAbbitMQ a traves de la siguiente imagen de docker:
+A su vez el servicio indexa los items en el motor de busqueda a medida que los items se van cargando en la base de datos implementada por el servicio de ITEMs. Esto se logra utilizando una implementacion de ColasMQTT de RabbitMQ a traves de la siguiente imagen de docker:
+    
     | docker run -d --hostname my-rabbit -e RABBITMQ_DEFAULT_USER=user -e RABBITMQ_DEFAULT_PASS=password --name some-rabbit -p 5671:5671 -p 5672:5672 -p 8080:15672 rabbitmq:3-management |
     
 
@@ -32,17 +34,16 @@ ITEMs tiene la tarea de recibir los datos de los items a medida que son listados
     | docker run --name memcached -p 11211:11211 memcached:1.6.16 |
             - RabbitMQ - Detallado en BÚSQUEDA anteriormente
 
-        En nuestra implementacion el servicio contiene 2 metodos: 
+En nuestra implementacion el servicio contiene 2 metodos: 
 
-            - POST de items:
+ - POST de items:
                 Recibe un Json con los items a cargar.
                 Si el json pudo ser procesado, devuelve codigo http 201 (created).
                 Asincronicamente, a traves de gorutines, carga uno por uno los items primero en la base de datos
                 y luego en la cache.
                 Si un item es cargado correctamente en la bd se envia un mensaje a un cola (implementacion RabbitMQ).
                 De lo contrario se carga un log con el mensaje de error.
-
-            - GET de item (por id)
+ - GET de item (por id)
                 Recibe itemId como string. 
                 Busca el Item en cache.
                 De no encontrarlo lo busca en la Base de datos y lo carga en cache.
