@@ -65,7 +65,7 @@ func (s *ItemServiceImpl) InsertItem(itemDto dto.ItemDto) (dto.ItemDto, e.ApiErr
 	}
 	itemDto.ItemId = insertItem.ItemId
 
-	itemDto, err2 := s.memcached.InsertItem(insertItem)
+	itemDto, err2 := s.memcached.InsertItem(itemDto)
 	if err2 != nil {
 		return itemDto, e.NewBadRequestApiError("Error inserting in memcached")
 	}

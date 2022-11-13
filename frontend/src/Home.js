@@ -2,7 +2,6 @@ import React, { useState , useEffect} from "react";
 import "./css/Home.css";
 import logo from "./images/logo.svg"
 import loadinggif from "./images/loading.gif"
-import usersvg from "./images/user.svg"
 import Cookies from "universal-cookie";
 import {HOST, PORT} from "./config/config";
 
@@ -32,7 +31,7 @@ function parseField(field){
   if (field !== undefined){
     return field
   }
-  return ""
+  return "Not available"
 }
 
 function showItems(items){
@@ -40,29 +39,31 @@ function showItems(items){
 
    <div obj={item} key={item.id} className="item">
     <div onClick={()=>goto("/item?id="+item.id)}>
-      <img width="128px" height="128px" src={item.url_img}  onError={(e) => (e.target.onerror = null, e.target.src = "./images/default.jpg")}/>
+      <img width="128px" height="128px" src={parseField(item.url_img)}  onError={(e) => (e.target.onerror = null, e.target.src = "./images/default.jpg")}/>
     </div>
-    <a className="name">{item.titulo}</a>
-    <a className="price"> - {"$" + item.precio_base}</a>
-    <a className="price"> -  Expensas: {"$" + item.expensas}</a>
+    <a className="title">{parseField(item.titulo)}</a>
+    <a className="price"> {"$" + parseField(item.precio_base)}</a>
+     <div>
+       <a className="expenses"> -  Expensas: {"$" + parseField(item.expensas)}</a>
+     </div>
     <div>
-      <a className="description">{item.tipo}</a>
-    </div>
-    <div>
-      <a className="description">{item.ubicacion}</a>
-      <a className="description">, {item.barrio}</a>
+      <a className="type">{parseField(item.tipo)}</a>
     </div>
     <div>
-      <a className="description">{item.descripcion}</a>
+      <a className="location">{parseField(item.ubicacion)},</a>
+      <a className="neighbourhood">{parseField(item.barrio)}</a>
     </div>
     <div>
-      <a className="description">{item.vendedor}</a>
+      <a className="description">{parseField(item.descripcion)}</a>
+    </div>
+    <div className="sellerBlock">
+      <a className="seller">{parseField(item.vendedor)}</a>
     </div>
     <div className="right">
-      <a className="stock">Mts2: {item.mts2}</a>
-      <a className="stock"> - Ambientes: {item.ambientes}</a>
-      <a className="stock"> - Dormitorios: {item.dormitorios}</a>
-      <a className="stock"> - Baños: {item.banos}</a>
+      <a className="sqmts">Mts2: {parseField(item.mts2)}</a>
+      <a className="rooms"> - Ambientes: {parseField(item.ambientes)}</a>
+      <a className="bedrooms"> - Dormitorios: {parseField(item.dormitorios)}</a>
+      <a className="bathrooms"> - Baños: {parseField(item.banos)}</a>
     </div>
    </div>
  )//agregar los campos faltantes
@@ -122,7 +123,7 @@ function Home() {
   const login = (
 
     <span>
-    <img src={usersvg} onClick={()=>goto("/user")} id="user" width="48px" height="48px"/>
+    <img src="./images/loading.gif" onClick={()=>goto("/user")} id="user" width="48px" height="48px"/>
     {/*<a id="logout" onClick={logout}> <span> Welcome in {user.first_name} </span> </a>*/}
     </span>
   )
@@ -142,7 +143,7 @@ function Home() {
           <img src={logo} width="80px" height="80px" id="logo" onClick={()=>goto("/")} /> <p>3 Random Words Shop</p>
         </div>
         <input type="text" id="search" placeholder="Search..." onKeyDown={(e) => e.key === "Enter" ? searchQueryAll(e.target.value) : void(0)}/>
-        {isLogged ? login : <a id="login" onClick={()=>goto("/login")}>Login</a>}
+        {isLogged ? login : <a id="login" onClick={()=>goto("/")}>Login</a>}
       </div>
 
 

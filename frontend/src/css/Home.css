@@ -117,7 +117,7 @@
  padding: 20px;
 }
 
-.product {
+.item {
   display: block;
   width: 70%;
   min-height: 200px;
@@ -129,69 +129,101 @@
 }
 
 @media screen and (max-width: 1400px){
-  .product {
+  .item {
     width: 100%;
     min-height: 300px;
   }
 }
 
-.product img {
+.item {
+  padding-bottom: 15px;
+}
+
+.item img {
   display: block;
   float: left;
 }
 
-.product a {
+.item a {
   display: inline-block;
   padding: 2px 8px;
 }
 
-.product .name {
+.item .title {
   font-size: 32px;
   font-weight: bold;
+  margin-bottom: -20px;
 }
-
-.product .price {
+.item .price {
   float: right;
   font-weight: bolder;
 }
 
-.product .description {
+.item .expenses {
+  float: bottom;
+  color: gray;
+}
+
+.item .type{
+  font-weight: bolder;
+}
+.item .rooms{
+  float: right;
+  color: #463522;
+  font-weight: bold;
+}
+.item .bedrooms{
+   float: right;
+   color: #463522;
+   font-weight: bold;
+ }
+
+.item .bathrooms{
+  float: right;
+  color: #463522;
+  font-weight: bold;
+}
+
+.item .sqmts{
+  float: right;
+  color: darkslateblue;
+  font-weight: bold;
+}
+.item .description {
+  color: gray;
   text-align: justify;
   display: flex;
 }
 
-.product .right {
+.item .right {
   float: right;
   text-align: right;
   padding-top: 10px;
   padding-bottom: 20px;
 }
 
-.product .category {
-  display: block;
+.item .location {
+  display: inline-block;
   font-weight: 500;
 }
 
-.product .stock {
-  display: block;
+.item .neighbourhood {
+  display: inline-block;
+  margin-left: -10px;
   font-size: 16px;
 }
 
-.product .addcart {
+
+.item .seller {
+  min-width: 200px;
+  text-align: center;
   float: right;
-  border: 2px solid #e0b155;
+  border: 2px solid darkslateblue;
   box-shadow: #696969 2px 2px;
-  border-radius: 20px;
-  background-color: #ebf453;
+  background-color: #2196F3;
   padding: 5px 10px;
   font-size: 18px;
   font-weight: bold;
-}
-
-.product .addcart:hover{
-  transition: 0.2s;
-  border-color: #936500;
-  background-color: orange;
 }
 
 #logout {
