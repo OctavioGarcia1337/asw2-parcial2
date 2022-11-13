@@ -34,6 +34,8 @@ function parseField(field){
   return "Not available"
 }
 
+
+
 function showItems(items){
   return items.map((item) =>
 
@@ -85,23 +87,22 @@ async function getItemsBySearchAll(query){
 }
 
 function Home() {
-  const [isLogged, setIsLogged] = useState(false)
-  const [user, setUser] = useState({})
   const [items, setItems] = useState([])
   const [needItems, setNeedItems] = useState(true)
   const [failedSearch, setFailedSearch] = useState(false)
+  const [querying, setQuerying] = useState(false)
 
   if(!items.length && needItems){
     getItems().then(response => setItems(response))
     setNeedItems(false)
   }
 
-  async function searchQueryAll(query){
 
+  async function searchQueryAll(query){
+    if(query == ""){
+      query = "*"
+    }
     await getItemsBySearchAll(query).then(response=>{
-      if(query == ""){
-        query = "*"
-      }
       if(response != null){
         if(response.length > 0){
           setItems(response)
@@ -116,8 +117,21 @@ function Home() {
         getItems().then(response=>setItems(response))
       }
     })
+  }
 
 
+
+  const options= (
+
+      <div>
+        hola
+      </div>
+  )
+
+  function showOptions(query) {
+    console.log(query)
+    var f = query.toLowerCase();
+    return options
   }
 
   const login = (
@@ -142,8 +156,7 @@ function Home() {
         <div>
           <img src={logo} width="80px" height="80px" id="logo" onClick={()=>goto("/")} /> <p>3 Random Words Shop</p>
         </div>
-        <input type="text" id="search" placeholder="Search..." onKeyDown={(e) => e.key === "Enter" ? searchQueryAll(e.target.value) : void(0)}/>
-        {isLogged ? login : <a id="login" onClick={()=>goto("/")}>Login</a>}
+        <input type="text" id="search" placeholder="Search..." onKeyDown={(e) => e.key === "Enter" ? searchQueryAll(e.target.value) : void(0)} onKeyUp={(e)=>showOptions(e.target.value)}/>
       </div>
 
 
