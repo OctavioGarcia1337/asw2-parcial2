@@ -3,6 +3,7 @@ const userCardTemplate = document.querySelector("[data-user-template]")
 const userCardContainer = document.querySelector("[data-user-cards-container]")
 const searchInput = document.querySelector("[data-search]")
 
+let HOST = "localhost:8000"
 let users = []
 
 searchInput.addEventListener("input", e => {
@@ -15,7 +16,7 @@ searchInput.addEventListener("input", e => {
   })
 })
 
-fetch("localhost:8000/")
+fetch(HOST + "/search=*_" + query)
   .then(res => res.json())
   .then(data => {
     users = data.map(user => {
