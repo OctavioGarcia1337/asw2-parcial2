@@ -37,12 +37,26 @@ function showItems(items, setCartItems){
       <img width="128px" height="128px" src={item.Url_Img}  onError={(e) => (e.target.onerror = null, e.target.src = "./images/default.jpg")}/>
     </div>
     <a className="name">{item.Titulo}</a>
-    <a className="price">{"$" + item.Precio_base}</a>
+    <a className="price"> - {"$" + item.Precio_base}</a>
+    <a className="price"> -  Expensas: {"$" + item.Expensas}</a>
+    <div>
+      <a className="description">{item.Tipo}</a>
+    </div>
+    <div>
+      <a className="description">{item.Ubicacion}</a>
+      <a className="description">, {item.Barrio}</a>
+    </div>
     <div>
       <a className="description">{item.Descripcion}</a>
     </div>
+    <div>
+      <a className="description">{item.Vendedor}</a>
+    </div>
     <div className="right">
-      <a className="stock">Dormitorios: {item.Dormitorios}</a>
+      <a className="stock">Mts2: {item.Mts2}</a>
+      <a className="stock"> - Ambientes: {item.Ambientes}</a>
+      <a className="stock"> - Dormitorios: {item.Dormitorios}</a>
+      <a className="stock"> - Baños: {item.Banos}</a>
     </div>
    </div>
  )//agregar los campos faltantes
