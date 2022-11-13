@@ -35,7 +35,7 @@ services:
     healthcheck:
       test: rabbitmq-diagnostics check_port_connectivity
       interval: 1s
-      timeout: 3s
+      timeout: 5s
       retries: 30
 
   solr:
