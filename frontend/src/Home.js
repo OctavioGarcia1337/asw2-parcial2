@@ -28,35 +28,41 @@ function retry() {
   goto("/")
 }
 
+function parseField(field){
+  if (field !== undefined){
+    return field
+  }
+  return ""
+}
 
 function showItems(items){
   return items.map((item) =>
 
    <div obj={item} key={item.id} className="item">
     <div onClick={()=>goto("/item?id="+item.id)}>
-      <img width="128px" height="128px" src={item.Url_Img}  onError={(e) => (e.target.onerror = null, e.target.src = "./images/default.jpg")}/>
+      <img width="128px" height="128px" src={item.url_img}  onError={(e) => (e.target.onerror = null, e.target.src = "./images/default.jpg")}/>
     </div>
-    <a className="name">{item.Titulo}</a>
-    <a className="price"> - {"$" + item.Precio_base}</a>
-    <a className="price"> -  Expensas: {"$" + item.Expensas}</a>
+    <a className="name">{item.titulo}</a>
+    <a className="price"> - {"$" + item.precio_base}</a>
+    <a className="price"> -  Expensas: {"$" + item.expensas}</a>
     <div>
-      <a className="description">{item.Tipo}</a>
-    </div>
-    <div>
-      <a className="description">{item.Ubicacion}</a>
-      <a className="description">, {item.Barrio}</a>
+      <a className="description">{item.tipo}</a>
     </div>
     <div>
-      <a className="description">{item.Descripcion}</a>
+      <a className="description">{item.ubicacion}</a>
+      <a className="description">, {item.barrio}</a>
     </div>
     <div>
-      <a className="description">{item.Vendedor}</a>
+      <a className="description">{item.descripcion}</a>
+    </div>
+    <div>
+      <a className="description">{item.vendedor}</a>
     </div>
     <div className="right">
-      <a className="stock">Mts2: {item.Mts2}</a>
-      <a className="stock"> - Ambientes: {item.Ambientes}</a>
-      <a className="stock"> - Dormitorios: {item.Dormitorios}</a>
-      <a className="stock"> - Baños: {item.Banos}</a>
+      <a className="stock">Mts2: {item.mts2}</a>
+      <a className="stock"> - Ambientes: {item.ambientes}</a>
+      <a className="stock"> - Dormitorios: {item.dormitorios}</a>
+      <a className="stock"> - Baños: {item.banos}</a>
     </div>
    </div>
  )//agregar los campos faltantes
@@ -135,7 +141,7 @@ function Home() {
         <div>
           <img src={logo} width="80px" height="80px" id="logo" onClick={()=>goto("/")} /> <p>3 Random Words Shop</p>
         </div>
-        <input type="text" id="search" placeholder="Search..." onKeyDown={(e) => e.keyCode === 13 ? searchQueryAll(e.target.value) : void(0)}/>
+        <input type="text" id="search" placeholder="Search..." onKeyDown={(e) => e.key === "Enter" ? searchQueryAll(e.target.value) : void(0)}/>
         {isLogged ? login : <a id="login" onClick={()=>goto("/login")}>Login</a>}
       </div>
 

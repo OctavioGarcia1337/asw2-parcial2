@@ -447,20 +447,20 @@
       <tokenizer name="whitespace"/>
     </analyzer>
   </fieldType>
-  <field name="Ambientes" type="plongs"/>
-  <field name="Ba_os" type="plongs"/>
-  <field name="Banos" type="plongs"/>
-  <field name="Barrio" type="text_general"/>
-  <field name="Descripcion" type="text_general"/>
-  <field name="Dormitorios" type="plongs"/>
-  <field name="Expensas" type="plongs"/>
-  <field name="Mts2" type="plongs"/>
-  <field name="Precio_base" type="plongs"/>
-  <field name="Tipo" type="text_general"/>
-  <field name="Titulo" type="text_general"/>
-  <field name="Ubicacion" type="text_general"/>
-  <field name="Url_Img" type="text_general"/>
-  <field name="Vendedor" type="text_general"/>
+  <field name="ambientes" type="plongs"/>
+  <field name="ba_os" type="plongs"/>
+  <field name="banos" type="plongs"/>
+  <field name="barrio" type="text_general"/>
+  <field name="descripcion" type="text_general"/>
+  <field name="dormitorios" type="plongs"/>
+  <field name="expensas" type="plongs"/>
+  <field name="mts2" type="plongs"/>
+  <field name="precio_base" type="plongs"/>
+  <field name="tipo" type="text_general"/>
+  <field name="titulo" type="text_general"/>
+  <field name="ubicacion" type="text_general"/>
+  <field name="url_img" type="text_general"/>
+  <field name="vendedor" type="text_general"/>
   <field name="_nest_path_" type="_nest_path_"/>
   <field name="_root_" type="string" docValues="false" indexed="true" stored="false"/>
   <field name="_text_" type="text_general" multiValued="false" indexed="true" stored="false"/>
@@ -536,11 +536,11 @@
   <dynamicField name="*_d" type="pdouble" indexed="true" stored="true"/>
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
   <dynamicField name="*" type="string"/>
-  <copyField source="Ubicacion" dest="Ubicacion_str" maxChars="256"/>
-  <copyField source="Tipo" dest="Tipo_str" maxChars="256"/>
-  <copyField source="Vendedor" dest="Vendedor_str" maxChars="256"/>
-  <copyField source="Barrio" dest="Barrio_str" maxChars="256"/>
-  <copyField source="Descripcion" dest="Descripcion_str" maxChars="256"/>
-  <copyField source="Url_Img" dest="Url_Img_str" maxChars="256"/>
-  <copyField source="Titulo" dest="Titulo_str" maxChars="256"/>
+  <copyField source="ubicacion" dest="ubicacion_str" maxChars="256"/>
+  <copyField source="tipo" dest="tipo_str" maxChars="256"/>
+  <copyField source="vendedor" dest="vendedor_str" maxChars="256"/>
+  <copyField source="barrio" dest="barrio_str" maxChars="256"/>
+  <copyField source="descripcion" dest="descripcion_str" maxChars="256"/>
+  <copyField source="url_img" dest="url_img_str" maxChars="256"/>
+  <copyField source="titulo" dest="titulo_str" maxChars="256"/>
 </schema>

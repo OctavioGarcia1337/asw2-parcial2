@@ -30,8 +30,8 @@ services:
       - "5672:5672"
       - "8080:15672"
     volumes:
-      - ./init/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
-      - ./init/definitions.json:/etc/rabbitmq/definitions.json:ro
+      - ./rabbit/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./rabbit/definitions.json:/etc/rabbitmq/definitions.json:ro
     healthcheck:
       test: rabbitmq-diagnostics check_port_connectivity
       interval: 1s
@@ -44,7 +44,7 @@ services:
     ports:
       - "8983:8983"
     volumes:
-      - ./managed-schema:/opt/solr/server/solr/configsets/_default/conf/managed-schema
+      - ./solr/managed-schema:/opt/solr/server/solr/configsets/_default/conf/managed-schema
     entrypoint:
       - docker-entrypoint.sh
       - solr-precreate
@@ -82,6 +82,8 @@ services:
 
     ports:
       - "3000:3000"
+
+
   lbbusqueda:
     build: ./lb
     depends_on:

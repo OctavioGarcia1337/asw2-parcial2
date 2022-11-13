@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	logger "github.com/sirupsen/logrus"
-	solr "github.com/stevenferrer/solr-go"
+	"github.com/stevenferrer/solr-go"
 	"io"
 	"net/http"
 	"wesolr/config"
@@ -46,7 +46,7 @@ func (sc *SolrClient) GetQueryAllFields(query string) (dto.ItemsDto, e.ApiError)
 	var itemsDto dto.ItemsDto
 
 	q, err := http.Get(
-		fmt.Sprintf("http://%s:%d/solr/items/select?q=Titulo%s%s%sTipo%s%s%sUbicacion%s%s%sVendedor%s%s%sDescripcion%s%s%sBarrio%s%s",
+		fmt.Sprintf("http://%s:%d/solr/items/select?q=titulo%s%s%stipo%s%s%subicacion%s%s%svendedor%s%s%sdescripcion%s%s%sbarrio%s%s",
 			config.SOLRHOST, config.SOLRPORT,
 			"%3A", query, "%0A",
 			"%3A", query, "%0A",
@@ -72,7 +72,7 @@ func (sc *SolrClient) GetQueryAllFields(query string) (dto.ItemsDto, e.ApiError)
 	return itemsDto, nil
 }
 
-func (sc *SolrClient) Update(itemDto dto.ItemDto, command string) e.ApiError {
+func (sc *SolrClient) Add(itemDto dto.ItemDto) e.ApiError {
 	var addItemDto dto.AddDto
 	addItemDto.Add = dto.DocDto{Doc: itemDto}
 	data, err := json.Marshal(addItemDto)
@@ -82,11 +82,15 @@ func (sc *SolrClient) Update(itemDto dto.ItemDto, command string) e.ApiError {
 		return e.NewBadRequestApiError("Error getting json")
 	}
 	resp, err := sc.Client.Update(context.TODO(), sc.Collection, solr.JSON, reader)
-	logger.Debug(resp.Error)
+	logger.Debug(resp)
 	if err != nil {
 		return e.NewBadRequestApiError("Error in solr")
 	}
 
-	sc.Client.Commit(context.TODO(), sc.Collection)
+	er := sc.Client.Commit(context.TODO(), sc.Collection)
+	if er != nil {
+		logger.Debug("Error committing load")
+		return e.NewInternalServerApiError("Error committing to solr", er)
+	}
 	return nil
 }

@@ -37,7 +37,7 @@ func (s *ItemServiceImpl) GetItemById(id string) (dto.ItemDto, e.ApiError) {
 			return itemDto, err2
 		}
 		if itemDto.ItemId == "000000000000000000000000" {
-			return itemDto, e.NewBadRequestApiError("solr not found")
+			return itemDto, e.NewBadRequestApiError("item not found")
 		}
 		_, err3 := s.memcached.InsertItem(itemDto)
 		if err3 != nil {

@@ -60,6 +60,10 @@ func (s *SolrService) AddFromId(id string) e.ApiError {
 		log.Debugf("error in unmarshal of item %s", id)
 		return e.NewBadRequestApiError("error in unmarshal of item")
 	}
-	s.solr.Update(itemDto, "add")
+	er := s.solr.Add(itemDto)
+	if er != nil {
+		log.Debugf("error adding to solr")
+		return e.NewInternalServerApiError("Adding to Solr error", err)
+	}
 	return nil
 }

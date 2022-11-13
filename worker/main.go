@@ -2,7 +2,7 @@ package main
 
 import (
 	log "github.com/sirupsen/logrus"
-	worker "worker/controllers/solr"
+	worker "worker/controllers/worker"
 )
 
 func init() {

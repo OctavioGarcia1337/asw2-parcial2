@@ -7,7 +7,7 @@ import (
 )
 
 func mapUrls() {
-	// Products Mapping
+	// Items Mapping
 	router.GET("/items/:item_id", itemController.GetItemById)
 	router.POST("/item", itemController.InsertItem)
 	router.POST("/items", itemController.QueueItems)
