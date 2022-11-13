@@ -45,7 +45,7 @@ function showItems(items, setCartItems){
       <a className="stock">Dormitorios: {item.Dormitorios}</a>
     </div>
    </div>
- )
+ )//agregar los campos faltantes
 }
 
 
