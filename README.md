@@ -24,15 +24,23 @@ A su vez el servicio indexa los items en el motor de busqueda a medida que los i
 ### **2) ITEMs:**
 
 ITEMs tiene la tarea de recibir los datos de los items a medida que son listados, guardandolos en una base de datos. Tambien tiene la funcion de devolver dichos datos. Para un mejor rendimiento (tiempo de respuesta a la hora de devolver datos), implementa una cache local que retiene los datos de los ultimos items manipulados. Por ultimo, realiza la carga de datos de manera asincronica con uso de goRutines.
-        ITEMs implementa una base de datos no SQL (mongodb), una cache local (memcached) y una cola de mensajes tipo colasMQTT (rabbitMQ); a través de sus respectivas imagenes en docker.
+        ITEMs implementa una base de datos no SQL (mongodb), una cache distribuida (memcached) y una cola de mensajes tipo ColasMQTT (RabbitMQ); a través de sus respectivas imagenes en docker.
 
-        Imagenes de docker:
+ Imagenes de docker:
 
-            - Base de datos MONGO: 
-    | # docker run -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=root --name some-mongo -d mongo:5.0 |
-            - Implementacion de cache MEMCACHED:
-    | docker run --name memcached -p 11211:11211 memcached:1.6.16 |
-            - RabbitMQ - Detallado en BÚSQUEDA anteriormente
+ - Base de datos MONGO: 
+            
+         | # docker run -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=root --name some-mongo -d mongo:5.0 |
+    
+    
+- Cache Distribuida MEMCACHED:
+            
+         | docker run --name memcached -p 11211:11211 memcached:1.6.16 |
+    
+    
+- ColasMMQT RabbitMQ:
+     
+          | Detallado en BÚSQUEDA anteriormente |
 
 En nuestra implementacion el servicio contiene 2 metodos: 
 
@@ -41,7 +49,7 @@ En nuestra implementacion el servicio contiene 2 metodos:
                 Si el json pudo ser procesado, devuelve codigo http 201 (created).
                 Asincronicamente, a traves de gorutines, carga uno por uno los items primero en la base de datos
                 y luego en la cache.
-                Si un item es cargado correctamente en la bd se envia un mensaje a un cola (implementacion RabbitMQ).
+                Si un item es cargado correctamente en la bdd se envia un mensaje a un cola (implementacion RabbitMQ).
                 De lo contrario se carga un log con el mensaje de error.
  - GET de item (por id)
                 Recibe itemId como string. 
