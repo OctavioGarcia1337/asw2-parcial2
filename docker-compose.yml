@@ -62,20 +62,16 @@ services:
       - "8090:8090"
 
   busqueda:
-    container_name: busqueda
     build: ./busqueda
     depends_on:
       solr:
         condition: service_started
       items:
         condition: service_started
-    ports:
-      - "8000:8000"
-  worker:
-    build: ./worker
-    depends_on:
-      busqueda:
-        condition: service_started
+    deploy:
+      mode: replicated
+      replicas: 2
+
 
   frontend:
     container_name: frontend
@@ -86,10 +82,17 @@ services:
 
     ports:
       - "3000:3000"
-  lb:
+  lbbusqueda:
     build: ./lb
     depends_on:
       busqueda:
         condition: service_started
     ports:
       - "80:80"
+  worker:
+    build: ./worker
+    depends_on:
+      busqueda:
+        condition: service_started
+      lbbusqueda:
+        condition: service_started
