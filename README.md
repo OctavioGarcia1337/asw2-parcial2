@@ -1,9 +1,139 @@
 # Arquitectura de Computadoras II - Proyecto Final
+
 ##  **Descripcion del proyecto:**
    El trabajo pide desarrollar un sistema de publicación de clasificados, mediante el cual las empresas inmobiliarias puedan cargar sus bases de datos con el posteo de un archivo json de la información relacionada a los inmuebles. Los navegantes pueden buscar esos clasificados desde la home del sitio en base a una oración y traiga los resultados priorizados que permitan ver el detalle de la publicación.
 
-## Para esto, se piden desarrollar 3 microservicios:
-### **1) BÚSQUEDA:**
+## Endpoints
+
+### BÚSQUEDA
+
+**GET** - /search=:searchQuery
+
+Ejemplo:  /search=vendedor_juan
+
+Response:
+
+    {
+	    ...
+	    "precio_base": 10000,
+	    "vendedor":"Juan",
+	    "barrio":"Nueva Cordoba",
+	    ...
+    }
+    
+***
+
+**GET** - /searchAll=:searchQuery
+
+Ejemplo:  /searchAll=juan
+
+Response:
+
+    {
+	    ...
+	    "precio_base": 10000,
+	    "vendedor":"Juan",
+	    "barrio":"Nueva Cordoba",
+	    ...
+    }
+    
+***
+
+**GET** - /items/:id
+
+Ejemplo:  /items=7b1227b0-75cc-4793-874f-f17939803ece
+
+Response:
+
+    {
+	    "id": "7b1227b0-75cc-4793-874f-f17939803ece",
+	    "titulo": "Pozo dpto. Las Venturas A-I",
+	    "tipo":"Departamento",
+	    ...
+    }
+    
+***
+
+### ITEMS
+
+**GET** - /items/:item_id
+
+Ejemplo:  /items/7b1227b0-75cc-4793-874f-f17939803ece
+
+Response:
+
+    {
+	    "id": "7b1227b0-75cc-4793-874f-f17939803ece",
+	    "titulo": "Pozo dpto. Las Venturas A-I",
+	    "tipo":"Departamento",
+	    ...
+    }
+    
+***
+
+**POST** - /item
+
+Ejemplo:  /item
+
+Body:
+
+    {
+	    "titulo": "Pozo dpto. Las Venturas A-I",
+	    "tipo": "Departamento",
+	    "ubicacion": "Cordoba",
+	    ...
+	}
+
+Response:
+
+    {
+	    "id": "7b1227b0-75cc-4793-874f-f17939803ece",
+	    "titulo": "Pozo dpto. Las Venturas A-I",
+	    "tipo":"Departamento",
+	    "ubicacion": "Cordoba",
+	    ...
+    }
+     
+***
+**POST** - /items
+
+Ejemplo: /items
+
+Body:
+
+    [
+		{
+		    "titulo": "Pozo dpto. Las Venturas A-I",
+		    "tipo":"Departamento",
+		    ...
+		},
+		...
+		{
+		    "titulo": "Pozo dpto. Las Venturas B-V",
+		    "tipo":"Departamento",
+		    ...
+		}
+	]
+
+Response:
+
+    [
+		{
+		    "titulo": "Pozo dpto. Las Venturas A-I",
+		    "tipo":"Departamento",
+		    ...
+		},
+		...
+		{
+		    "titulo": "Pozo dpto. Las Venturas B-V",
+		    "tipo":"Departamento",
+		    ...
+		}
+	]
+    
+***
+
+### **BÚSQUEDA:**
 
 Se pidio utilizar un motor de búsqueda que permita una indexación y búsqueda de los ítems por sus características (título, descripción, atributos, ciudad, estado, etc), que se nutra mediante notificaciones del servicio de Items y busque la información de ese servicio.
 
@@ -21,7 +151,7 @@ A su vez el servicio indexa los items en el motor de busqueda a medida que los i
     
 
 
-### **2) ITEMs:**
+### **ITEMs:**
 
 ITEMs tiene la tarea de recibir los datos de los items a medida que son listados, guardandolos en una base de datos. Tambien tiene la funcion de devolver dichos datos. Para un mejor rendimiento (tiempo de respuesta a la hora de devolver datos), implementa una cache local que retiene los datos de los ultimos items manipulados. Por ultimo, realiza la carga de datos de manera asincronica con uso de goRutines.
         ITEMs implementa una base de datos no SQL (mongodb), una cache distribuida (memcached) y una cola de mensajes tipo ColasMQTT (RabbitMQ); a través de sus respectivas imagenes en docker.
@@ -57,7 +187,7 @@ En nuestra implementacion el servicio contiene 2 metodos:
                 De no encontrarlo lo busca en la Base de datos y lo carga en cache.
                 Devuelve el item como archivo .json.
 
-### **3) FRONTEND:**
+### **FRONTEND:**
 
 El Frontend debia contener la vista de inicio con el input de búsqueda, el listado de Items, el detalle de la publicación.
 
