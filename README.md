@@ -20,8 +20,6 @@ Response:
 	    "barrio":"Nueva Cordoba",
 	    ...
     }
-    
-***
 
 **GET** - /searchAll=:searchQuery
 
@@ -37,7 +35,6 @@ Response:
 	    ...
     }
     
-***
 
 **GET** - /items/:id
 
@@ -69,7 +66,6 @@ Response:
 	    ...
     }
     
-***
 
 **POST** - /item
 
@@ -93,8 +89,7 @@ Response:
 	    "ubicacion": "Cordoba",
 	    ...
     }
-     
-***
+   
 **POST** - /items
 
 Ejemplo: /items
