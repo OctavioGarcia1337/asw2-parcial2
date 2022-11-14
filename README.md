@@ -7,7 +7,7 @@
 
 ### BÚSQUEDA
 
-**GET** - /search=:searchQuery
+**GET - /search=:searchQuery**
 
 Ejemplo:  /search=vendedor_juan
 
@@ -21,7 +21,7 @@ Response:
 	    ...
     }
 
-**GET** - /searchAll=:searchQuery
+**GET - /searchAll=:searchQuery**
 
 Ejemplo:  /searchAll=juan
 
@@ -36,7 +36,7 @@ Response:
     }
     
 
-**GET** - /items/:id
+**GET - /items/:id**
 
 Ejemplo:  /items=7b1227b0-75cc-4793-874f-f17939803ece
 
@@ -53,7 +53,7 @@ Response:
 
 ### ITEMS
 
-**GET** - /items/:item_id
+**GET - /items/:item_id**
 
 Ejemplo:  /items/7b1227b0-75cc-4793-874f-f17939803ece
 
@@ -67,7 +67,7 @@ Response:
     }
     
 
-**POST** - /item
+**POST - /item**
 
 Ejemplo:  /item
 
@@ -90,7 +90,7 @@ Response:
 	    ...
     }
    
-**POST** - /items
+**POST - /items**
 
 Ejemplo: /items
 
