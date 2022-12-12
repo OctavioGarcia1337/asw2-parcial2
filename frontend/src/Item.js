@@ -1,9 +1,10 @@
 import React, { useState , useEffect} from "react";
-import "./css/Home.css";
+import "./css/Item.css";
 import logo from "./images/logo.svg"
 import loadinggif from "./images/loading.gif"
 import Cookies from "universal-cookie";
 import {HOST, PORT} from "./config/config";
+import Comments from "./Comments";
 
 
 const URL = HOST + ":" + PORT
@@ -40,7 +41,7 @@ function showItem(items){
   return items.map((item) =>
    <div obj={item} key={item.id} className="item">
         <div>
-            <img width="512px" height="512px" src={parseField(item.url_img)}  onError={(e) => (e.target.onerror = null, e.target.src = "./images/default.jpg")}/>
+            <img width="240px" height="240px" src={parseField(item.url_img)}  onError={(e) => (e.target.onerror = null, e.target.src = "./images/default.jpg")}/>
         </div>
             <a className="title">{parseField(item.titulo)}</a>
             <a className="price"> {"$" + parseField(item.precio_base)}</a>
@@ -66,7 +67,11 @@ function showItem(items){
             <a className="bedrooms"> - Dormitorios: {parseField(item.dormitorios)}</a>
             <a className="bathrooms"> - Baños: {parseField(item.banos)}</a>
         </div>
-    </div>)//agregar los campos faltantes
+        <div>
+          <Comments CurrentUserId="1" />
+        </div>
+    </div>
+    ) 
 }
 
 
