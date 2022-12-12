@@ -6,8 +6,6 @@ const Comment = ({
   replies,
   setActiveComment,
   activeComment,
-  updateComment,
-  deleteComment,
   addComment,
   parentId = null,
   currentUserId,
@@ -20,12 +18,7 @@ const Comment = ({
     activeComment &&
     activeComment.id === comment.id &&
     activeComment.type === "replying";
-  const fiveMinutes = 300000;
-  const timePassed = new Date() - new Date(comment.createdAt) > fiveMinutes;
-  const canDelete =
-    currentUserId === comment.userId && replies.length === 0 && !timePassed;
   const canReply = Boolean(currentUserId);
-  const canEdit = currentUserId === comment.userId && !timePassed;
   const replyId = parentId ? parentId : comment.id;
   const createdAt = new Date(comment.createdAt).toLocaleDateString();
 
@@ -40,17 +33,6 @@ const Comment = ({
           <div>{createdAt}</div>
         </div>
         {!isEditing && <div className="comment-text">{comment.body}</div>}
-        {isEditing && (
-          <CommentForm
-            submitLabel="Update"
-            hasCancelButton
-            initialText={comment.body}
-            handleSubmit={(text) => updateComment(text, comment.id)}
-            handleCancel={() => {
-              setActiveComment(null);
-            }}
-          />
-        )}
         <div className="comment-actions">
           {canReply && (
             <div
@@ -60,24 +42,6 @@ const Comment = ({
               }
             >
               Reply
-            </div>
-          )}
-          {canEdit && (
-            <div
-              className="comment-action"
-              onClick={() =>
-                setActiveComment({ id: comment.id, type: "editing" })
-              }
-            >
-              Edit
-            </div>
-          )}
-          {canDelete && (
-            <div
-              className="comment-action"
-              onClick={() => deleteComment(comment.id)}
-            >
-              Delete
             </div>
           )}
         </div>
@@ -95,8 +59,6 @@ const Comment = ({
                 key={reply.id}
                 setActiveComment={setActiveComment}
                 activeComment={activeComment}
-                updateComment={updateComment}
-                deleteComment={deleteComment}
                 addComment={addComment}
                 parentId={comment.id}
                 replies={[]}

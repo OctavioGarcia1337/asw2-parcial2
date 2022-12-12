@@ -4,10 +4,11 @@ import Comment from "./Comment";
 import {
   getComments as getCommentsApi,
   createComment as createCommentApi,
-  updateComment as updateCommentApi,
-  deleteComment as deleteCommentApi,
 } from "./CommentBD";
 import "./css/Item.css";
+
+
+
 
 const Comments = ({ commentsUrl, currentUserId }) => {
   const [backendComments, setBackendComments] = useState([]);
@@ -23,34 +24,10 @@ const Comments = ({ commentsUrl, currentUserId }) => {
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
       );
   const addComment = (text, parentId) => {
-    createCommentApi(text, parentId).then((comment) => {
+    createCommentApi(text, currentUserId, parentId).then((comment) => {
       setBackendComments([comment, ...backendComments]);
       setActiveComment(null);
     });
-  };
-
-  const updateComment = (text, commentId) => {
-    updateCommentApi(text).then(() => {
-      const updatedBackendComments = backendComments.map((backendComment) => {
-        if (backendComment.id === commentId) {
-          return { ...backendComment, body: text };
-        }
-        return backendComment;
-      });
-      setBackendComments(updatedBackendComments);
-      setActiveComment(null);
-    });
-  };
-
-  const deleteComment = (commentId) => {
-    if (window.confirm("Are you sure you want to remove comment?")) {
-      deleteCommentApi().then(() => {
-        const updatedBackendComments = backendComments.filter(
-          (backendComment) => backendComment.id !== commentId
-        );
-        setBackendComments(updatedBackendComments);
-      });
-    }
   };
 
   useEffect(() => {
@@ -73,8 +50,6 @@ const Comments = ({ commentsUrl, currentUserId }) => {
             activeComment={activeComment}
             setActiveComment={setActiveComment}
             addComment={addComment}
-            deleteComment={deleteComment}
-            updateComment={updateComment}
             currentUserId={currentUserId}
           />
         ))}

@@ -4,9 +4,9 @@ import Cookies from "universal-cookie";
 
 const Cookie = new Cookies();
 
-async function register(username, password, confirmpassword) {
-  /*
-  return await fetch('http://localhost:8090/login', {
+async function register(username, password) {
+  /* //NO CAMBIAR, DEBERIA ANDAR
+  return await fetch('http://localhost:8090/users', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -35,7 +35,7 @@ function Register() {
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const error = "Contraseña o Usuario invalido";
+  const error = "Las contraseñas deben coincidir";
 
   const handleSubmit = (event) => {
     //Prevent page reload
@@ -44,11 +44,12 @@ function Register() {
     var { uname, pass, cpass } = document.forms[0];
 
     // Validate user registration TODO: Check if the username is not taken
-    const userData = register(uname.value, pass.value, cpass.value).then(data => {
-      if (pass == cpass) {
+    const userData = register(uname.value, pass.value).then(data => {
+      if (pass.value == cpass.value) {
+        
         goto("/login")
       }
-      else if (pass != cpass) {
+      else{
         setErrorMessages({name: "default", message: error})
       }
     })
@@ -80,12 +81,12 @@ function Register() {
 
           {renderErrorMessage("default")}
         <div className="button-container">
-          <input type="submit" />
+          <input type="submit"/>
         </div>
       </form>
     </div>
-
   );
+
 
   return (
     <div className="app">

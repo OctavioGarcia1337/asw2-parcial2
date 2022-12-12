@@ -1,4 +1,12 @@
-export const getComments = async () => {
+export const getComments = async (type, id) => { // cambiar por un GET a la BD
+  return await fetch(URL + "/comments/"+ type +"/"+ id, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then(response => response.json())
+  
+  
   return [
     {
       id: "1",
@@ -25,7 +33,7 @@ export const getComments = async () => {
       createdAt: "2021-08-16T23:00:33.010+02:00",
     },
     {
-      id: "4",
+      itemid: "4",
       body: "Second comment second child",
       username: "John",
       userId: "2",
@@ -35,21 +43,23 @@ export const getComments = async () => {
   ];
 };
 
-export const createComment = async (text, parentId = null) => {
+export const createComment = async (text, uname, parentId = null) => { //cambiar por un POST
+  await fetch(URL + "/comment", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body:{
+      body: text,
+      parentId: parentId,
+      username: uname,
+      createdAt: new Date().toISOString()}
+  })
   return {
-    id: Math.random().toString(36).substr(2, 9),
     body: text,
-    parentId,
-    userId: "1",
-    username: "John",
+    parentId: parentId,
+    username: uname,
     createdAt: new Date().toISOString(),
   };
-};
-
-export const updateComment = async (text) => {
-  return { text };
-};
-
-export const deleteComment = async () => {
-  return {};
+  
 };

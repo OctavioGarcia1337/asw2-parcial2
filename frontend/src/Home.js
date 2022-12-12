@@ -70,6 +70,9 @@ function showItems(items){
       <a className="bedrooms"> - Dormitorios: {parseField(item.dormitorios)}</a>
       <a className="bathrooms"> - Baños: {parseField(item.banos)}</a>
     </div>
+    <div>
+    <a className="comentarios"> Ver Comentarios</a>
+    </div>
    </div>
  )//agregar los campos faltantes
 }
@@ -101,7 +104,6 @@ function Home() {
     setNeedItems(false)
   }
 
-
   async function searchQueryAll(query) {
     if (query == "") {
       query = "*"
@@ -119,6 +121,7 @@ function Home() {
         setFailedSearch(false)
         getItems().then(response => setItems(response))
       }
+      setQuery("");
     })
   }
     async function searchQuery(field, query){
@@ -139,18 +142,29 @@ function Home() {
           setFailedSearch(false)
           getItems().then(response=>setItems(response))
         }
+        setQuery("");
       })
     }
+  
+  function searchAllDelete(e){
+    searchQueryAll(e.target.value);
+    setQuerying(false);
+  }
 
+  function searchDelete(field, query){
+    searchQuery(field, query);
+    setQuerying(false);
+  }
+  
   const options= (
       <div className="options-div">
         <div>
-          <a onClick={()=>searchQuery("titulo", query)}>Titulo: <span>{query}</span></a>
-          <a onClick={()=>searchQuery("titulo", query)}>Tipo: <span>{query}</span></a>
-          <a onClick={()=>searchQuery("titulo", query)}>Descripcion: <span>{query}</span></a>
-          <a onClick={()=>searchQuery("titulo", query)}>Ubicacion: <span>{query}</span></a>
-          <a onClick={()=>searchQuery("titulo", query)}>Barrio: <span>{query}</span></a>
-          <a onClick={()=>searchQuery("titulo", query)}>Vendedor: <span>{query}</span></a>
+          <a onClick={()=>searchDelete("titulo", query)}>Titulo: <span>{query}</span></a>
+          <a onClick={()=>searchDelete("tipo", query)}>Tipo: <span>{query}</span></a>
+          <a onClick={()=>searchDelete("descripcion", query)}>Descripcion: <span>{query}</span></a>
+          <a onClick={()=>searchDelete("ubicacion", query)}>Ubicacion: <span>{query}</span></a>
+          <a onClick={()=>searchDelete("barrio", query)}>Barrio: <span>{query}</span></a>
+          <a onClick={()=>searchDelete("vendedor", query)}>Vendedor: <span>{query}</span></a>
         </div>
       </div>
   )
@@ -174,6 +188,7 @@ function Home() {
     searchQuery("*","*")
   }
 
+
   return (
     <div className="home">
       <div className="topnavHOME">
@@ -182,7 +197,7 @@ function Home() {
         </div>
 
         <div>
-          <input type="text" id="search" placeholder="Search..." onKeyDown={(e) => e.key === "Enter" ? searchQueryAll(e.target.value) : void(0)} onKeyUp={
+          <input type="text" id="search" placeholder="Search..." onKeyDown={(e) => e.key === "Enter" ? searchAllDelete(e) : void(0)} onKeyUp={
             (e)=>{
               setQuery(e.target.value)
               if(e.target.value == ""){
