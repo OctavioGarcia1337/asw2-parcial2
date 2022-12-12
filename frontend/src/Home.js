@@ -35,11 +35,14 @@ function parseField(field){
 }
 
 
+function test(id){
+  window.localStorage.setItem("id",id)
+  goto("/item")
+}
 
 function showItems(items){
   return items.map((item) =>
-
-   <div obj={item} key={item.id} className="item">
+   <div obj={item} key={item.id} className="item" onClick={()=>test(item.id)}>
     <div>
       <img width="128px" height="128px" src={parseField(item.url_img)}  onError={(e) => (e.target.onerror = null, e.target.src = "./images/default.jpg")}/>
     </div>
@@ -153,7 +156,6 @@ function Home() {
   )
 
   const login = (
-
     <span>
     <img src="./images/loading.gif" onClick={()=>goto("/user")} id="user" width="48px" height="48px"/>
     {/*<a id="logout" onClick={logout}> <span> Welcome in {user.first_name} </span> </a>*/}
@@ -176,7 +178,7 @@ function Home() {
     <div className="home">
       <div className="topnavHOME">
         <div>
-          <img src={logo} width="80px" height="80px" id="logo" onClick={()=>goto("/")} /> <p>3 Random Words Shop</p>
+          <img src={logo} width="80px" height="80px" id="logo" onClick={()=>goto("/")} /> <p> TuCasa.com </p>
         </div>
 
         <div>
@@ -194,15 +196,12 @@ function Home() {
 
       </div>
 
-
-      <div id="mySidenav" className="sidenav">
-
+      <div id="mySidenav" className="sidenav" > 
       </div>
 
       <div id="main">
         {failedSearch ? renderFailedSearch : void(0)}
         {items.length > 0 || failedSearch ? showItems(items) : loading}
-
       </div>
     </div>
   );

@@ -47,6 +47,7 @@
   margin-right: 2%;
   color: black;
 }
+
 /* Style the search box inside the navigation bar */
 .topnavHOME input[type=text] {
   display: inline-block;
@@ -120,6 +121,7 @@
 
 .item {
   display: block;
+  box-sizing: content-box;
   width: 70%;
   min-height: 200px;
   border: 2px solid black;
@@ -219,6 +221,7 @@
   min-width: 200px;
   text-align: center;
   float: right;
+  box-sizing: content-box;
   border: 2px solid darkslateblue;
   box-shadow: #696969 2px 2px;
   background-color: #2196F3;

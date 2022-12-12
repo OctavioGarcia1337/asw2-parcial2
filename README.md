@@ -191,7 +191,7 @@ En nuestra implementacion el servicio contiene 2 metodos:
 
 El Frontend debia contener la vista de inicio con el input de búsqueda, el listado de Items, el detalle de la publicación.
 
-EN la implementacion, el frontend simplemente se comunica con el servicio BÚSQUEDA a traves del request http - GET Query - que se especifico anteriormente, obtiene la informacion de los items y la muestra, cargando tambien las imagenes correspondientes
+En la implementacion, el frontend simplemente se comunica con el servicio BÚSQUEDA a traves del request http - GET Query - que se especifico anteriormente, obtiene la informacion de los items y la muestra, cargando tambien las imagenes correspondientes
 
 
     
