@@ -8,6 +8,7 @@ import (
 	service "items/services"
 	client "items/services/repositories"
 	"net/http"
+	"strconv"
 )
 
 var (
@@ -74,4 +75,16 @@ func QueueItems(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, itemsDto)
+}
+
+func DeleteUserItems(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+	err := itemService.DeleteUserItems(id)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, nil)
 }

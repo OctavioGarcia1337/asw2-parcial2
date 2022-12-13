@@ -10,4 +10,5 @@ type Client interface {
 	InsertItem(book dto.ItemDto) (dto.ItemDto, errors.ApiError)
 	Update(book dto.ItemDto) (dto.ItemDto, errors.ApiError)
 	Delete(id string) errors.ApiError
+	DeleteUserItems(id int) errors.ApiError
 }

@@ -6,6 +6,7 @@ type MessageDto struct {
 	Body      string `json:"body"`
 	ItemId    string `json:"item_id"`
 	CreatedAt string `json:"created_at"`
+	System    bool   `json:"system"`
 }
 
 type MessagesDto []MessageDto

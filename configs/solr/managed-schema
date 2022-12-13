@@ -461,6 +461,7 @@
   <field name="ubicacion" type="text_general"/>
   <field name="url_img" type="text_general"/>
   <field name="vendedor" type="text_general"/>
+  <field name="usuario_id" type="plong"/>
   <field name="_nest_path_" type="_nest_path_"/>
   <field name="_root_" type="string" docValues="false" indexed="true" stored="false"/>
   <field name="_text_" type="text_general" multiValued="false" indexed="true" stored="false"/>

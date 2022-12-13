@@ -67,3 +67,11 @@ func (s *SolrService) AddFromId(id string) e.ApiError {
 	}
 	return nil
 }
+
+func (s *SolrService) Delete(id string) e.ApiError {
+	err := s.solr.Delete(id)
+	if err != nil {
+		return err
+	}
+	return nil
+}

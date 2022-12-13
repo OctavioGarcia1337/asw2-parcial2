@@ -8,8 +8,8 @@ import (
 
 func mapUrls() {
 	// Messages Mapping
-	router.GET("/message/:id", messageController.GetMessageById)
-	router.GET("/message", messageController.GetMessages)
+	router.GET("/messages/:id", messageController.GetMessageById)
+	router.GET("/messages", messageController.GetMessages)
 	router.POST("/message", messageController.MessageInsert)
 	router.GET("/users/:id/messages", messageController.GetMessagesByUserId)
 

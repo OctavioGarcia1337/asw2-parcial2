@@ -15,5 +15,6 @@ type ItemDto struct {
 	Ambientes   int    `json:"ambientes"`
 	UrlImg      string `json:"url_img"`
 	Expensas    int    `json:"expensas"`
+	UsuarioId   int    `json:"usuario_id"`
 }
 type ItemsDto []ItemDto

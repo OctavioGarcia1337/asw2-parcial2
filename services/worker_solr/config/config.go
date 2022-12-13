@@ -1,6 +1,9 @@
 package config
 
 var (
+	QUEUENAME = "worker_solr"
+	EXCHANGE  = "items"
+
 	LBHOST = "lbbusqueda"
 	LBPORT = 80
 

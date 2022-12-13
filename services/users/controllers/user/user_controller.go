@@ -5,9 +5,18 @@ import (
 	"strconv"
 	"users/dto"
 	service "users/services"
+	client "users/services/repositories"
 
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
+	"users/config"
+)
+
+var (
+	userService = service.NewUserServiceImpl(
+		client.NewUserInterface(config.SQLUSER, config.SQLPASS, config.SQLHOST, config.SQLPORT, config.SQLDB),
+		client.NewQueueClient(config.RABBITUSER, config.RABBITPASSWORD, config.RABBITHOST, config.RABBITPORT),
+	)
 )
 
 func GetUserById(c *gin.Context) {
@@ -17,7 +26,7 @@ func GetUserById(c *gin.Context) {
 
 	var userDto dto.UserDto
 	id, _ := strconv.Atoi(c.Param("id"))
-	userDto, err := service.UserService.GetUserById(id)
+	userDto, err := userService.GetUserById(id)
 	if err != nil {
 		log.Error(err.Error())
 		c.JSON(http.StatusBadRequest, err.Error())
@@ -29,7 +38,7 @@ func GetUserById(c *gin.Context) {
 func GetUsers(c *gin.Context) {
 
 	var usersDto dto.UsersDto
-	usersDto, err := service.UserService.GetUsers()
+	usersDto, err := userService.GetUsers()
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
@@ -50,7 +59,7 @@ func UserInsert(c *gin.Context) {
 		return
 	}
 
-	userDto, er := service.UserService.InsertUser(userDto)
+	userDto, er := userService.InsertUser(userDto)
 	if er != nil {
 		c.JSON(er.Status(), er)
 		return
@@ -71,7 +80,7 @@ func Login(c *gin.Context) {
 	log.Debug(loginDto)
 
 	var loginResponseDto dto.LoginResponseDto
-	loginResponseDto, err := service.UserService.Login(loginDto)
+	loginResponseDto, err := userService.Login(loginDto)
 	if err != nil {
 		if err.Status() == 400 {
 			c.JSON(http.StatusBadRequest, err.Error())
@@ -82,4 +91,17 @@ func Login(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, loginResponseDto)
+}
+
+func DeleteUser(c *gin.Context) {
+	log.Debug("User id: " + c.Param("id"))
+	var userDto dto.UserDto
+	id, _ := strconv.Atoi(c.Param("id"))
+	err := userService.DeleteUser(id)
+	if err != nil {
+		log.Error(err.Error())
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+	c.JSON(http.StatusCreated, userDto)
 }

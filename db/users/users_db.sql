@@ -20,18 +20,18 @@ USE `users_db` ;
 -- -----------------------------------------------------
 -- Table `users_db`.`users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `users`.`users` ;
+DROP TABLE IF EXISTS `users_db`.`users` ;
 
 CREATE TABLE IF NOT EXISTS `users_db`.`users` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(255) NOT NULL,
-  `first_name` VARCHAR(255) NOT NULL,
-  `last_name` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE)
-ENGINE = InnoDB;
+      `id` INT NOT NULL AUTO_INCREMENT,
+      `username` VARCHAR(45) NOT NULL,
+    `password` VARCHAR(45) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `first_name` VARCHAR(255) NOT NULL,
+    `last_name` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE)
+    ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -40,19 +40,20 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `users_db`.`messages` ;
 
 CREATE TABLE IF NOT EXISTS `users_db`.`messages` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `body` VARCHAR(500) NOT NULL,
-  `id_user` INT NOT NULL,
-  `id_item` VARCHAR(500) NULL,
-  `created_at` DATETIME NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_messages_users_idx` (`id_user` ASC) VISIBLE,
-  CONSTRAINT `fk_messages_users`
-    FOREIGN KEY (`id_user`)
+     `id` INT NOT NULL AUTO_INCREMENT,
+     `body` VARCHAR(500) NOT NULL,
+    `user_id` INT NOT NULL,
+    `item_id` VARCHAR(500) NULL,
+    `created_at` DATETIME NOT NULL,
+    `system` BOOL NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `fk_messages_users_idx` (`user_id` ASC) VISIBLE,
+    CONSTRAINT `fk_messages_users`
+    FOREIGN KEY (`user_id`)
     REFERENCES `users_db`.`users` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

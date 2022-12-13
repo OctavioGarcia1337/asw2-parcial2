@@ -19,6 +19,7 @@ type Item struct {
 	Ambientes   int                `bson:"ambientes"`
 	UrlImg      string             `bson:"url_img"`
 	Expensas    int                `bson:"expensas"`
+	UsuarioId   int                `bson:"usuario_id"`
 }
 
 type Items []Item

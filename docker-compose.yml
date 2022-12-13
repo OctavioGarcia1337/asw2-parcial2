@@ -4,7 +4,7 @@ services:
   users_db:
     build: ./db/users
     environment:
-      MYSQL_DATABASE: users
+      MYSQL_DATABASE: users_db
       MYSQL_ALLOW_EMPTY_PASSWORD: true
     ports:
       - "3306:3306"
@@ -106,16 +106,16 @@ services:
       mode: replicated
       replicas: 2
 
-
-  frontend:
-    container_name: frontend
-    build: ./frontend
-    depends_on:
-      busqueda:
-        condition: service_started
-
-    ports:
-      - "3000:3000"
+#
+#  frontend:
+#    container_name: frontend
+#    build: ./frontend
+#    depends_on:
+#      busqueda:
+#        condition: service_started
+#
+#    ports:
+#      - "3000:3000"
 
 
   lbbusqueda:
@@ -131,4 +131,10 @@ services:
       busqueda:
         condition: service_started
       lbbusqueda:
+        condition: service_started
+
+  worker_items:
+    build: services/worker_items
+    depends_on:
+      items:
         condition: service_started

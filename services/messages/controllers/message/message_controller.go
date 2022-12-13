@@ -1,13 +1,22 @@
 package messageController
 
 import (
+	"messages/config"
 	"messages/dto"
 	service "messages/services"
+	client "messages/services/repositories"
 	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
+)
+
+var (
+	messageService = service.NewMessageServiceImpl(
+		client.NewMessageInterface(config.SQLUSER, config.SQLPASS, config.SQLHOST, config.SQLPORT, config.SQLDB),
+		client.NewQueueClient(config.RABBITUSER, config.RABBITPASSWORD, config.RABBITHOST, config.RABBITPORT),
+	)
 )
 
 func GetMessageById(c *gin.Context) {
@@ -17,7 +26,7 @@ func GetMessageById(c *gin.Context) {
 
 	var messageDto dto.MessageDto
 	id, _ := strconv.Atoi(c.Param("id"))
-	messageDto, err := service.MessageService.GetMessageById(id)
+	messageDto, err := messageService.GetMessageById(id)
 	if err != nil {
 		log.Error(err.Error())
 		c.JSON(http.StatusBadRequest, err.Error())
@@ -33,7 +42,7 @@ func GetMessagesByUserId(c *gin.Context) {
 
 	var messagesDto dto.MessagesDto
 	id, _ := strconv.Atoi(c.Param("id"))
-	messagesDto, err := service.MessageService.GetMessagesByUserId(id)
+	messagesDto, err := messageService.GetMessagesByUserId(id)
 	if err != nil {
 		log.Error(err.Error())
 		c.JSON(http.StatusBadRequest, err.Error())
@@ -45,7 +54,7 @@ func GetMessagesByUserId(c *gin.Context) {
 func GetMessages(c *gin.Context) {
 
 	var messagesDto dto.MessagesDto
-	messagesDto, err := service.MessageService.GetMessages()
+	messagesDto, err := messageService.GetMessages()
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
@@ -66,7 +75,7 @@ func MessageInsert(c *gin.Context) {
 		return
 	}
 
-	messageDto, er := service.MessageService.InsertMessage(messageDto)
+	messageDto, er := messageService.InsertMessage(messageDto)
 	if er != nil {
 		c.JSON(er.Status(), er)
 		return

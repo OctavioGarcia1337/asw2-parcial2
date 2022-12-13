@@ -11,6 +11,7 @@ func mapUrls() {
 	router.GET("/users/:id", userController.GetUserById)
 	router.GET("/users", userController.GetUsers)
 	router.POST("/user", userController.UserInsert)
+	router.DELETE("/user/:id", userController.DeleteUser)
 
 	// Login Mapping
 	router.POST("/login", userController.Login)

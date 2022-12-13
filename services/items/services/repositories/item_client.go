@@ -3,6 +3,7 @@ package repositories
 import (
 	"context"
 	"fmt"
+	log "github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -71,7 +72,47 @@ func (s *ItemClient) GetItemById(id string) (dto.ItemDto, e.ApiError) {
 		Ambientes:   item.Ambientes,
 		UrlImg:      item.UrlImg,
 		Expensas:    item.Expensas,
+		UsuarioId:   item.UsuarioId,
 	}, nil
+
+}
+
+func (s *ItemClient) GetItemsByUserId(id int) (dto.ItemsDto, e.ApiError) {
+
+	result, _ := s.Database.Collection(s.Collection).Find(context.TODO(), bson.D{
+		{"usuario_id", id},
+	})
+	if result.Err() == mongo.ErrNoDocuments {
+		return dto.ItemsDto{}, e.NewNotFoundApiError(fmt.Sprintf("item %d not found", id))
+	}
+	var items model.Items
+
+	if err := result.All(context.TODO(), &items); err != nil {
+		return dto.ItemsDto{}, e.NewInternalServerApiError(fmt.Sprintf("error getting item %d", id), err)
+	}
+	var itemsDto dto.ItemsDto
+	for i := range items {
+		item := items[i]
+		itemsDto = append(itemsDto,
+			dto.ItemDto{
+				ItemId:      item.ItemId.Hex(),
+				Titulo:      item.Titulo,
+				Tipo:        item.Tipo,
+				Ubicacion:   item.Ubicacion,
+				PrecioBase:  item.PrecioBase,
+				Vendedor:    item.Vendedor,
+				Barrio:      item.Barrio,
+				Descripcion: item.Descripcion,
+				Dormitorios: item.Dormitorios,
+				Banos:       item.Banos,
+				Mts2:        item.Mts2,
+				Ambientes:   item.Ambientes,
+				UrlImg:      item.UrlImg,
+				Expensas:    item.Expensas,
+				UsuarioId:   item.UsuarioId,
+			})
+	}
+	return itemsDto, nil
 
 }
 
@@ -92,6 +133,7 @@ func (s *ItemClient) InsertItem(item dto.ItemDto) (dto.ItemDto, e.ApiError) {
 		Ambientes:   item.Ambientes,
 		UrlImg:      item.UrlImg,
 		Expensas:    item.Expensas,
+		UsuarioId:   item.UsuarioId,
 	})
 
 	if err != nil {
@@ -100,4 +142,14 @@ func (s *ItemClient) InsertItem(item dto.ItemDto) (dto.ItemDto, e.ApiError) {
 	item.ItemId = fmt.Sprintf(result.InsertedID.(primitive.ObjectID).Hex())
 
 	return item, nil
+}
+
+func (s *ItemClient) DeleteItem(id string) e.ApiError {
+	result, err := s.Database.Collection(s.Collection).DeleteOne(context.TODO(), bson.M{"_id": id})
+	if err != nil {
+		log.Error(err)
+		return e.NewInternalServerApiError("error deleting item", err)
+	}
+	log.Debug(result.DeletedCount)
+	return nil
 }

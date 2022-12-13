@@ -15,6 +15,6 @@ var (
 
 func StartWorker() {
 
-	Worker.QueueWorker("solr")
+	Worker.TopicWorker("*.*")
 
 }

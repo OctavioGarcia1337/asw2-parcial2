@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	log "github.com/sirupsen/logrus"
 	"items/dto"
 	client "items/services/repositories"
@@ -51,6 +52,20 @@ func (s *ItemServiceImpl) GetItemById(id string) (dto.ItemDto, e.ApiError) {
 	}
 }
 
+func (s *ItemServiceImpl) GetItemsByUserId(id int) (dto.ItemsDto, e.ApiError) {
+
+	var itemsDto dto.ItemsDto
+
+	itemsDto, err := s.item.GetItemsByUserId(id)
+	if err != nil {
+		log.Debug("Error getting item from mongo")
+		return itemsDto, err
+	}
+
+	return itemsDto, nil
+
+}
+
 func (s *ItemServiceImpl) InsertItem(itemDto dto.ItemDto) (dto.ItemDto, e.ApiError) {
 
 	var insertItem dto.ItemDto
@@ -81,8 +96,29 @@ func (s *ItemServiceImpl) QueueItems(itemsDto dto.ItemsDto) e.ApiError {
 			if err != nil {
 				log.Debug(err)
 			}
-			err = s.queue.SendMessage("solr", item.ItemId)
+			err = s.queue.SendMessage(item.ItemId, "create", item.ItemId)
 			log.Debug(err)
+		}()
+	}
+	return nil
+}
+
+func (s *ItemServiceImpl) DeleteUserItems(id int) e.ApiError {
+	items, err := s.GetItemsByUserId(id)
+	if err != nil {
+		log.Error(err)
+		return err
+	}
+	for i := range items {
+		var item dto.ItemDto
+		item = items[i]
+		go func() {
+			err := s.item.DeleteItem(item.ItemId)
+			if err != nil {
+				log.Error(err)
+			}
+			err = s.queue.SendMessage(item.ItemId, "delete", fmt.Sprintf("%s.delete", item.ItemId))
+			log.Error(err)
 		}()
 	}
 	return nil
