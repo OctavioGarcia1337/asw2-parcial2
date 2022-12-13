@@ -1,7 +1,21 @@
 version: '3'
 
 services:
-  mongo:
+  users_db:
+    build: ./db/users
+    environment:
+      MYSQL_DATABASE: users
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db/users:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root" ]
+      timeout: 20s
+      retries: 10
+
+  items_db:
     image: mongo
     restart: always
     environment:
@@ -30,8 +44,8 @@ services:
       - "5672:5672"
       - "8080:15672"
     volumes:
-      - ./rabbit/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
-      - ./rabbit/definitions.json:/etc/rabbitmq/definitions.json:ro
+      - ./configs/rabbit/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./configs/rabbit/definitions.json:/etc/rabbitmq/definitions.json:ro
     healthcheck:
       test: rabbitmq-diagnostics check_port_connectivity
       interval: 1s
@@ -44,15 +58,15 @@ services:
     ports:
       - "8983:8983"
     volumes:
-      - ./solr/managed-schema:/opt/solr/server/solr/configsets/_default/conf/managed-schema
+      - ./configs/solr/managed-schema:/opt/solr/server/solr/configsets/_default/conf/managed-schema
     entrypoint:
       - docker-entrypoint.sh
       - solr-precreate
       - items
   items:
-    build: ./items
+    build: services/items
     depends_on:
-      mongo:
+      items_db:
         condition: service_started
       memcached:
         condition: service_started
@@ -61,8 +75,28 @@ services:
     ports:
       - "8090:8090"
 
+  users:
+    build: services/users
+    depends_on:
+      users_db:
+        condition: service_healthy
+      rabbit:
+        condition: service_healthy
+    ports:
+      - "9000:9000"
+
+  messages:
+    build: services/messages
+    depends_on:
+      users_db:
+        condition: service_healthy
+      rabbit:
+        condition: service_healthy
+    ports:
+      - "9001:9001"
+
   busqueda:
-    build: ./busqueda
+    build: services/busqueda
     depends_on:
       solr:
         condition: service_started
@@ -85,14 +119,14 @@ services:
 
 
   lbbusqueda:
-    build: ./lb
+    build: configs/lb
     depends_on:
       busqueda:
         condition: service_started
     ports:
       - "80:80"
-  worker:
-    build: ./worker
+  worker_solr:
+    build: services/worker_solr
     depends_on:
       busqueda:
         condition: service_started

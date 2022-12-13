@@ -1,7 +1,7 @@
 package config
 
 var (
-	MONGOHOST       = "mongo"
+	MONGOHOST       = "items_db"
 	MONGOPORT       = 27017
 	MONGOCOLLECTION = "items"
 

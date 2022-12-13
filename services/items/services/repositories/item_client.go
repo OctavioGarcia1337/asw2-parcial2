@@ -76,6 +76,7 @@ func (s *ItemClient) GetItemById(id string) (dto.ItemDto, e.ApiError) {
 }
 
 func (s *ItemClient) InsertItem(item dto.ItemDto) (dto.ItemDto, e.ApiError) {
+
 	result, err := s.Database.Collection(s.Collection).InsertOne(context.TODO(), model.Item{
 		ItemId:      primitive.NewObjectID(),
 		Titulo:      item.Titulo,
