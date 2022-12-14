@@ -222,50 +222,6 @@ function Home() {
   }
 
 
-  /* Funciones con cookies
-
-  function productsByCategoryId(id, setter, categorySetter) {
-    getProductsByCategoryId(id).then(response => {setter(response); 
-    Cookie.set("category", id); getCategoryById(id).then(category => categorySetter(category))})
-  }
-
-  function addToCart(id, setCartItems){
-    let cookie = Cookie.get("cart");
-  
-    if(cookie == undefined){
-      Cookie.set("cart", id + ",1;", {path: "/"});
-      setCartItems(1)
-      return
-    }
-    let newCookie = ""
-    let isNewItem = true
-    let toCompare = cookie.split(";")
-    let total = 0;
-    toCompare.forEach((item) => {
-      if(item != ""){
-        let array = item.split(",")
-        let item_id = array[0]
-        let item_quantity = array[1]
-        if(id == item_id){
-          item_quantity = Number(item_quantity) + 1
-          isNewItem = false
-        }
-        newCookie += item_id + "," + item_quantity + ";"
-        total += Number(item_quantity);
-      }
-    });
-    if(isNewItem){
-      newCookie += id + ",1;"
-      total += 1;
-    }
-    cookie = newCookie
-    Cookie.set("cart", cookie, {path: "/"})
-    Cookie.set("cartItems", total, {path: "/"})
-    setCartItems(total)
-    return
-  }*/
-  
-
   return (
     <div className="home">
       <div className="topnavHOME">

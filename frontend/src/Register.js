@@ -6,7 +6,6 @@ import logo from "./images/logo.svg"
 const Cookie = new Cookies();
 
 async function register(username, password) {
-  /* //NO CAMBIAR, DEBERIA ANDAR
   return await fetch('http://localhost:8090/users', {
     method: 'POST',
     headers: {
@@ -24,7 +23,7 @@ async function register(username, password) {
     .then(response => {
       Cookie.set("user_id", response.user_id, {path: '/'})
       Cookie.set("username", username, {path: '/login'})
-    })*/
+    })
 }
 
 function goto(path){

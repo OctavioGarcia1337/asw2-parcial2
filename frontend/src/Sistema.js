@@ -4,11 +4,20 @@ import logo from "./images/logo.svg"
 import loadinggif from "./images/loading.gif"
 import Cookies from "universal-cookie";
 import {HOST, PORT} from "./config/config";
-import Comments from "./Comments";
 
 
 const URL = HOST + ":" + PORT
 const Cookie = new Cookies();
+
+async function getUserById(id){
+    return await fetch('http://localhost:8090/user/' + id, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(response => response.json())
+
+}
 
 async function getSystems(){
   return await fetch(URL + "/search=*_*", {
@@ -65,6 +74,12 @@ async function getSystemsBySearch(field, query){
   }).then(response=>response.json())
 }
 
+function logout(){
+  Cookie.set("user_id", -1, {path: "/"})
+  document.location.reload()
+}
+
+
 function System() {
   const [isLogged, setIsLogged] = useState(false)
   const [user, setUser] = useState({})
@@ -73,6 +88,15 @@ function System() {
   const [failedSearch, setFailedSearch] = useState(false)
   const [querying, setQuerying] = useState(false)
   const [query, setQuery] = useState("")
+
+  if (Cookie.get("user_id") > -1 && !isLogged){
+    getUserById(Cookie.get("user_id")).then(response => setUser(response))
+    setIsLogged(true)
+  }
+
+  if (!(Cookie.get("user_id") > -1) && isLogged){
+    setIsLogged(false)
+  }
 
   if(!systems.length && needSystems){
     getSystems().then(response => setSystems(response))
@@ -130,52 +154,6 @@ async function searchQuery(field, query){
     searchQuery("*","*") // segundo * sacar de localstorage id
   }
 
-  /* Funciones con cookies
-
-  function productsByCategoryId(id, setter, categorySetter) {
-    getProductsByCategoryId(id).then(response => {setter(response); 
-    Cookie.set("category", id); getCategoryById(id).then(category => categorySetter(category))})
-  }
-
-  function addToCart(id, setCartSystems){
-    let cookie = Cookie.get("cart");
-  
-    if(cookie == undefined){
-      Cookie.set("cart", id + ",1;", {path: "/"});
-      setCartSystems(1)
-      return
-    }
-    let newCookie = ""
-    let isNewSystem = true
-    let toCompare = cookie.split(";")
-    let total = 0;
-    toCompare.forEach((system) => {
-      if(system != ""){
-        let array = system.split(",")
-        let system_id = array[0]
-        let system_quantity = array[1]
-        if(id == system_id){
-          system_quantity = Number(system_quantity) + 1
-          isNewSystem = false
-        }
-        newCookie += system_id + "," + system_quantity + ";"
-        total += Number(system_quantity);
-      }
-    });
-    if(isNewSystem){
-      newCookie += id + ",1;"
-      total += 1;
-    }
-    cookie = newCookie
-    Cookie.set("cart", cookie, {path: "/"})
-    Cookie.set("cartSystems", total, {path: "/"})
-    setCartSystems(total)
-    return
-  }*/
-
-
-
-
 
   return (
     <div className="home">
@@ -198,5 +176,8 @@ async function searchQuery(field, query){
     </div>
     );
 }
+
+
+
 
 export default System;

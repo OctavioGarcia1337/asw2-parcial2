@@ -103,15 +103,12 @@ function Item() {
     }
 
     /* Funciones con cookies
-
     function productsByCategoryId(id, setter, categorySetter) {
       getProductsByCategoryId(id).then(response => {setter(response);
       Cookie.set("category", id); getCategoryById(id).then(category => categorySetter(category))})
     }
-
     function addToCart(id, setCartItems){
       let cookie = Cookie.get("cart");
-
       if(cookie == undefined){
         Cookie.set("cart", id + ",1;", {path: "/"});
         setCartItems(1)
