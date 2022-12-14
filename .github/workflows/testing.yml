@@ -2,10 +2,9 @@ name: Testing
 run-name: ${{ github.actor }} ASW2 Project
 on: [push]
 jobs:
-  testing:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Testing Step
-        id: test
-        uses: ./services/busqueda
+      - name: "Starting step"
+        uses: docker://golang:1.18
 
