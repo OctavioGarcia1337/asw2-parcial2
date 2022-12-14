@@ -266,6 +266,7 @@ function Home() {
         {isLogged ? loggedout : logreg}
         <a id="sistema" onClick={()=>goto("/sistema")}>Sistema</a>
         <a id="publications" onClick={()=>goto("/publications")}>Publicaciones</a>
+        <a id="mycomments" onClick={()=>goto("/mycomments")}>Mis Comentarios</a>
       </div>
 
       <div id="main">
