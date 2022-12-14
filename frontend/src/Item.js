@@ -3,21 +3,13 @@ import "./css/Item.css";
 import logo from "./images/logo.svg"
 import loadinggif from "./images/loading.gif"
 import Cookies from "universal-cookie";
-import {HOST, PORT} from "./config/config";
+import {HOST, PORT, ITEMSPORT} from "./config/config";
 import Comments from "./Comments";
 
 
 const URL = HOST + ":" + PORT
+const ITEMSURL = HOST + ":" + ITEMSPORT
 const Cookie = new Cookies();
-
-async function getItems(){
-  return await fetch(URL + "/search=*_*", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  }).then(response => response.json())
-}
 
 function goto(path){
   window.location = window.location.origin + path
@@ -34,8 +26,8 @@ function parseField(field){
   return "Not available"
 }
 
-function showItem(items){
-  return items.map((item) =>
+function showItem(item){
+  return (
    <div obj={item} key={item.id} className="item">
         <div>
             <img width="240px" height="240px" src={parseField(item.url_img)}  onError={(e) => (e.target.onerror = null, e.target.src = "./images/default.jpg")}/>
@@ -68,65 +60,30 @@ function showItem(items){
           <Comments CurrentUserId="1" />
         </div>
     </div>
-    ) 
+)
 }
 
-
-async function getItemsBySearch(field, query){
-  return fetch( URL + "/search=" + "id" + "_" + localStorage.getItem("id"), {
-    method: "GET",
-    header: "Content-Type: application/json"
-  }).then(response=>response.json())
+async function getItemById(id){
+    return fetch(ITEMSURL + "/items/" + id, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(response => response.json())
 }
 
 function Item() {
   const [isLogged, setIsLogged] = useState(false)
-  const [user, setUser] = useState({})
-  const [items, setItems] = useState([])
-  const [needItems, setNeedItems] = useState(true)
+  const [user, setUser] = useState({id: null})
+  const [needItem, setNeedItem] = useState(true)
+  const [item, setItem] = useState({})
   const [failedSearch, setFailedSearch] = useState(false)
-  const [querying, setQuerying] = useState(false)
-  const [query, setQuery] = useState("")
 
-  if(!items.length && needItems){
-    getItems().then(response => setItems(response))
-    setNeedItems(false)
-  }
-
-
-async function searchQuery(field, query){
-    if(query == ""){
-        query = localStorage.getItem("id")
+    if (needItem){
+        Cookie.set("need_item", "true");
+        setNeedItem(false);
     }
-    await getItemsBySearch(field, localStorage.getItem("id")).then(response=>{
-    if(response != null){
-        if(response.length > 0){
-                setItems(response)
-                setFailedSearch(false)
-        }else{
-                setItems([])
-                setFailedSearch(true)
-            }
-        }
-        else{
-          setFailedSearch(false)
-          getItems().then(response=>setItems(response))
-        }
-    })
-}
 
-  const options= (
-      <div className="options-div">
-        <div>
-          <a onClick={()=>searchQuery("titulo", query)}>Titulo: <span>{query}</span></a>
-          <a onClick={()=>searchQuery("tipo", query)}>Tipo: <span>{query}</span></a>
-          <a onClick={()=>searchQuery("descripcion", query)}>Descripcion: <span>{query}</span></a>
-          <a onClick={()=>searchQuery("ubicacion", query)}>Ubicacion: <span>{query}</span></a>
-          <a onClick={()=>searchQuery("barrio", query)}>Barrio: <span>{query}</span></a>
-          <a onClick={()=>searchQuery("vendedor", query)}>Vendedor: <span>{query}</span></a>
-        </div>
-      </div>
-  )
 
   const login = (
 
@@ -140,52 +97,53 @@ async function searchQuery(field, query){
 
   const renderFailedSearch = (<a>No results :(</a>)
 
-  if(query == "" && items.length <= 0){
-    searchQuery("*","*") // segundo * sacar de localstorage id
-  }
-
-  /* Funciones con cookies
-
-  function productsByCategoryId(id, setter, categorySetter) {
-    getProductsByCategoryId(id).then(response => {setter(response); 
-    Cookie.set("category", id); getCategoryById(id).then(category => categorySetter(category))})
-  }
-
-  function addToCart(id, setCartItems){
-    let cookie = Cookie.get("cart");
-  
-    if(cookie == undefined){
-      Cookie.set("cart", id + ",1;", {path: "/"});
-      setCartItems(1)
-      return
+    if (Cookie.get("need_item") === "true") {
+        getItemById(localStorage.getItem("id")).then(response => setItem(response));
+        Cookie.set("need_item", "false");
     }
-    let newCookie = ""
-    let isNewItem = true
-    let toCompare = cookie.split(";")
-    let total = 0;
-    toCompare.forEach((item) => {
-      if(item != ""){
-        let array = item.split(",")
-        let item_id = array[0]
-        let item_quantity = array[1]
-        if(id == item_id){
-          item_quantity = Number(item_quantity) + 1
-          isNewItem = false
-        }
-        newCookie += item_id + "," + item_quantity + ";"
-        total += Number(item_quantity);
+
+    /* Funciones con cookies
+
+    function productsByCategoryId(id, setter, categorySetter) {
+      getProductsByCategoryId(id).then(response => {setter(response);
+      Cookie.set("category", id); getCategoryById(id).then(category => categorySetter(category))})
+    }
+
+    function addToCart(id, setCartItems){
+      let cookie = Cookie.get("cart");
+
+      if(cookie == undefined){
+        Cookie.set("cart", id + ",1;", {path: "/"});
+        setCartItems(1)
+        return
       }
-    });
-    if(isNewItem){
-      newCookie += id + ",1;"
-      total += 1;
-    }
-    cookie = newCookie
-    Cookie.set("cart", cookie, {path: "/"})
-    Cookie.set("cartItems", total, {path: "/"})
-    setCartItems(total)
-    return
-  }*/
+      let newCookie = ""
+      let isNewItem = true
+      let toCompare = cookie.split(";")
+      let total = 0;
+      toCompare.forEach((item) => {
+        if(item != ""){
+          let array = item.split(",")
+          let item_id = array[0]
+          let item_quantity = array[1]
+          if(id == item_id){
+            item_quantity = Number(item_quantity) + 1
+            isNewItem = false
+          }
+          newCookie += item_id + "," + item_quantity + ";"
+          total += Number(item_quantity);
+        }
+      });
+      if(isNewItem){
+        newCookie += id + ",1;"
+        total += 1;
+      }
+      cookie = newCookie
+      Cookie.set("cart", cookie, {path: "/"})
+      Cookie.set("cartItems", total, {path: "/"})
+      setCartItems(total)
+      return
+    }*/
 
 
 
@@ -199,7 +157,7 @@ async function searchQuery(field, query){
             </div>
         </div>
 
-        <div id="mySidenav" className="sidenav" > 
+        <div id="mySidenav" className="sidenav" >
           <a id="login" onClick={()=>goto("/login")}>Login</a>
           <a id="register" onClick={()=>goto("/register")}>Register</a>
           <a id="sistema" onClick={()=>goto("/sistema")}>Sistema</a>
@@ -208,7 +166,7 @@ async function searchQuery(field, query){
 
         <div id="main">
             {failedSearch ? renderFailedSearch : void(0)}
-            {items.length > 0 || failedSearch ? showItem(items) : loading}
+            {item.id != null ? showItem(item) : loading}
          </div>
     </div>
     );
