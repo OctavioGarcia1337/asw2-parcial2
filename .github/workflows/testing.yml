@@ -7,5 +7,5 @@ jobs:
     steps:
       - name: Testing Step
         id: test
-        uses: asw2-parcial2/services@main
+        uses: ./services/busqueda/Busqueda
 
