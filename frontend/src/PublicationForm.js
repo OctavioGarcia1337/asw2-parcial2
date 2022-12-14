@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./css/Item.css";
 
 
-const CommentForm = ({
+const PublicationForm = ({
   handleSubmit,
   submitLabel,
   hasCancelButton = false,
@@ -27,4 +27,4 @@ const CommentForm = ({
   );
 };
 
-export default CommentForm;
+export default PublicationForm;

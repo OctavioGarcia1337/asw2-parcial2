@@ -88,6 +88,11 @@ function showItems(items){
  )//agregar los campos faltantes
 }
 
+function logout(){
+  Cookie.set("user_id", -1, {path: "/"})
+  document.location.reload()
+}
+
 
 async function getItemsBySearch(field, query){
   return fetch( URL + "/search=" + field + "_" + query, {
@@ -200,7 +205,7 @@ function Home() {
   const login = (
     <span>
     <img src="./images/loading.gif" onClick={()=>goto("/user")} id="user" width="48px" height="48px"/>
-    {/*<a id="logout" onClick={logout}> <span> Welcome in {user.first_name} </span> </a>*/}
+    <a id="logout" onClick={logout}> <span> Welcome in {user.first_name} </span> </a>
     </span>
   )
 
