@@ -3,14 +3,16 @@ import "./css/Home.css";
 import logo from "./images/logo.svg"
 import loadinggif from "./images/loading.gif"
 import Cookies from "universal-cookie";
-import {HOST, PORT} from "./config/config";
+import usersvg from "./images/user.svg"
+import {HOST, PORT, USERSPORT} from "./config/config";
 
 
 const URL = HOST + ":" + PORT
+const URLUSERS = `${HOST}:${USERSPORT}`
 const Cookie = new Cookies();
 
 async function getUserById(id){
-    return await fetch('http://localhost:8090/user/' + id, {
+    return await fetch(`${URLUSERS}/users/` + id, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -46,14 +48,14 @@ function parseField(field){
 }
 
 
-function test(id){
+function goToItem(id){
   window.localStorage.setItem("id",id)
   goto("/item")
 }
 
 function showItems(items){
   return items.map((item) =>
-   <div obj={item} key={item.id} className="item" onClick={()=>test(item.id)}>
+   <div obj={item} key={item.id} className="item" onClick={()=>goToItem(item.id)}>
     <div>
       <img width="128px" height="128px" src={parseField(item.url_img)}  onError={(e) => (e.target.onerror = null, e.target.src = "./images/default.jpg")}/>
     </div>
@@ -119,10 +121,12 @@ function Home() {
 
   if (Cookie.get("user_id") > -1 && !isLogged){
     getUserById(Cookie.get("user_id")).then(response => setUser(response))
+    Cookie.set("first_name", user.first_name)
     setIsLogged(true)
   }
 
   if (!(Cookie.get("user_id") > -1) && isLogged){
+    Cookie.set("first_name", "-1")
     setIsLogged(false)
   }
 
@@ -159,7 +163,7 @@ function Home() {
     })
   }
     async function searchQuery(field, query){
-      if(query == ""){
+      if(query === ""){
         query = "*"
       }
       await getItemsBySearch(field, query).then(response=>{
@@ -204,8 +208,7 @@ function Home() {
 
   const login = (
     <span>
-    <img src="./images/loading.gif" onClick={()=>goto("/user")} id="user" width="48px" height="48px"/>
-    <a id="logout" onClick={logout}> <span> Welcome in {user.first_name} </span> </a>
+      <img src={usersvg} onClick={()=>goto("/user")} id="user" width="48px" height="48px"/>
     </span>
   )
 
@@ -221,6 +224,18 @@ function Home() {
     searchQuery("*","*")
   }
 
+  const logreg = (
+      <div>
+        <a id="login" onClick={()=>goto("/login")}>Login</a>
+        <a id="register" onClick={()=>goto("/register")}>Register</a>
+      </div>
+)
+
+  const loggedout = (
+      <div>
+        <a id="logout" onClick={logout}> <span> Welcome in {user.first_name} </span> </a>
+      </div>
+  )
 
   return (
     <div className="home">
@@ -247,9 +262,9 @@ function Home() {
         </div>
       </div>
 
-      <div id="mySidenav" className="sidenav" > 
-        <a id="login" onClick={()=>goto("/login")}>Login</a>
-        <a id="register" onClick={()=>goto("/register")}>Register</a>
+      <div id="mySidenav" className="sidenav" >
+
+        {isLogged ? loggedout : logreg}
         <a id="sistema" onClick={()=>goto("/sistema")}>Sistema</a>
         <a id="publications" onClick={()=>goto("/publications")}>Publicaciones</a>
       </div>

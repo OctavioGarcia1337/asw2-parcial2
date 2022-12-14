@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import "./css/Login.css";
 import Cookies from "universal-cookie";
 import logo from "./images/logo.svg"
+import {HOST, PORT, USERSPORT} from "./config/config";
 
 const Cookie = new Cookies();
+const URL = `${HOST}:${USERSPORT}`
+
 
 async function login(username, password) {
-  return await fetch('http://localhost:8090/login', {
+  return await fetch(`${URL}/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -14,7 +17,7 @@ async function login(username, password) {
 	body: JSON.stringify({"username": username, "password":password})
   })
     .then(response => {
-      if (response.status == 400 || response.status == 401)
+      if (response.status === 400 || response.status === 401)
       {
         return {"user_id": -1}
       }
@@ -26,6 +29,7 @@ async function login(username, password) {
     })
 }
 
+
 function goto(path){
   window.location = window.location.origin + path
 }
@@ -33,7 +37,6 @@ function goto(path){
 function Login() {
   // React States
   const [errorMessages, setErrorMessages] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const error = "Contraseña o Usuario invalido";
 
@@ -44,11 +47,11 @@ function Login() {
     var { uname, pass } = document.forms[0];
 
     // Find user login info
-    const userData = login(uname.value, pass.value).then(data => {
+    login(uname.value, pass.value).then(data => {
       if (Cookie.get("user_id") > -1) {
         goto("/")
       }
-      else if (Cookie.get("user_id") == -1) {
+      else if (Cookie.get("user_id") === -1) {
         setErrorMessages({name: "default", message: error})
       }
     })
@@ -83,6 +86,14 @@ function Login() {
 
   );
 
+  const logreg = (
+      <div>
+        <a id="login" className="clicked" onClick={()=>goto("/login")}>Login</a>
+        <a id="register" onClick={()=>goto("/register")}>Register</a>
+      </div>
+  )
+
+
   return (
     <div>
     <div className="home">
@@ -93,16 +104,16 @@ function Login() {
       </div>
     </div>
 
-    <div id="mySidenav" className="sidenav" > 
-          <a id="register" onClick={()=>goto("/register")}>Register</a>
-          <a id="sistema" onClick={()=>goto("/sistema")}>Sistema</a>
-          <a id="publications" onClick={()=>goto("/publications")}>Publicaciones</a>
-        </div>
+    <div id="mySidenav" className="sidenav" >
+      {logreg}
+      <a id="sistema" onClick={()=>goto("/sistema")}>Sistema</a>
+      <a id="publications" onClick={()=>goto("/publications")}>Publicaciones</a>
+    </div>
 
     <div className="app">
       <div className="login-form">
         <div className="title">BIENVENIDOS</div>
-        {isSubmitted || Cookie.get("user_id") > -1 ? Cookie.get("username") : renderForm}
+        {Cookie.get("user_id") > -1 ? Cookie.get("username") : renderForm}
       </div>
     </div>
     </div>

@@ -3,16 +3,27 @@ import "./css/Item.css";
 import logo from "./images/logo.svg"
 import loadinggif from "./images/loading.gif"
 import Cookies from "universal-cookie";
-import {HOST, PORT, ITEMSPORT} from "./config/config";
+import {HOST, PORT, ITEMSPORT, USERSPORT} from "./config/config";
 import Comments from "./Comments";
 
 
 const URL = HOST + ":" + PORT
 const ITEMSURL = HOST + ":" + ITEMSPORT
+const URLUSERS = `${HOST}:${USERSPORT}`
 const Cookie = new Cookies();
 
 function goto(path){
   window.location = window.location.origin + path
+}
+
+async function getUserById(id){
+    return await fetch(`${URLUSERS}/users/` + id, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => response.json())
+
 }
 
 function retry() {
@@ -57,7 +68,7 @@ function showItem(item){
             <a className="bathrooms"> - Baños: {parseField(item.banos)}</a>
         </div>
         <div>
-          <Comments CurrentUserId="1" />
+          <Comments first_name={Cookie.get("first_name")} />
         </div>
     </div>
 )
@@ -79,19 +90,21 @@ function Item() {
   const [item, setItem] = useState({})
   const [failedSearch, setFailedSearch] = useState(false)
 
+
+    if (Cookie.get("user_id") > -1 && !isLogged){
+        getUserById(Cookie.get("user_id")).then(response => setUser(response));
+        setIsLogged(true);
+    }
+
+    if (!(Cookie.get("user_id") > -1) && isLogged){
+        setIsLogged(false);
+    }
+
     if (needItem){
         Cookie.set("need_item", "true");
         setNeedItem(false);
     }
 
-
-  const login = (
-
-    <span>
-    <img src="./images/loading.gif" onClick={()=>goto("/user")} id="user" width="48px" height="48px"/>
-    {/*<a id="logout" onClick={logout}> <span> Welcome in {user.first_name} </span> </a>*/}
-    </span>
-  )
 
   const loading = (<img id="loading" src={loadinggif}/>)
 
@@ -101,50 +114,6 @@ function Item() {
         getItemById(localStorage.getItem("id")).then(response => setItem(response));
         Cookie.set("need_item", "false");
     }
-
-    /* Funciones con cookies
-    function productsByCategoryId(id, setter, categorySetter) {
-      getProductsByCategoryId(id).then(response => {setter(response);
-      Cookie.set("category", id); getCategoryById(id).then(category => categorySetter(category))})
-    }
-    function addToCart(id, setCartItems){
-      let cookie = Cookie.get("cart");
-      if(cookie == undefined){
-        Cookie.set("cart", id + ",1;", {path: "/"});
-        setCartItems(1)
-        return
-      }
-      let newCookie = ""
-      let isNewItem = true
-      let toCompare = cookie.split(";")
-      let total = 0;
-      toCompare.forEach((item) => {
-        if(item != ""){
-          let array = item.split(",")
-          let item_id = array[0]
-          let item_quantity = array[1]
-          if(id == item_id){
-            item_quantity = Number(item_quantity) + 1
-            isNewItem = false
-          }
-          newCookie += item_id + "," + item_quantity + ";"
-          total += Number(item_quantity);
-        }
-      });
-      if(isNewItem){
-        newCookie += id + ",1;"
-        total += 1;
-      }
-      cookie = newCookie
-      Cookie.set("cart", cookie, {path: "/"})
-      Cookie.set("cartItems", total, {path: "/"})
-      setCartItems(total)
-      return
-    }*/
-
-
-
-
 
   return (
     <div className="home">

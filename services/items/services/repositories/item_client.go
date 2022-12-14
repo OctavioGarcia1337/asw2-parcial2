@@ -145,7 +145,19 @@ func (s *ItemClient) InsertItem(item dto.ItemDto) (dto.ItemDto, e.ApiError) {
 }
 
 func (s *ItemClient) DeleteItem(id string) e.ApiError {
-	result, err := s.Database.Collection(s.Collection).DeleteOne(context.TODO(), bson.M{"_id": id})
+	objectID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return e.NewBadRequestApiError(fmt.Sprintf("error deleting item %s invalid id", id))
+	}
+
+	result, err := s.Database.Collection(s.Collection).DeleteOne(context.TODO(), bson.M{"_id": objectID})
+	if err != nil {
+		log.Error(err)
+		return e.NewInternalServerApiError("error deleting item", err)
+	}
+	log.Debug(result.DeletedCount)
+
+	result, err = s.Database.Collection(s.Collection).DeleteOne(context.TODO(), bson.M{"id": id})
 	if err != nil {
 		log.Error(err)
 		return e.NewInternalServerApiError("error deleting item", err)

@@ -10,21 +10,15 @@ import "./css/Item.css";
 
 
 
-const Comments = ({ commentsUrl, currentUserId }) => {
+const Comments = ({ first_name }) => {
   const [backendComments, setBackendComments] = useState([]);
   const [activeComment, setActiveComment] = useState(null);
   const rootComments = backendComments.filter(
-    (backendComment) => backendComment.parentId === null
+      (comment) => comment.item_id === localStorage.getItem("id")
   );
-  const getReplies = (commentId) =>
-    backendComments
-      .filter((backendComment) => backendComment.parentId === commentId)
-      .sort(
-        (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-      );
-  const addComment = (text, parentId) => {
-    createCommentApi(text, currentUserId, parentId).then((comment) => {
+
+  const addComment = (text) => {
+    createCommentApi(text).then((comment) => {
       setBackendComments([comment, ...backendComments]);
       setActiveComment(null);
     });
@@ -46,11 +40,10 @@ const Comments = ({ commentsUrl, currentUserId }) => {
           <Comment
             key={rootComment.id}
             comment={rootComment}
-            replies={getReplies(rootComment.id)}
             activeComment={activeComment}
             setActiveComment={setActiveComment}
             addComment={addComment}
-            currentUserId={currentUserId}
+            firstName={first_name}
           />
         ))}
       </div>

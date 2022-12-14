@@ -120,7 +120,7 @@
 }
 
 .item {
-  display: block;
+  display: inline-block;
   box-sizing: content-box;
   width: 70%;
   min-height: 200px;
@@ -242,6 +242,8 @@
 
 #logout {
   .transition: .5s;
+  cursor: pointer;
+  color: white;
   min-width: 200px;
   max-width: 350px;
 }
@@ -251,7 +253,8 @@
 }
 
 #logout:hover:before {
-  content: "Logout?"
+  content: "Logout?";
+  color: red;
 }
 
 .hidden {
@@ -324,5 +327,26 @@ img:hover {
   cursor: pointer;
 }
 
+#eliminar {
+  display: inline-block;
+  margin-left: 40px;
+}
 
+#eliminar-boton {
+  display: inline-block;
+  cursor: pointer;
+  position: initial;
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  border: 2px solid black;
+  border-radius: 20px;
+}
 
+#eliminar-boton:hover{
+  background-color: darkred;
+}
+
+.clicked {
+  background-color: darkslategray;
+}

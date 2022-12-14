@@ -32,6 +32,20 @@ func GetItemById(c *gin.Context) {
 	c.JSON(http.StatusOK, itemDto)
 }
 
+func GetItemsByUserId(c *gin.Context) {
+	var itemsDto dto.ItemsResponseDto
+	id, _ := strconv.Atoi(c.Param("id"))
+	itemsDto, err := itemService.GetItemsByUserId(id)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, itemsDto)
+
+}
+
 func InsertItem(c *gin.Context) {
 	var itemDto dto.ItemDto
 	err := c.BindJSON(&itemDto)
@@ -87,4 +101,16 @@ func DeleteUserItems(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, nil)
+}
+
+func DeleteItemById(c *gin.Context) {
+	id := c.Param("item_id")
+	err := itemService.DeleteItemById(id)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	c.Status(http.StatusOK)
 }

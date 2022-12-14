@@ -6,11 +6,20 @@ import usersvg from "./images/user.svg"
 import Cookies from "universal-cookie";
 import "./css/Item.css";
 import PublicationForm from "./PublicationForm";
+import {HOST, ITEMSPORT, USERSPORT} from "./config/config";
+
 
 const Cookie = new Cookies();
+const URLITEMS = `${HOST}:${ITEMSPORT}`
+const URLUSERS = `${HOST}:${USERSPORT}`
+
+function logout(){
+    Cookie.set("user_id", -1, {path: "/"})
+    document.location.reload()
+}
 
 async function getUserById(id) {
-    return fetch("http://localhost:8090/user/" + id, {
+    return fetch(`${URLUSERS}/users/` + id, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
@@ -18,8 +27,14 @@ async function getUserById(id) {
     }).then(response => response.json())
 }
 
-async function getitemById(id) {
-    return fetch("http://localhost:8090/item/" + id, {
+function goToItem(id){
+    window.localStorage.setItem("id",id)
+    goto("/item")
+}
+
+
+async function getItemById(id) {
+    return fetch(`${URLITEMS}/item/` + id, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
@@ -27,23 +42,25 @@ async function getitemById(id) {
     }).then(response => response.json())
 }
 
-async function getOrderById(id) {
-    return fetch("http://localhost:8090/publications/" + id, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
+async function makeItem(newItem) {
+    let userid = Number(Cookie.get("user_id"))
+    let parsedItem = JSON.parse(newItem)
+    if (parsedItem.length) {
+        for (let i = 0; i < parsedItem.length; i++){
+            parsedItem[i].usuario_id = userid;
         }
-    }).then(response => response.json())
-}
+    }
+    else{
+        parsedItem.usuario_id = userid;
+        parsedItem = [parsedItem]
+    }
 
-async function makePublication(newpublication) {
-    
-    return await fetch('http://localhost:8090/items', {
+    return await fetch(`${URLITEMS}/items`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: newpublication.json()
+      body: JSON.stringify(parsedItem)
     })
       .then(response => {
         if (response.status == 400 || response.status == 401)
@@ -54,13 +71,15 @@ async function makePublication(newpublication) {
       })
   }
 
-async function deletePublication(id) {
-    return fetch("http://localhost:8090/publications/" + id, {
+async function deleteItem(id) {
+    return await fetch(`${URLITEMS}/item/` + id, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json"
         }
-    }).then(response => response.json())
+    }).then(response => {
+        response.status === 200 ? goto("/publications") : alert("error deleting item");
+    })
 }
 
 function parseField(field) {
@@ -74,27 +93,14 @@ function goto(path) {
     window.location = window.location.origin + path
 }
 
-function logout() {
-    Cookie.set("user_id", -1, { path: "/" })
-    window.location.reload();
-}
-
-
 
 function showItems(items) {
 
-    const addPublication = (text) => {makePublication(text);};
-
-    <div className="comments">
-        <h3 className="comments-title">Nueva Publicación</h3>
-        <div className="comment-form-title">JSON Here</div>
-        <PublicationForm submitLabel="Write" handleSubmit={addPublication} />
-    </div>
 
     return items.map((item) =>
-        <div obj={item} key={item.id} className="item" onClick={() => test(item.id)}>
+        <div>
+        <div obj={item} key={item.id} className="item" onClick={() => goToItem(item.id)}>
             <div>
-                <button onClick={() => deletePublication(item.id)}> Eliminar </button>
                 <img width="128px" height="128px" src={parseField(item.url_img)} onError={(e) => (e.target.onerror = null, e.target.src = "./images/default.jpg")} />
             </div>
             <a className="title">{parseField(item.titulo)}</a>
@@ -121,50 +127,20 @@ function showItems(items) {
                 <a className="bedrooms"> - Dormitorios: {parseField(item.dormitorios)}</a>
                 <a className="bathrooms"> - Baños: {parseField(item.banos)}</a>
             </div>
-            <div>
-                <a className="comentarios"> Ver Comentarios</a>
+
+
+        </div>
+            <div id="eliminar">
+                <button id="eliminar-boton" onClick={() => deleteItem(item.id)}> X </button>
             </div>
         </div>
     )
 
 }
 
-function showAddress(address) {
-    return (
-        <div className="orderAddress">
-            ADDRESS N°{address.address_id}
-            <div><span className="orderAddressInfo"> Street: </span> <a className="orderAddressInfoLoad">{address.street1}</a> </div>
-            <div><span className="orderAddressInfo"> Street2: </span> <a className="orderAddressInfoLoad">{address.street2} </a> </div>
-            <div><span className="orderAddressInfo"> Number: </span> <a className="orderAddressInfoLoad">{address.number} </a> </div>
-            <div><span className="orderAddressInfo"> District: </span> <a className="orderAddressInfoLoad">{address.district} </a> </div>
-            <div><span className="orderAddressInfo"> City: </span> <a className="orderAddressInfoLoad">{address.city} </a> </div>
-            <div><span className="orderAddressInfo"> Country: </span> <a className="orderAddressInfoLoad">{address.country} </a> </div>
-        </div>
-    )
 
-}
-
-
-async function getOrderitems() {
-    let items = []
-    let a = Cookie.get("order").split(";")
-
-    for (let i = 0; i < a.length; i++) {
-        let item = a[i];
-        if (item != "") {
-            let array = item.split(",")
-            let id = array[0]
-            let quantity = array[1]
-            let item = await getitemById(id)
-            item.quantity = quantity;
-            items.push(item)
-        }
-    }
-    return items
-}
-
-async function getAddressById(id) {
-    return fetch("http://localhost:8090/address/" + id, {
+async function getItemsByUserId(id) {
+    return fetch(`${URLITEMS}/users/${id}/items`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
@@ -173,86 +149,78 @@ async function getAddressById(id) {
 }
 
 
-async function setOrder(setOrder, setTotal) {
-    let total = 0;
-    await getOrderitems().then(response => {
-        setOrder(response)
-        response.forEach((item) => {
-            total += item.base_price * item.quantity;
-        });
-        setTotal(total)
+
+async function setItems(setUserItems, userId) {
+    await getItemsByUserId(userId).then(response => {
+        response != null ? setUserItems(response) : setUserItems([]);
     })
 }
 
 
 
-function Publication() {
+function Item() {
     const [user, setUser] = useState({});
     const [isLogged, setIsLogged] = useState(false);
-    const [orderitems, setOrderitems] = useState([])
-    const [total, setTotal] = useState(0)
-    const [address, setAddress] = useState({})
-
-    const login = (
-
-        <span>
-            <img src={usersvg} onClick={() => goto("/user")} id="user" width="48px" height="48px" />
-            <img src={cart} onClick={() => goto("/cart")} id="cart" width="48px" height="48px" />
-            <a id="logout" onClick={logout}> <span> Welcome in {user.first_name} </span> </a>
-        </span>
-    )
+    const [userItems, setUserItems] = useState([])
 
     if (Cookie.get("user_id") > -1 && !isLogged) {
         getUserById(Cookie.get("user_id")).then(response => setUser(response))
         setIsLogged(true)
 
-        if (Cookie.get("address") > -1) {
-            getAddressById(Cookie.get("address")).then(response => setAddress(response))
-        }
     }
 
 
-    if (orderitems.length <= 0 && Cookie.get("user_id") > -1) {
-        setOrder(setOrderitems, setTotal)
+    if (userItems.length <= 0 && Cookie.get("user_id") > -1) {
+        setItems(setUserItems, Cookie.get("user_id"))
     }
-
-    const complete = (
-        <div>
-            <div> Woohoo you placed a freaking order. I'm so proud of you</div>
-            {address.address_id != undefined ? showAddress(address) : <span> NOOO </span>}
-            {showItems(orderitems)}
-
-
-            <div> Total: ${total} </div>
-        </div>
-    )
-
+    const addItem = (text) => {makeItem(text);};
 
     const error = (
         <div>
             <div> BOO ERROR :(((( </div>
-            <div> Let's think. This probably happened because of some stock mistake </div>
-            <div> Error {Cookie.get("orderError")} </div>
+            <div> There's no items yet :D </div>
+        </div>
+    )
+
+    const logreg = (
+        <div>
+            <a id="login" onClick={()=>goto("/login")}>Login</a>
+            <a id="register" onClick={()=>goto("/register")}>Register</a>
+        </div>
+    )
+
+    const loggedout = (
+        <div>
+            <a id="logout" onClick={logout}> <span> Welcome in {user.first_name} </span> </a>
         </div>
     )
 
     return (
-        <div className="orderstatus">
-            <div className="topnav">
+        <div className="items">
+            <div className="topnavHOME">
                 <img src={logo} width="80px" height="80px" id="logo" onClick={() => goto("/")} />
             </div>
 
             <div id="mySidenav" className="sidenav" >
-                <a id="login" onClick={() => goto("/login")}>Login</a>
-                <a id="register" onClick={() => goto("/register")}>Register</a>
-                <a id="sistema" onClick={() => goto("/sistema")}>Sistema</a>
+                {isLogged ? loggedout : logreg}
+                <a id="sistema" onClick={()=>goto("/sistema")}>Sistema</a>
+                <a id="publications" className="clicked" onClick={()=>goto("/publications")}>Publicaciones</a>
             </div>
 
             <div id="main">
-                {window.location.pathname.split("/")[2] == "complete" ? complete : error}
+
+
+
+                <div className="comments">
+                    <h3 className="comments-title">Nueva Publicación</h3>
+                    <div className="comment-form-title">JSON Here</div>
+                    <PublicationForm submitLabel="Write" handleSubmit={addItem} />
+                </div>
+
+                {userItems.length > 0 ? showItems(userItems) : error}
             </div>
         </div>
     );
 }
 
-export default Publication;
+export default Item;

@@ -104,17 +104,25 @@ func (s *ItemServiceImpl) GetItemById(id string) (dto.ItemResponseDto, e.ApiErro
 	}
 }
 
-func (s *ItemServiceImpl) GetItemsByUserId(id int) (dto.ItemsDto, e.ApiError) {
+func (s *ItemServiceImpl) GetItemsByUserId(id int) (dto.ItemsResponseDto, e.ApiError) {
 
 	var itemsDto dto.ItemsDto
-
+	var itemsResponseDto dto.ItemsResponseDto
 	itemsDto, err := s.item.GetItemsByUserId(id)
 	if err != nil {
-		log.Debug("Error getting item from mongo")
-		return itemsDto, err
+		log.Debug("Error getting items from mongo")
+		return itemsResponseDto, err
 	}
 
-	return itemsDto, nil
+	for i := range itemsDto {
+		item, err := s.GetUserById(itemsDto[i].UsuarioId, itemsDto[i])
+		if err != nil {
+			return itemsResponseDto, e.NewBadRequestApiError("error getting user for item")
+		}
+		itemsResponseDto = append(itemsResponseDto, item)
+	}
+
+	return itemsResponseDto, nil
 
 }
 
@@ -203,7 +211,7 @@ func (s *ItemServiceImpl) DeleteUserItems(id int) e.ApiError {
 		return err
 	}
 	for i := range items {
-		var item dto.ItemDto
+		var item dto.ItemResponseDto
 		item = items[i]
 		go func() {
 			err := s.item.DeleteItem(item.ItemId)
@@ -214,5 +222,23 @@ func (s *ItemServiceImpl) DeleteUserItems(id int) e.ApiError {
 			log.Error(err)
 		}()
 	}
+	return nil
+}
+
+func (s *ItemServiceImpl) DeleteItemById(id string) e.ApiError {
+
+	err := s.item.DeleteItem(id)
+	if err != nil {
+		log.Error(err)
+		return err
+	}
+
+	err = s.memcached.DeleteItem(id)
+	if err != nil {
+		log.Error("Error deleting from cache", err)
+	}
+	err = s.queue.SendMessage(id, "delete", fmt.Sprintf("%s.delete", id))
+	log.Error(err)
+
 	return nil
 }

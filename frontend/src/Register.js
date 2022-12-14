@@ -2,16 +2,24 @@ import React, { useState } from "react";
 import "./css/Register.css";
 import Cookies from "universal-cookie";
 import logo from "./images/logo.svg"
+import {HOST, PORT, USERSPORT} from "./config/config";
 
 const Cookie = new Cookies();
+const URL = `${HOST}:${USERSPORT}`
 
-async function register(username, password) {
-  return await fetch('http://localhost:8090/users', {
+async function register(username, password, first_name, last_name, email) {
+  return await fetch(`${URL}/user`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-	body: JSON.stringify({"username": username, "password":password})
+	body: JSON.stringify({
+      "username": username,
+      "password":password,
+      "first_name":first_name,
+      "last_name":last_name,
+      "email":email
+    })
   })
     .then(response => {
       if (response.status == 400 || response.status == 401)
@@ -41,12 +49,11 @@ function Register() {
     //Prevent page reload
     event.preventDefault();
 
-    var { uname, pass, cpass } = document.forms[0];
+    var { uname, pass, cpass, first_name, last_name, email } = document.forms[0];
 
     // Validate user registration TODO: Check if the username is not taken
-    const userData = register(uname.value, pass.value).then(data => {
-      if (pass.value == cpass.value) {
-        
+    register(uname.value, pass.value, first_name.value, last_name.value, email.value).then(data => {
+      if (pass.value === cpass.value) {
         goto("/login")
       }
       else{
@@ -80,6 +87,19 @@ function Register() {
         </div>
 
           {renderErrorMessage("default")}
+
+        <div className="input-container">
+          <label>Nombre</label>
+          <input type="text" name="first_name" placeholder="Nombre" required />
+        </div>
+        <div className="input-container">
+          <label>Apellido</label>
+          <input type="text" name="last_name" placeholder="Apellido" required />
+        </div>
+        <div className="input-container">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="EMAIL@HOST.COM" required />
+        </div>
         <div className="button-container">
           <input type="submit"/>
         </div>
@@ -87,6 +107,12 @@ function Register() {
     </div>
   );
 
+  const logreg = (
+      <div>
+        <a id="login" onClick={()=>goto("/login")}>Login</a>
+        <a id="register" className="clicked" onClick={()=>goto("/register")}>Register</a>
+      </div>
+  )
 
   return (
     <div>
@@ -98,8 +124,8 @@ function Register() {
       </div>
     </div>
 
-    <div id="mySidenav" className="sidenav" > 
-      <a id="login" onClick={()=>goto("/login")}>Login</a>
+    <div id="mySidenav" className="sidenav" >
+      {logreg}
       <a id="sistema" onClick={()=>goto("/sistema")}>Sistema</a>
       <a id="publications" onClick={()=>goto("/publications")}>Publicaciones</a>
     </div>

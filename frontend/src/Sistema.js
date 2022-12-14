@@ -3,20 +3,26 @@ import "./css/Home.css";
 import logo from "./images/logo.svg"
 import loadinggif from "./images/loading.gif"
 import Cookies from "universal-cookie";
-import {HOST, PORT} from "./config/config";
+import {HOST, PORT, USERSPORT} from "./config/config";
 
 
 const URL = HOST + ":" + PORT
+const URLUSERS = `${HOST}:${USERSPORT}`
 const Cookie = new Cookies();
 
-async function getUserById(id){
-    return await fetch('http://localhost:8090/user/' + id, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }).then(response => response.json())
+function logout(){
+    Cookie.set("user_id", -1, {path: "/"})
+    document.location.reload()
+}
 
+
+async function getUserById(id) {
+    return fetch(`${URLUSERS}/users/` + id, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(response => response.json())
 }
 
 async function getSystems(){
@@ -72,11 +78,6 @@ async function getSystemsBySearch(field, query){
     method: "GET",
     header: "Content-Type: application/json"
   }).then(response=>response.json())
-}
-
-function logout(){
-  Cookie.set("user_id", -1, {path: "/"})
-  document.location.reload()
 }
 
 
@@ -138,14 +139,6 @@ async function searchQuery(field, query){
       </div>
   )
 
-  const login = (
-
-    <span>
-    <img src="./images/loading.gif" onClick={()=>goto("/user")} id="user" width="48px" height="48px"/>
-    {/*<a id="logout" onClick={logout}> <span> Welcome in {user.first_name} </span> </a>*/}
-    </span>
-  )
-
   const loading = (<img id="loading" src={loadinggif}/>)
 
   const renderFailedSearch = (<a>No results :(</a>)
@@ -154,6 +147,18 @@ async function searchQuery(field, query){
     searchQuery("*","*") // segundo * sacar de localstorage id
   }
 
+    const logreg = (
+        <div>
+            <a id="login" onClick={()=>goto("/login")}>Login</a>
+            <a id="register" onClick={()=>goto("/register")}>Register</a>
+        </div>
+    )
+
+    const loggedout = (
+        <div>
+            <a id="logout" onClick={logout}> <span> Welcome in {user.first_name} </span> </a>
+        </div>
+    )
 
   return (
     <div className="home">
@@ -163,10 +168,10 @@ async function searchQuery(field, query){
             </div>
         </div>
 
-        <div id="mySidenav" className="sidenav" > 
-          <a id="login" onClick={()=>goto("/login")}>Login</a>
-          <a id="register" onClick={()=>goto("/register")}>Register</a>
-          <a id="publications" onClick={()=>goto("/publications")}>Publicaciones</a>
+        <div id="mySidenav" className="sidenav" >
+            {isLogged ? loggedout : logreg}
+            <a id="sistema" className="clicked" onClick={()=>goto("/sistema")}>Sistema</a>
+            <a id="publications" onClick={()=>goto("/publications")}>Publicaciones</a>
         </div>
 
         <div id="main">
