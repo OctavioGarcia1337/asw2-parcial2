@@ -12,4 +12,8 @@ var (
 
 	MEMCACHEDHOST = "cache"
 	MEMCACHEDPORT = 11211
+
+	USERSHOST     = "users"
+	USERSPORT     = 9000
+	USERSENDPOINT = "users"
 )

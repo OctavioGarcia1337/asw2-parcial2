@@ -1,6 +1,6 @@
 package dto
 
-type ItemDto struct {
+type ItemResponseDto struct {
 	ItemId      string `json:"id"`
 	Titulo      string `json:"titulo"`
 	Tipo        string `json:"tipo"`
@@ -21,4 +21,4 @@ type ItemDto struct {
 	UApellido   string `json:"usuario_apellido"`
 	UEmail      string `json:"usuario_email"`
 }
-type ItemsDto []ItemDto
+type ItemsResponseDto []ItemResponseDto

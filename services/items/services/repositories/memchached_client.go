@@ -6,6 +6,7 @@ import (
 	json "github.com/json-iterator/go"
 	"items/dto"
 	e "items/utils/errors"
+	"strconv"
 )
 
 type MemcachedClient struct {
@@ -54,7 +55,7 @@ func (repo *MemcachedClient) InsertItem(item dto.ItemDto) (dto.ItemDto, e.ApiErr
 	return item, nil
 }
 
-func (repo *MemcachedClient) Update(item dto.ItemDto) (dto.ItemDto, e.ApiError) {
+func (repo *MemcachedClient) UpdateItem(item dto.ItemDto) (dto.ItemDto, e.ApiError) {
 	bytes, err := json.Marshal(item)
 	if err != nil {
 		return dto.ItemDto{}, e.NewBadRequestApiError(fmt.Sprintf("invalid item %s: %v", item.ItemId, err))
@@ -70,10 +71,60 @@ func (repo *MemcachedClient) Update(item dto.ItemDto) (dto.ItemDto, e.ApiError) 
 	return item, nil
 }
 
-func (repo *MemcachedClient) Delete(id string) e.ApiError {
+func (repo *MemcachedClient) DeleteItem(id string) e.ApiError {
 	err := repo.Client.Delete(id)
 	if err != nil {
 		return e.NewInternalServerApiError(fmt.Sprintf("error deleting item %s", id), err)
 	}
 	return nil
+}
+
+func (repo *MemcachedClient) InsertUser(user dto.UserDto) (dto.UserDto, e.ApiError) {
+	bytes, err := json.Marshal(user)
+	if err != nil {
+		return dto.UserDto{}, e.NewBadRequestApiError(err.Error())
+	}
+
+	if err := repo.Client.Set(&memcache.Item{
+		Key:        strconv.Itoa(user.UserId),
+		Value:      bytes,
+		Expiration: 5000,
+	}); err != nil {
+		return dto.UserDto{}, e.NewInternalServerApiError(fmt.Sprintf("error inserting item %d", user.UserId), err)
+	}
+
+	return user, nil
+}
+
+func (repo *MemcachedClient) UpdateUser(user dto.UserDto) (dto.UserDto, e.ApiError) {
+	bytes, err := json.Marshal(user)
+	if err != nil {
+		return dto.UserDto{}, e.NewBadRequestApiError(fmt.Sprintf("invalid item %s: %v", user.UserId, err))
+	}
+
+	if err := repo.Client.Set(&memcache.Item{
+		Key:   strconv.Itoa(user.UserId),
+		Value: bytes,
+	}); err != nil {
+		return dto.UserDto{}, e.NewInternalServerApiError(fmt.Sprintf("error updating item %s", user.UserId), err)
+	}
+
+	return user, nil
+}
+
+func (repo *MemcachedClient) GetUserById(id int) (dto.UserDto, e.ApiError) {
+	user, err := repo.Client.Get(strconv.Itoa(id))
+	if err != nil {
+		if err == memcache.ErrCacheMiss {
+			return dto.UserDto{}, e.NewNotFoundApiError(fmt.Sprintf("user %d not found", id))
+		}
+		return dto.UserDto{}, e.NewInternalServerApiError(fmt.Sprintf("error getting user %d", id), err)
+	}
+
+	var userDto dto.UserDto
+	if err := json.Unmarshal(user.Value, &userDto); err != nil {
+		return dto.UserDto{}, e.NewInternalServerApiError(fmt.Sprintf("error getting user %d", id), err)
+	}
+
+	return userDto, nil
 }

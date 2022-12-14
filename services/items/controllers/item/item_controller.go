@@ -20,7 +20,7 @@ var (
 )
 
 func GetItemById(c *gin.Context) {
-	var itemDto dto.ItemDto
+	var itemDto dto.ItemResponseDto
 	id := c.Param("item_id")
 	itemDto, err := itemService.GetItemById(id)
 
