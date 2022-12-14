@@ -134,8 +134,10 @@ Response:
 ***
 ### Messages
 **GET**- /messages/:id
-Ejemplo: /messages/2 
-Response:
+
+ Ejemplo: /messages/2 
+ 
+ Response:
 ***
     {
         "messages_id": 2,
@@ -143,8 +145,10 @@ Response:
     }
 ***
 **GET**-/messages 
-Ejemplo: /messages 
-Response:
+
+ Ejemplo: /messages 
+ 
+ Response:
 ***
       {
         "message_id":  2,
@@ -154,7 +158,9 @@ Response:
     }
 ***
 **GET**-/users/:id/messages 
+
 Ejemplo: /users/:id/messages
+
 Response:
 ***
     {
@@ -163,7 +169,9 @@ Response:
     }
 ***
 **POST**-/message
+
 Ejemplo: /message
+
 Body:
 ***
     {
@@ -175,48 +183,56 @@ Body:
 ***
 ### Users
 **Get**-/users/:id
-Ejemplo: /users/2
-Response:
+
+ Ejemplo: /users/2
+ 
+ Response:
 ***
-{
+    {
     "user_id": 2,
     "username": "pedro",
     ...
-}
+    }
 ***
 **Get**-/users
-Ejemplo: /users
-Response:
+
+ Ejemplo: /users
+ 
+ Response:
 ***
-{
+    {
     "user_id": 2,
     "username": "pedro",
     ...
-}
+    }
 ***
 **Post**-/user
-Ejemplo: /user
-Body:
+
+ Ejemplo: /user
+ 
+ Body:
 ***
-{
+    {
     "username": "pedro",
     "password": "1234",
     ...
-}
+    }
 ***
 **Delete**-/user/:id
-Ejemplo: /user/3
-Response:  OK! 
+ 
+ Ejemplo: /user/3
+ 
+ Response:  OK! 
 
 **Post**-/login
 Ejemplo: /login
 Body:
 ***
-{
+    {
     "username": "juan",
     "password": "1234",
     ...
-}
+    }
 ***
 ### Worker_items
 
