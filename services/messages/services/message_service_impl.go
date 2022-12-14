@@ -91,6 +91,7 @@ func (s *MessageServiceImpl) InsertMessage(messageDto dto.MessageDto) (dto.Messa
 	message.ItemId = messageDto.ItemId
 	message.Body = messageDto.Body
 	message.ID = messageDto.MessageId
+	message.System = messageDto.System
 
 	message = s.messageDB.InsertMessage(message)
 

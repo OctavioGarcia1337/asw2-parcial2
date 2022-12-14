@@ -16,4 +16,8 @@ var (
 	USERSHOST     = "users"
 	USERSPORT     = 9000
 	USERSENDPOINT = "users"
+
+	MESSAGESHOST     = "messages"
+	MESSAGESPORT     = 9001
+	MESSAGESENDPOINT = "message"
 )

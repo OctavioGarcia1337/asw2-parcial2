@@ -1,0 +1,11 @@
+name: Testing
+run-name: ${{ github.actor }} ASW2 Project
+on: [push]
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Testing Step
+        id: test
+        uses: ./services/busqueda
+

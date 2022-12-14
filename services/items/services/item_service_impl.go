@@ -1,6 +1,7 @@
 package services
 
 import (
+	"bytes"
 	"fmt"
 	json "github.com/json-iterator/go"
 	log "github.com/sirupsen/logrus"
@@ -138,19 +139,60 @@ func (s *ItemServiceImpl) InsertItem(itemDto dto.ItemDto) (dto.ItemDto, e.ApiErr
 	return itemDto, nil
 }
 
+func CheckQueue(processed chan string, total int, userid int) {
+	var complete int
+	var errors int
+	for loop := true; loop; {
+		select {
+		case data := <-processed:
+			if data == "error" {
+				errors++
+			} else {
+				complete++
+			}
+			if errors+complete == total {
+				loop = false
+			}
+		default:
+			log.Debugf("waiting for %d more messages", total-complete-errors)
+		}
+	}
+	var body []byte
+	var message dto.MessageDto
+	message.UserId = userid
+	message.System = true
+	message.Body = fmt.Sprintf("Processed items total = %d, Completed: %d, Errors: %d", complete+errors, complete, errors)
+	body, err := json.Marshal(&message)
+
+	if err != nil {
+		panic(e.NewInternalServerApiError("Error marshaling in sending message", err))
+	}
+	_, err = http.Post(fmt.Sprintf("http://%s:%d/%s", config.MESSAGESHOST, config.MESSAGESPORT, config.MESSAGESENDPOINT), "application/json", bytes.NewBuffer(body))
+	if err != nil {
+		panic(e.NewInternalServerApiError("Error sending message to message service", err))
+
+	}
+}
+
 func (s *ItemServiceImpl) QueueItems(itemsDto dto.ItemsDto) e.ApiError {
+	total := len(itemsDto)
+	processed := make(chan string, total)
 	for i := range itemsDto {
 		var item dto.ItemDto
 		item = itemsDto[i]
 		go func() {
 			item, err := s.item.InsertItem(item)
 			if err != nil {
+				processed <- "error"
 				log.Debug(err)
 			}
+			processed <- "complete"
 			err = s.queue.SendMessage(item.ItemId, "create", item.ItemId)
 			log.Debug(err)
 		}()
 	}
+
+	go CheckQueue(processed, total, itemsDto[0].UsuarioId)
 	return nil
 }
 

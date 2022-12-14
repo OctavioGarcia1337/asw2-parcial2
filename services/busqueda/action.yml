@@ -1,0 +1,6 @@
+# action.yml
+name: 'Busqueda'
+description: 'Conexion con SOLR para busqueda de items'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
