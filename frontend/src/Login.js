@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./css/Login.css";
 import Cookies from "universal-cookie";
+import logo from "./images/logo.svg"
 
 const Cookie = new Cookies();
 
@@ -83,11 +84,25 @@ function Login() {
   );
 
   return (
+    <div>
+    <div className="home">
+      <div className="topnavHOME">
+        <div>
+          <img src={logo} width="80px" height="80px" id="logo" onClick={()=>goto("/")} /> <p> TuCasa.com </p>
+        </div>
+      </div>
+    </div>
+
+    <div id="mySidenav" className="sidenav" > 
+      <a id="register" onClick={()=>goto("/register")}>Register</a>
+    </div>
+
     <div className="app">
       <div className="login-form">
         <div className="title">BIENVENIDOS</div>
         {isSubmitted || Cookie.get("user_id") > -1 ? Cookie.get("username") : renderForm}
       </div>
+    </div>
     </div>
   );
 }

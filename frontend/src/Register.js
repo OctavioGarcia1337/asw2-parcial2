@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./css/Register.css";
 import Cookies from "universal-cookie";
+import logo from "./images/logo.svg"
 
 const Cookie = new Cookies();
 
@@ -89,12 +90,24 @@ function Register() {
 
 
   return (
+    <div>
+    <div className="home">
+      <div className="topnavHOME">
+        <div>
+          <img src={logo} width="80px" height="80px" id="logo" onClick={()=>goto("/")} /> <p> TuCasa.com </p>
+        </div>
+      </div>
+    </div>
+    <div id="mySidenav" className="sidenav" > 
+      <a id="login" onClick={()=>goto("/login")}>Login</a>
+    </div>
     <div className="app">
       <div className="login-form">
         <div className="title">CREAR UN USUARIO</div>
 
         {isSubmitted || Cookie.get("user_id") > -1 ? Cookie.get("username") : renderForm}
       </div>
+    </div>
     </div>
   );
 }

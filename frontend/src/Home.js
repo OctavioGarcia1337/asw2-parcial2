@@ -9,6 +9,17 @@ import {HOST, PORT} from "./config/config";
 const URL = HOST + ":" + PORT
 const Cookie = new Cookies();
 
+async function getUserById(id){
+    return await fetch('http://localhost:8090/user/' + id, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(response => response.json())
+
+}
+
+
 async function getItems(){
   return await fetch(URL + "/search=*_*", {
     method: "GET",
@@ -93,11 +104,23 @@ async function getItemsBySearchAll(query){
 }
 
 function Home() {
+  const [isLogged, setIsLogged] = useState(false)
+  const [user, setUser] = useState({})
   const [items, setItems] = useState([])
   const [needItems, setNeedItems] = useState(true)
   const [failedSearch, setFailedSearch] = useState(false)
   const [querying, setQuerying] = useState(false)
   const [query, setQuery] = useState("")
+
+  if (Cookie.get("user_id") > -1 && !isLogged){
+    getUserById(Cookie.get("user_id")).then(response => setUser(response))
+    setIsLogged(true)
+  }
+
+  if (!(Cookie.get("user_id") > -1) && isLogged){
+    setIsLogged(false)
+  }
+
 
   if(!items.length && needItems){
     getItems().then(response => setItems(response))
@@ -189,6 +212,50 @@ function Home() {
   }
 
 
+  /* Funciones con cookies
+
+  function productsByCategoryId(id, setter, categorySetter) {
+    getProductsByCategoryId(id).then(response => {setter(response); 
+    Cookie.set("category", id); getCategoryById(id).then(category => categorySetter(category))})
+  }
+
+  function addToCart(id, setCartItems){
+    let cookie = Cookie.get("cart");
+  
+    if(cookie == undefined){
+      Cookie.set("cart", id + ",1;", {path: "/"});
+      setCartItems(1)
+      return
+    }
+    let newCookie = ""
+    let isNewItem = true
+    let toCompare = cookie.split(";")
+    let total = 0;
+    toCompare.forEach((item) => {
+      if(item != ""){
+        let array = item.split(",")
+        let item_id = array[0]
+        let item_quantity = array[1]
+        if(id == item_id){
+          item_quantity = Number(item_quantity) + 1
+          isNewItem = false
+        }
+        newCookie += item_id + "," + item_quantity + ";"
+        total += Number(item_quantity);
+      }
+    });
+    if(isNewItem){
+      newCookie += id + ",1;"
+      total += 1;
+    }
+    cookie = newCookie
+    Cookie.set("cart", cookie, {path: "/"})
+    Cookie.set("cartItems", total, {path: "/"})
+    setCartItems(total)
+    return
+  }*/
+  
+
   return (
     <div className="home">
       <div className="topnavHOME">
@@ -197,21 +264,27 @@ function Home() {
         </div>
 
         <div>
+        
+          
+        
           <input type="text" id="search" placeholder="Search..." onKeyDown={(e) => e.key === "Enter" ? searchAllDelete(e) : void(0)} onKeyUp={
             (e)=>{
               setQuery(e.target.value)
               if(e.target.value == ""){
                 setQuerying(false)
               }else{
-                setQuerying(true)}
-            }
-          }/>
+                setQuerying(true)
+                }
+              }}/>
+              {isLogged ? login : <a id="login" onClick={()=>goto("/login")}>Login</a>}
           {querying ? options : void(0)}
         </div>
-
       </div>
 
       <div id="mySidenav" className="sidenav" > 
+        <a id="login" onClick={()=>goto("/login")}>Login</a>
+        <a id="register" onClick={()=>goto("/register")}>Register</a>
+        <a id="sistema" onClick={()=>goto("/sistema")}>Sistema</a>
       </div>
 
       <div id="main">

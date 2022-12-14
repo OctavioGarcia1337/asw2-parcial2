@@ -19,7 +19,6 @@ async function getItems(){
   }).then(response => response.json())
 }
 
-
 function goto(path){
   window.location = window.location.origin + path
 }
@@ -34,8 +33,6 @@ function parseField(field){
   }
   return "Not available"
 }
-
-
 
 function showItem(items){
   return items.map((item) =>
@@ -83,6 +80,8 @@ async function getItemsBySearch(field, query){
 }
 
 function Item() {
+  const [isLogged, setIsLogged] = useState(false)
+  const [user, setUser] = useState({})
   const [items, setItems] = useState([])
   const [needItems, setNeedItems] = useState(true)
   const [failedSearch, setFailedSearch] = useState(false)
@@ -120,11 +119,11 @@ async function searchQuery(field, query){
       <div className="options-div">
         <div>
           <a onClick={()=>searchQuery("titulo", query)}>Titulo: <span>{query}</span></a>
-          <a onClick={()=>searchQuery("titulo", query)}>Tipo: <span>{query}</span></a>
-          <a onClick={()=>searchQuery("titulo", query)}>Descripcion: <span>{query}</span></a>
-          <a onClick={()=>searchQuery("titulo", query)}>Ubicacion: <span>{query}</span></a>
-          <a onClick={()=>searchQuery("titulo", query)}>Barrio: <span>{query}</span></a>
-          <a onClick={()=>searchQuery("titulo", query)}>Vendedor: <span>{query}</span></a>
+          <a onClick={()=>searchQuery("tipo", query)}>Tipo: <span>{query}</span></a>
+          <a onClick={()=>searchQuery("descripcion", query)}>Descripcion: <span>{query}</span></a>
+          <a onClick={()=>searchQuery("ubicacion", query)}>Ubicacion: <span>{query}</span></a>
+          <a onClick={()=>searchQuery("barrio", query)}>Barrio: <span>{query}</span></a>
+          <a onClick={()=>searchQuery("vendedor", query)}>Vendedor: <span>{query}</span></a>
         </div>
       </div>
   )
@@ -145,6 +144,53 @@ async function searchQuery(field, query){
     searchQuery("*","*") // segundo * sacar de localstorage id
   }
 
+  /* Funciones con cookies
+
+  function productsByCategoryId(id, setter, categorySetter) {
+    getProductsByCategoryId(id).then(response => {setter(response); 
+    Cookie.set("category", id); getCategoryById(id).then(category => categorySetter(category))})
+  }
+
+  function addToCart(id, setCartItems){
+    let cookie = Cookie.get("cart");
+  
+    if(cookie == undefined){
+      Cookie.set("cart", id + ",1;", {path: "/"});
+      setCartItems(1)
+      return
+    }
+    let newCookie = ""
+    let isNewItem = true
+    let toCompare = cookie.split(";")
+    let total = 0;
+    toCompare.forEach((item) => {
+      if(item != ""){
+        let array = item.split(",")
+        let item_id = array[0]
+        let item_quantity = array[1]
+        if(id == item_id){
+          item_quantity = Number(item_quantity) + 1
+          isNewItem = false
+        }
+        newCookie += item_id + "," + item_quantity + ";"
+        total += Number(item_quantity);
+      }
+    });
+    if(isNewItem){
+      newCookie += id + ",1;"
+      total += 1;
+    }
+    cookie = newCookie
+    Cookie.set("cart", cookie, {path: "/"})
+    Cookie.set("cartItems", total, {path: "/"})
+    setCartItems(total)
+    return
+  }*/
+
+
+
+
+
   return (
     <div className="home">
         <div className="topnavHOME">
@@ -153,7 +199,11 @@ async function searchQuery(field, query){
             </div>
         </div>
 
-        <div id="mySidenav" className="sidenav"></div>
+        <div id="mySidenav" className="sidenav" > 
+          <a id="login" onClick={()=>goto("/login")}>Login</a>
+          <a id="register" onClick={()=>goto("/register")}>Register</a>
+          <a id="sistema" onClick={()=>goto("/sistema")}>Sistema</a>
+        </div>
 
         <div id="main">
             {failedSearch ? renderFailedSearch : void(0)}
