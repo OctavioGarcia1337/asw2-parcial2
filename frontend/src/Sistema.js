@@ -11,7 +11,7 @@ const URL = HOST + ":" + PORT
 const Cookie = new Cookies();
 
 async function getSystems(){
-  return await fetch( HOST + ":8090" + "/systems", {
+  return await fetch(URL + "/search=*_*", {
     method: "GET",
     headers: {
       "Content-Type": "application/json"
@@ -20,14 +20,13 @@ async function getSystems(){
 }
 
 async function setSystems(){
-    return await fetch( HOST + ":8090" + "/system", {
+    return await fetch(URL + "/search=*_*", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       }
     }).then(response => response.json())
   }
-
 
 function goto(path){
   window.location = window.location.origin + path
@@ -45,19 +44,22 @@ function parseField(field){
 }
 
 function showSystem(systems){
-  return systems.map((System) =>
-   <div obj={System} key={System.id} className="System">
+  return systems.map((system) =>
+   <div obj={system} key={system.id} className="System">
         <div>
-            <button POST> </button>
-
+            <a className="title">{parseField(system.titulo)}</a>
+        </div>
+        <div>
+            <button onClick={()=>getSystems()}> GET </button>
+            <button onClick={()=>setSystems()}> POST </button>
         </div>
     </div>
     ) 
 }
 
-
+// Probablemente hay que eliminar muchas de estas funciones
 async function getSystemsBySearch(field, query){
-  return fetch( HOST + ":8090" + "/systems", {
+  return fetch( URL + "/search=" + "id" + "_" + localStorage.getSystem("id"), {
     method: "GET",
     header: "Content-Type: application/json"
   }).then(response=>response.json())
@@ -99,7 +101,18 @@ async function searchQuery(field, query){
     })
 }
 
-
+  const options= (
+      <div className="options-div">
+        <div>
+          <a onClick={()=>searchQuery("titulo", query)}>Titulo: <span>{query}</span></a>
+          <a onClick={()=>searchQuery("tipo", query)}>Tipo: <span>{query}</span></a>
+          <a onClick={()=>searchQuery("descripcion", query)}>Descripcion: <span>{query}</span></a>
+          <a onClick={()=>searchQuery("ubicacion", query)}>Ubicacion: <span>{query}</span></a>
+          <a onClick={()=>searchQuery("barrio", query)}>Barrio: <span>{query}</span></a>
+          <a onClick={()=>searchQuery("vendedor", query)}>Vendedor: <span>{query}</span></a>
+        </div>
+      </div>
+  )
 
   const login = (
 
@@ -136,17 +149,17 @@ async function searchQuery(field, query){
     let isNewSystem = true
     let toCompare = cookie.split(";")
     let total = 0;
-    toCompare.forEach((System) => {
-      if(System != ""){
-        let array = System.split(",")
-        let System_id = array[0]
-        let System_quantity = array[1]
-        if(id == System_id){
-          System_quantity = Number(System_quantity) + 1
+    toCompare.forEach((system) => {
+      if(system != ""){
+        let array = system.split(",")
+        let system_id = array[0]
+        let system_quantity = array[1]
+        if(id == system_id){
+          system_quantity = Number(system_quantity) + 1
           isNewSystem = false
         }
-        newCookie += System_id + "," + System_quantity + ";"
-        total += Number(System_quantity);
+        newCookie += system_id + "," + system_quantity + ";"
+        total += Number(system_quantity);
       }
     });
     if(isNewSystem){
@@ -173,6 +186,9 @@ async function searchQuery(field, query){
         </div>
 
         <div id="mySidenav" className="sidenav" > 
+          <a id="login" onClick={()=>goto("/login")}>Login</a>
+          <a id="register" onClick={()=>goto("/register")}>Register</a>
+          <a id="publications" onClick={()=>goto("/publications")}>Publicaciones</a>
         </div>
 
         <div id="main">

@@ -94,8 +94,10 @@ function Login() {
     </div>
 
     <div id="mySidenav" className="sidenav" > 
-      <a id="register" onClick={()=>goto("/register")}>Register</a>
-    </div>
+          <a id="register" onClick={()=>goto("/register")}>Register</a>
+          <a id="sistema" onClick={()=>goto("/sistema")}>Sistema</a>
+          <a id="publications" onClick={()=>goto("/publications")}>Publicaciones</a>
+        </div>
 
     <div className="app">
       <div className="login-form">
