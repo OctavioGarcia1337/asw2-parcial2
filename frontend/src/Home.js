@@ -120,9 +120,8 @@ function Home() {
   const [query, setQuery] = useState("")
 
   if (Cookie.get("user_id") > -1 && !isLogged){
-    getUserById(Cookie.get("user_id")).then(response => setUser(response))
-    Cookie.set("first_name", user.first_name)
     setIsLogged(true)
+    getUserById(Cookie.get("user_id")).then(response => setUser(response)).then(r => Cookie.set("first_name", user.first_name))
   }
 
   if (!(Cookie.get("user_id") > -1) && isLogged){

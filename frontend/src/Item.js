@@ -68,7 +68,7 @@ function showItem(item){
             <a className="bathrooms"> - Baños: {parseField(item.banos)}</a>
         </div>
         <div>
-          <Comments first_name={Cookie.get("first_name")} />
+          <Comments first_name={Cookie.get("first_name")} item={localStorage.getItem("id")} uid={Number(Cookie.get("user_id"))} />
         </div>
     </div>
 )

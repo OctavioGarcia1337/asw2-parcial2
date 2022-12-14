@@ -10,15 +10,13 @@ import "./css/Item.css";
 
 
 
-const Comments = ({ first_name }) => {
+const Comments = ({ first_name, uid, item}) => {
   const [backendComments, setBackendComments] = useState([]);
   const [activeComment, setActiveComment] = useState(null);
-  const rootComments = backendComments.filter(
-      (comment) => comment.item_id === localStorage.getItem("id")
-  );
+  const rootComments = backendComments.filter((backendComment) => backendComment.item_id === item);
 
   const addComment = (text) => {
-    createCommentApi(text).then((comment) => {
+    createCommentApi(text, uid, item).then((comment) => {
       setBackendComments([comment, ...backendComments]);
       setActiveComment(null);
     });

@@ -14,25 +14,17 @@ export const getComments = async (type, id) => { // cambiar por un GET a la BD
 }
 export const createComment = async (text, uid, itemid) => { //cambiar por un POST
 
-  await fetch(URL + "/message", {
+  return await fetch(URL + "/message", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body:{
-      body: text,
+    body:JSON.stringify({
       user_id: uid,
+      body: text,
       item_id: itemid,
       system: false,
-    }
+    })
   }).then(response => response.json())
-      .then(response => {
-    return {
-      body: text,
-      user_id: uid,
-      item_id: itemid,
-      createdAt: response.created_at,
-    }
-  });
   
 };
