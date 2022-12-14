@@ -123,7 +123,14 @@ function Home() {
 
 
   if(!items.length && needItems){
-    getItems().then(response => setItems(response))
+    getItems().then(response => {
+      if (response != null){
+        setItems(response)
+      }
+      else{
+        setItems([])
+      }
+    })
     setNeedItems(false)
   }
 
@@ -144,7 +151,6 @@ function Home() {
         setFailedSearch(false)
         getItems().then(response => setItems(response))
       }
-      setQuery("");
     })
   }
     async function searchQuery(field, query){
@@ -165,7 +171,6 @@ function Home() {
           setFailedSearch(false)
           getItems().then(response=>setItems(response))
         }
-        setQuery("");
       })
     }
   

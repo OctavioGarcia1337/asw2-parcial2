@@ -12,7 +12,7 @@
   "mts2": 100,
   "ambientes": 4,
   "url_img": "https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/styles/855/public/media/image/2019/07/gta-online-propiedades_3.jpg",
-  "expensas": 10000
+  "usuario_id": 1, "expensas": 10000
 },
 {
   "titulo": "Castillo Aldeano",
@@ -27,7 +27,7 @@
   "mts2": 4,
   "ambientes": 2,
   "url_img": "https://i0.wp.com/parradesign.net/wp-content/uploads/2022/03/snapshot-2.jpg",
-  "expensas": 64
+  "usuario_id": 1, "expensas": 64
 },
 {
   "titulo": "minecraft",
@@ -42,7 +42,7 @@
   "mts2": 400,
   "ambientes": 8,
   "url_img": "https://comoconfigurarpc.org/wp-content/uploads/2021/12/Minecraft-Two-Player-Medieval-House-600x338.png",
-  "expensas": 0
+  "usuario_id": 1, "expensas": 0
 },
 {
   "titulo": "Casa Toreto",
@@ -57,7 +57,7 @@
   "mts2": 50,
   "ambientes": 4,
   "url_img": "https://conteudo.imguol.com.br/c/entretenimento/72/2019/11/22/casa-de-dom-e-mia-em-los-angeles-1574434492517_v2_615x300.jpg",
-  "expensas": 0
+  "usuario_id": 1, "expensas": 0
 },
 {
   "titulo": "Residencia Franklin",
@@ -72,7 +72,7 @@
   "mts2": 50,
   "ambientes": 4,
   "url_img": "https://static.wikia.nocookie.net/esgta/images/e/e5/ResidenciaClintonNextGenV.jpg/revision/latest?cb=20141121201436",
-  "expensas": 0
+  "usuario_id": 1, "expensas": 0
 },
 {
   "titulo": "Pollo",
@@ -87,7 +87,7 @@
   "mts2": 100,
   "ambientes": 1,
   "url_img": "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/OIDUFKXGDNG5HIYNHCTJVYCOSU.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Benja's house",
@@ -102,7 +102,7 @@
   "mts2": 150,
   "ambientes": 5,
   "url_img": "https://imgcla.lavoz.com.ar/files/imagecache/ficha_aviso_mobile_462_253/notas/duplex_1_1643796502-779.jpg",
-  "expensas": 45000
+  "usuario_id": 1, "expensas": 45000
 },
 {
   "titulo": "Juan's house",
@@ -117,7 +117,7 @@
   "mts2": 300,
   "ambientes": 15,
   "url_img": "https://e00-expansion.uecdn.es/assets/multimedia/imagenes/2021/04/16/16185679347539.jpg",
-  "expensas": 60000
+  "usuario_id": 1, "expensas": 60000
 },
 {
   "titulo": "Lautaro",
@@ -132,7 +132,7 @@
   "mts2": 340,
   "ambientes": 8,
   "url_img": "https://static.abc.es/media/MM/2021/08/24/2_the_weeknd_mansion_bel_air-ke61597x900@abc.jpg",
-  "expensas": 50000
+  "usuario_id": 1, "expensas": 50000
 },
 {
   "titulo": "tacho",
@@ -147,7 +147,7 @@
   "mts2": 1,
   "ambientes": 1,
   "url_img": "https://cdn.wamiz.fr/cdn-cgi/image/format=auto,quality=80,width=400,height=200,fit=cover/article/main-picture/5d934508474a1812482617.jpg",
-  "expensas": 0
+  "usuario_id": 1, "expensas": 0
 },
 {
   "titulo": "Buena Vista",
@@ -162,7 +162,7 @@
   "mts2": 200,
   "ambientes": 4,
   "url_img": "https://media-cdn.tripadvisor.com/media/vr-splice-j/06/0f/4c/90.jpg",
-  "expensas": 40000
+  "usuario_id": 1, "expensas": 40000
 },
 {
   "titulo": "Pozo dpto. Las Venturas A-I",
@@ -177,7 +177,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas A-II",
@@ -192,7 +192,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas A-III",
@@ -207,7 +207,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas A-IV",
@@ -222,7 +222,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas A-V",
@@ -237,7 +237,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas B-I",
@@ -252,7 +252,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas B-II",
@@ -267,7 +267,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas B-III",
@@ -282,7 +282,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas B-IV",
@@ -297,7 +297,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas B-V",
@@ -312,7 +312,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas C-I",
@@ -327,7 +327,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas C-II",
@@ -342,7 +342,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas C-III",
@@ -357,7 +357,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas C-IV",
@@ -372,7 +372,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas C-V",
@@ -387,7 +387,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas D-I",
@@ -402,7 +402,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas D-II",
@@ -417,7 +417,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas D-III",
@@ -432,7 +432,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas D-IV",
@@ -447,7 +447,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas D-V",
@@ -462,7 +462,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas E-I",
@@ -477,7 +477,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas E-II",
@@ -492,7 +492,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas E-III",
@@ -507,7 +507,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas E-IV",
@@ -522,7 +522,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas E-V",
@@ -537,7 +537,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas F-I",
@@ -552,7 +552,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas F-II",
@@ -567,7 +567,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas F-III",
@@ -582,7 +582,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas F-IV",
@@ -597,7 +597,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas F-V",
@@ -612,7 +612,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas G-I",
@@ -627,7 +627,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas G-II",
@@ -642,7 +642,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas G-III",
@@ -657,7 +657,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas G-IV",
@@ -672,7 +672,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas G-V",
@@ -687,7 +687,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas H-I",
@@ -702,7 +702,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas H-II",
@@ -717,7 +717,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas H-III",
@@ -732,7 +732,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas H-IV",
@@ -747,7 +747,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas H-V",
@@ -762,7 +762,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas J-I",
@@ -777,7 +777,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas J-II",
@@ -792,7 +792,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas J-III",
@@ -807,7 +807,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas J-IV",
@@ -822,7 +822,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas J-V",
@@ -837,7 +837,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas K-I",
@@ -852,7 +852,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas K-II",
@@ -867,7 +867,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas K-III",
@@ -882,7 +882,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas K-IV",
@@ -897,7 +897,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas K-V",
@@ -912,7 +912,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas L-I",
@@ -927,7 +927,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas L-II",
@@ -942,7 +942,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas L-III",
@@ -957,7 +957,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas L-IV",
@@ -972,7 +972,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas L-V",
@@ -987,7 +987,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas M-I",
@@ -1002,7 +1002,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas M-II",
@@ -1017,7 +1017,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas M-III",
@@ -1032,7 +1032,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas M-IV",
@@ -1047,7 +1047,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas M-V",
@@ -1062,7 +1062,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas N-I",
@@ -1077,7 +1077,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas N-II",
@@ -1092,7 +1092,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas N-III",
@@ -1107,7 +1107,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas N-IV",
@@ -1122,7 +1122,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas N-V",
@@ -1137,7 +1137,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas O-I",
@@ -1152,7 +1152,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas O-II",
@@ -1167,7 +1167,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas O-III",
@@ -1182,7 +1182,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas O-IV",
@@ -1197,7 +1197,7 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 },
 {
   "titulo": "Pozo dpto. Las Venturas O-V",
@@ -1212,6 +1212,6 @@
   "mts2": 200,
   "ambientes": 5,
   "url_img": "https://static2.mansionglobal.com/production/media/article-images/b36cdb44653aafd01bc9266cffa94614/large_BN-QK659_LIU_02_M_20161024142745.jpg",
-  "expensas": 30000
+  "usuario_id": 1, "expensas": 30000
 }
 ]
