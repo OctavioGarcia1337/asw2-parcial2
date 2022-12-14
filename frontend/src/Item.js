@@ -203,6 +203,7 @@ async function searchQuery(field, query){
           <a id="login" onClick={()=>goto("/login")}>Login</a>
           <a id="register" onClick={()=>goto("/register")}>Register</a>
           <a id="sistema" onClick={()=>goto("/sistema")}>Sistema</a>
+          <a id="publications" onClick={()=>goto("/publications")}>Publicaciones</a>
         </div>
 
         <div id="main">

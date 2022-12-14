@@ -6,6 +6,7 @@ import Login from "./Login"
 import Register from "./Register"
 import Item from "./Item"
 import Sistema from "./Sistema"
+import Publication from "./Publication"
 
 function App(){
 return (
@@ -16,6 +17,7 @@ return (
         <Route path= "/register" element={<Register/>}/>
         <Route path= "/item" element={<Item/>}/>
         <Route path= "/sistema" element={<Sistema/>}/>
+        <Route path= "/publications" element={<Publication/>}/>
       </Routes>
     </Router>
   );

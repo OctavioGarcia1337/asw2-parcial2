@@ -98,9 +98,13 @@ function Register() {
         </div>
       </div>
     </div>
+
     <div id="mySidenav" className="sidenav" > 
       <a id="login" onClick={()=>goto("/login")}>Login</a>
+      <a id="sistema" onClick={()=>goto("/sistema")}>Sistema</a>
+      <a id="publications" onClick={()=>goto("/publications")}>Publicaciones</a>
     </div>
+
     <div className="app">
       <div className="login-form">
         <div className="title">CREAR UN USUARIO</div>
