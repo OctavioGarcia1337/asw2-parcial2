@@ -312,6 +312,10 @@ En nuestra implementacion el servicio contiene 2 metodos:
                 Busca el Item en cache.
                 De no encontrarlo lo busca en la Base de datos y lo carga en cache.
                 Devuelve el item como archivo .json.
+		
+|http://localhost:3001/d/k6/k6-load-testing-results?orgId=1&refresh=5s|
+
+|docker-compose run k6 run /scripts/ewoks.js|
 
 ### **Messages** 
 Este servicio es el encargado de gestionar los mensajes de comentarios como su nombre lo indica y mediante sus GETS permite Acceder a los ids de los mensajes, su contenido, sus usuarios y filtrar por el el mismo. tambien posee una funcion POST con la cual por medio de un body podemos cargar mensajes y por ultimo con el metodo DELETE sumado al id del respectivo mensaje es posible eliminarlos.
