@@ -92,11 +92,15 @@ function Item() {
 
 
     if (Cookie.get("user_id") > -1 && !isLogged){
-        getUserById(Cookie.get("user_id")).then(response => setUser(response));
+        getUserById(Cookie.get("user_id")).then(response => {
+            setUser(response);
+            Cookie.set("first_name", response.first_name)
+        });
         setIsLogged(true);
     }
 
     if (!(Cookie.get("user_id") > -1) && isLogged){
+        Cookie.set("first_name", "Anonymous")
         setIsLogged(false);
     }
 
@@ -128,6 +132,7 @@ function Item() {
           <a id="register" onClick={()=>goto("/register")}>Register</a>
           <a id="sistema" onClick={()=>goto("/sistema")}>Sistema</a>
           <a id="publications" onClick={()=>goto("/publications")}>Publicaciones</a>
+          <a id="mycomments" onClick={()=>goto("/mycomments")}>Mis Comentarios</a>
         </div>
 
         <div id="main">

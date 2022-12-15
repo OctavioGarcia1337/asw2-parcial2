@@ -7,10 +7,7 @@ import {
 } from "./CommentBD";
 import "./css/Item.css";
 
-
-
-
-const Comments = ({ first_name, uid, item}) => {
+const Comments = ({ uid, item}) => {
   const [backendComments, setBackendComments] = useState([]);
   const [activeComment, setActiveComment] = useState(null);
   const rootComments = backendComments.filter((backendComment) => backendComment.item_id === item);
@@ -41,7 +38,7 @@ const Comments = ({ first_name, uid, item}) => {
             activeComment={activeComment}
             setActiveComment={setActiveComment}
             addComment={addComment}
-            firstName={first_name}
+            first_name={rootComment.first_name}
           />
         ))}
       </div>

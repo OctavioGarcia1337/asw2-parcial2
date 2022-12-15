@@ -4,7 +4,7 @@ import "./css/Item.css";
 const Comment = ({
   comment,
   activeComment,
-  firstName,
+  first_name,
   item_id,
 
 }) => {
@@ -21,7 +21,7 @@ const Comment = ({
       </div>
       <div className="comment-right-part">
         <div className="comment-content">
-          <div className="comment-author">{firstName}</div>
+          <div className="comment-author">{comment.first_name}</div>
           <div>{createdAt}</div>
         </div>
         {!isEditing && <div className="comment-text">{comment.body}</div>}
