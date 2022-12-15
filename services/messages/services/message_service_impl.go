@@ -38,12 +38,15 @@ func (s *MessageServiceImpl) GetMessageById(id int) (dto.MessageDto, e.ApiError)
 	messageDto.ItemId = message.ItemId
 	messageDto.Body = message.Body
 	messageDto.CreatedAt = message.CreatedAt
+	messageDto.System = message.System
 	return messageDto, nil
 }
 
 func (s *MessageServiceImpl) DeleteMessageById(id int) e.ApiError {
 
-	err := s.messageDB.DeleteMessageById(id)
+	var message model.Message
+	message.ID = id
+	err := s.messageDB.DeleteMessageById(message)
 	if err != nil {
 		return e.NewInternalServerApiError("Error deleting message", err)
 	}
@@ -66,6 +69,7 @@ func (s *MessageServiceImpl) GetMessagesByUserId(id int) (dto.MessagesDto, e.Api
 		messageDto.ItemId = message.ItemId
 		messageDto.Body = message.Body
 		messageDto.MessageId = message.ID
+		messageDto.System = message.System
 
 		messagesDto = append(messagesDto, messageDto)
 	}
@@ -84,6 +88,7 @@ func (s *MessageServiceImpl) GetMessages() (dto.MessagesDto, e.ApiError) {
 		messageDto.ItemId = message.ItemId
 		messageDto.Body = message.Body
 		messageDto.MessageId = message.ID
+		messageDto.System = message.System
 
 		messagesDto = append(messagesDto, messageDto)
 	}

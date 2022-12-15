@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import "./css/Orders.css";
 import logo from "./images/logo.svg"
 import cart from "./images/cart.svg"
@@ -162,17 +162,21 @@ function Item() {
     const [user, setUser] = useState({});
     const [isLogged, setIsLogged] = useState(false);
     const [userItems, setUserItems] = useState([])
-
+    const [needItems, setNeedItems] = useState(true)
     if (Cookie.get("user_id") > -1 && !isLogged) {
         getUserById(Cookie.get("user_id")).then(response => setUser(response))
         setIsLogged(true)
 
     }
 
+    useEffect(() => {
+        if (userItems.length <= 0 && Cookie.get("user_id") > -1 && needItems) {
+            setItems(setUserItems, Cookie.get("user_id"))
+            setNeedItems(false)
+        }
+    }, [userItems.length])
 
-    if (userItems.length <= 0 && Cookie.get("user_id") > -1) {
-        setItems(setUserItems, Cookie.get("user_id"))
-    }
+
     const addItem = (text) => {makeItem(text);};
 
     const error = (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import "./css/Orders.css";
 import logo from "./images/logo.svg"
 import Cookies from "universal-cookie";
@@ -25,20 +25,6 @@ async function getUserById(id) {
     }).then(response => response.json())
 }
 
-function goToComment(id) {
-    window.localStorage.setComment("id", id)
-    goto("/comment")
-}
-
-
-async function getCommentById(id) {
-    return fetch(`${URLMESSAGES}/messages/${id}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "comment/json"
-        }
-    }).then(response => response.json())
-}
 
 async function deleteComment(id) {
     return await fetch(`${URLMESSAGES}/messages/${id}`, {
@@ -47,7 +33,7 @@ async function deleteComment(id) {
             "Content-Type": "application/json"
         }
     }).then(response => {
-        response.status === 200 ? goto("/comments") : alert("error deleting comment");
+        response.status === 200 ? goto("/mycomments") : alert("error deleting comment");
     })
 }
 
@@ -60,12 +46,6 @@ async function getCommentsByUserId(id) {
     }).then(response => response.json())
 }
 
-function parseField(field) {
-    if (field !== undefined) {
-        return field
-    }
-    return "Not available"
-}
 
 function goto(path) {
     window.location = window.location.origin + path
@@ -78,13 +58,13 @@ function showComments(comments) {
         <div>
             <div>
                 <Comment
-                    key={comment.id}
+                    key={comment.message_id}
                     comment={comment}
                     first_name={comment.first_name}
                 />
             </div> 
             <div id="eliminar">
-                 <button id="eliminar-boton" onClick={() => deleteComment(comment.id)}> X </button>
+                {!comment.system ? <button id="eliminar-boton" onClick={() => deleteComment(comment.message_id)}> X </button> : void(0)}
             </div>
         </div>
     )
@@ -105,6 +85,7 @@ function MyComments() {
     const [user, setUser] = useState({});
     const [isLogged, setIsLogged] = useState(false);
     const [userComments, setUserComments] = useState([])
+    const [needComments, setNeedComments] = useState(true)
 
     if (Cookie.get("user_id") > -1 && !isLogged) {
         getUserById(Cookie.get("user_id")).then(response => setUser(response))
@@ -112,10 +93,13 @@ function MyComments() {
 
     }
 
+    useEffect(() => {
+        if (userComments.length <= 0 && Cookie.get("user_id") > -1 && needComments) {
+            setComments(setUserComments, Cookie.get("user_id"))
+        }
+        setNeedComments(false);
+    }, [userComments.length])
 
-    if (userComments.length <= 0 && Cookie.get("user_id") > -1) {
-        setComments(setUserComments, Cookie.get("user_id"))
-    }
 
     const error = (
         <div>

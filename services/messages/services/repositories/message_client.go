@@ -38,9 +38,9 @@ func (s *MessageClient) GetMessageById(id int) model.Message {
 	return message
 }
 
-func (s *MessageClient) DeleteMessageById(id int) e.ApiError {
-	s.Db.Delete(&model.Message{}).Where("id = ?", id)
-	return nil
+func (s *MessageClient) DeleteMessageById(message model.Message) e.ApiError {
+	result := s.Db.Delete(&message)
+	return e.NewInternalServerApiError("Error deleting", result.Error)
 }
 
 func (s *MessageClient) GetMessagesByUserId(id int) (model.Messages, error) {
