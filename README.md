@@ -21,7 +21,7 @@ Response:
 	    ...
     }
     
-*** usuarios, publicaciones
+***
 
 **GET** - /searchAll=:searchQuery
 
@@ -77,7 +77,7 @@ Ejemplo:  /item
 
 Body:
 
-    {
+    	{
 	    "titulo": "Pozo dpto. Las Venturas A-I",
 	    "tipo": "Departamento",
 	    "ubicacion": "Cordoba",
@@ -95,6 +95,7 @@ Response:
     }
      
 ***
+
 **POST** - /items
 
 Ejemplo: /items
@@ -132,92 +133,109 @@ Response:
 	]
     
 ***
+
 ### Messages
+
 **GET**- /messages/:id
 
  Ejemplo: /messages/2 
  
  Response:
-***
+
     {
         "messages_id": 2,
         ...
     }
+    
 ***
+
 **GET**-/messages 
 
  Ejemplo: /messages 
  
  Response:
-***
-      {
+
+    {
         "message_id":  2,
         "user_id": 3,
         "body": "...",
         ...
     }
+    
 ***
+
 **GET**-/users/:id/messages 
 
 Ejemplo: /users/:id/messages
 
 Response:
-***
+
     {
         "user_id": 3,
         ...
     }
+    
 ***
+
 **POST**-/message
 
 Ejemplo: /message
 
 Body:
-***
+
     {
         "message_id":  2,
         "user_id": 3,
         "body": "...",
         ...
     }
+    
 ***
+
 ### Users
+
 **Get**-/users/:id
 
  Ejemplo: /users/2
  
  Response:
-***
+
     {
     "user_id": 2,
     "username": "pedro",
     ...
     }
+    
 ***
+
 **Get**-/users
 
  Ejemplo: /users
  
  Response:
-***
+
     {
     "user_id": 2,
     "username": "pedro",
     ...
     }
+    
 ***
+
 **Post**-/user
 
  Ejemplo: /user
  
  Body:
-***
+
     {
     "username": "pedro",
     "password": "1234",
     ...
     }
+    
 ***
+
 **Delete**-/user/:id
  
  Ejemplo: /user/3
@@ -227,13 +245,15 @@ Body:
 **Post**-/login
 Ejemplo: /login
 Body:
-***
+
     {
     "username": "juan",
     "password": "1234",
     ...
     }
+    
 ***
+
 ### Worker_items
 
 
