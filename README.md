@@ -77,12 +77,14 @@ Ejemplo:  /item
 
 Body:
 
-    	{
-	    "titulo": "Pozo dpto. Las Venturas A-I",
-	    "tipo": "Departamento",
-	    "ubicacion": "Cordoba",
-	    ...
-	}
+    {
+	"titulo": "Pozo dpto. Las Venturas A-I",
+	"tipo": "Departamento",
+	"ubicacion": "Cordoba",
+	...
+    }
+    
+***
 
 Response:
 
@@ -103,33 +105,33 @@ Ejemplo: /items
 Body:
 
     [
-		{
-		    "titulo": "Pozo dpto. Las Venturas A-I",
-		    "tipo":"Departamento",
-		    ...
-		},
+	{
+		"titulo": "Pozo dpto. Las Venturas A-I",
+		"tipo":"Departamento",
 		...
-		{
-		    "titulo": "Pozo dpto. Las Venturas B-V",
-		    "tipo":"Departamento",
-		    ...
-		}
+	},
+	...
+	{
+		"titulo": "Pozo dpto. Las Venturas B-V",
+		"tipo":"Departamento",
+		...
+	}
     ]
 
 Response:
 
     [
-		{
-		    "titulo": "Pozo dpto. Las Venturas A-I",
-		    "tipo":"Departamento",
-		    ...
-		},
+	{
+		"titulo": "Pozo dpto. Las Venturas A-I",
+		"tipo":"Departamento",
 		...
-		{
-		    "titulo": "Pozo dpto. Las Venturas B-V",
-		    "tipo":"Departamento",
-		    ...
-		}
+	},
+	...
+	{
+		"titulo": "Pozo dpto. Las Venturas B-V",
+		"tipo":"Departamento",
+		...
+	}
     ]
     
 ***
@@ -206,9 +208,9 @@ Resposne: OK!
  Response:
 
     {
-    "user_id": 2,
-    "username": "pedro",
-    ...
+    	"user_id": 2,
+    	"username": "pedro",
+    	...
     }
     
 ***
@@ -220,9 +222,9 @@ Resposne: OK!
  Response:
 
     {
-    "user_id": 2,
-    "username": "pedro",
-    ...
+    	"user_id": 2,
+    	"username": "pedro",
+    	...
     }
     
 ***
@@ -234,9 +236,9 @@ Resposne: OK!
  Body:
 
     {
-    "username": "pedro",
-    "password": "1234",
-    ...
+    	"username": "pedro",
+    	"password": "1234",
+    	...
     }
     
 ***
@@ -252,9 +254,9 @@ Ejemplo: /login
 Body:
 
     {
-    "username": "juan",
-    "password": "1234",
-    ...
+    	"username": "juan",
+    	"password": "1234",
+    	...
     }
     
 ***
@@ -321,17 +323,15 @@ En nuestra implementacion el servicio contiene 2 metodos:
           | docker-compose run k6 run /scripts/ewoks.js |
 	
 
-### **Messages** 
+### **MESSAGES** 
 Este servicio es el encargado de gestionar los mensajes de comentarios como su nombre lo indica y mediante sus GETS permite Acceder a los ids de los mensajes, su contenido, sus usuarios y filtrar por el el mismo. tambien posee una funcion POST con la cual por medio de un body podemos cargar mensajes y por ultimo con el metodo DELETE sumado al id del respectivo mensaje es posible eliminarlos.
 ### **Users** 
 Mediante este servicio gestionamos las altas y bajas de los usuarios, a su vez entre sus metodos encontramos mecanismos para hallar los usuarios por id, setear sus credenciales para ingresar al sitio y un metodo para acceder al mismo, entre otros datos relevantes del usuario 
-
-### **Worker_items:**
-Este Trabajadir esta suscripto a una cola de topics, da la cual lee las solicitudes de eliminacion de items y las envia al servicio de items, quien es el encargado de procesarlas
-### **Worker_solr:**
-Este otro trabajador esta suscripto a una cola de topics de la cual se informa hacerca de las interacciones con solr y las envia a items  para ser procesadas adecuadamente.
+### **WORKER_ITEMS:**
+Este Trabajador esta suscripto a una cola de topics, da la cual lee las solicitudes de eliminacion de items y las envia al servicio de items, quien es el encargado de procesarlas
+### **WORKER_SOLR:**
+Este otro trabajador esta suscripto a una cola de topics de la cual se informa hacerca de las interacciones con solr y las envia a items para ser procesadas adecuadamente.
 ### **FRONTEND:**
-
 El Frontend debia contener la vista de inicio con el input de búsqueda, el listado de Items, el detalle de la publicación.
 
 En la implementacion, el frontend simplemente se comunica con el servicio BÚSQUEDA a traves del request http - GET Query - que se especifico anteriormente, obtiene la informacion de los items y la muestra, cargando tambien las imagenes correspondientes
