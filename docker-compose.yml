@@ -1,5 +1,8 @@
 version: '3'
 
+networks:
+  k6:
+  grafana:
 services:
   users_db:
     build: ./db/users
@@ -97,6 +100,7 @@ services:
 
   busqueda:
     build: services/busqueda
+
     depends_on:
       solr:
         condition: service_started
@@ -138,3 +142,37 @@ services:
     depends_on:
       items:
         condition: service_started
+
+  influxdb:
+    image: influxdb:1.8
+    networks:
+      - k6
+      - grafana
+    ports:
+      - "8086:8086"
+    environment:
+      - INFLUXDB_DB=k6
+  grafana:
+    image: grafana/grafana:latest
+    networks:
+      - grafana
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_BASIC_ENABLED=false
+    volumes:
+      - ./load_tests/grafana/dashboards:/var/lib/grafana/dashboards
+      - ./load_tests/grafana/grafana-dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
+      - ./load_tests/grafana/grafana-datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+  k6:
+    image: loadimpact/k6:latest
+    networks:
+      - k6
+    ports:
+      - "6565:6565"
+    environment:
+      - K6_OUT=influxdb=http://influxdb:8086/k6
+    volumes:
+      - ./scripts:/scripts

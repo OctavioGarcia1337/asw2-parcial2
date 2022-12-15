@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
 import "./css/Orders.css";
 import logo from "./images/logo.svg"
-import cart from "./images/cart.svg"
 import usersvg from "./images/user.svg"
 import Cookies from "universal-cookie";
 import "./css/Item.css";
 import PublicationForm from "./PublicationForm";
 import {HOST, ITEMSPORT, USERSPORT} from "./config/config";
 
+import { saveAs } from 'file-saver'
 const Cookie = new Cookies();
 const URLITEMS = `${HOST}:${ITEMSPORT}`
 const URLUSERS = `${HOST}:${USERSPORT}`
@@ -91,7 +91,6 @@ function parseField(field) {
 function goto(path) {
     window.location = window.location.origin + path
 }
-
 
 function showItems(items) {
 
@@ -205,7 +204,9 @@ function Item() {
             <a id="logout" onClick={logout}> <span> Welcome in {user.first_name} </span> </a>
         </div>
     )
-
+    const downloadImage = () => {
+        saveAs('https://cdn.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1520x800.png', 'image.jpg') // Put your image url here.
+    }
     return (
         <div className="items">
             <div className="topnavHOME">
@@ -222,8 +223,9 @@ function Item() {
 
             <div id="main">
 
-
-
+                <button onClick={
+                    downloadImage
+                }> Download </button>
                 <div className="comments">
                     <h3 className="comments-title">Nueva Publicación</h3>
                     <div className="comment-form-title">JSON Here</div>

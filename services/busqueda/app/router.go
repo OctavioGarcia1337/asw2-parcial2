@@ -24,5 +24,4 @@ func StartRoute() {
 	if err != nil {
 		log.Error("Error starting router", err)
 	}
-
 }
