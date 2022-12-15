@@ -191,10 +191,15 @@ Body:
     }
     
 ***
+**DELETE**-/messages/:id
+
+Ejemplo: /messages/53
+
+Resposne: OK!
 
 ### Users
 
-**Get**-/users/:id
+**GET**-/users/:id
 
  Ejemplo: /users/2
  
@@ -208,7 +213,7 @@ Body:
     
 ***
 
-**Get**-/users
+**GET**-/users
 
  Ejemplo: /users
  
@@ -222,7 +227,7 @@ Body:
     
 ***
 
-**Post**-/user
+**POST**-/user
 
  Ejemplo: /user
  
@@ -236,13 +241,13 @@ Body:
     
 ***
 
-**Delete**-/user/:id
+**DELETE**-/user/:id
  
  Ejemplo: /user/3
  
  Response:  OK! 
 
-**Post**-/login
+**POST**-/login
 Ejemplo: /login
 Body:
 
@@ -253,12 +258,6 @@ Body:
     }
     
 ***
-
-### Worker_items
-
-
-### Worker_solr
-
 
 ### **BÚSQUEDA:**
 
@@ -278,7 +277,7 @@ A su vez el servicio indexa los items en el motor de busqueda a medida que los i
     
 
 
-### **ITEMs:**
+### **ITEMS:**
 
 ITEMs tiene la tarea de recibir los datos de los items a medida que son listados, guardandolos en una base de datos. Tambien tiene la funcion de devolver dichos datos. Para un mejor rendimiento (tiempo de respuesta a la hora de devolver datos), implementa una cache local que retiene los datos de los ultimos items manipulados. Por ultimo, realiza la carga de datos de manera asincronica con uso de goRutines.
         ITEMs implementa una base de datos no SQL (mongodb), una cache distribuida (memcached) y una cola de mensajes tipo ColasMQTT (RabbitMQ); a través de sus respectivas imagenes en docker.
@@ -313,8 +312,16 @@ En nuestra implementacion el servicio contiene 2 metodos:
                 Busca el Item en cache.
                 De no encontrarlo lo busca en la Base de datos y lo carga en cache.
                 Devuelve el item como archivo .json.
+
 ### **Messages** 
+Este servicio es el encargado de gestionar los mensajes de comentarios como su nombre lo indica y mediante sus GETS permite Acceder a los ids de los mensajes, su contenido, sus usuarios y filtrar por el el mismo. tambien posee una funcion POST con la cual por medio de un body podemos cargar mensajes y por ultimo con el metodo DELETE sumado al id del respectivo mensaje es posible eliminarlos.
 ### **Users** 
+Mediante este servicio gestionamos las altas y bajas de los usuarios, a su vez entre sus metodos encontramos mecanismos para hallar los usuarios por id, setear sus credenciales para ingresar al sitio y un metodo para acceder al mismo, entre otros datos relevantes del usuario 
+
+### **Worker_items:**
+Este Trabajadir esta suscripto a una cola de topics, da la cual lee las solicitudes de eliminacion de items y las envia al servicio de items, quien es el encargado de procesarlas
+### **Worker_solr:**
+Este otro trabajador esta suscripto a una cola de topics de la cual se informa hacerca de las interacciones con solr y las envia a items  para ser procesadas adecuadamente.
 ### **FRONTEND:**
 
 El Frontend debia contener la vista de inicio con el input de búsqueda, el listado de Items, el detalle de la publicación.
