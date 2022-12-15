@@ -124,7 +124,7 @@ function MyComments() {
     return (
         <div className="comments">
             <div className="topnavHOME">
-                <img src={logo} width="80px" height="80px" id="logo" onClick={() => goto("/")} />
+                <img src={logo} width="80px" height="80px" id="logo" onClick={()=>goto("/")} /> <p> TuCasa.com </p>
             </div>
 
             <div id="mySidenav" className="sidenav" >
