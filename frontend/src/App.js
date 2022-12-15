@@ -7,6 +7,7 @@ import Register from "./Register"
 import Item from "./Item"
 import Sistema from "./Sistema"
 import Publication from "./Publication"
+import MyComments from "./MyComments"
 
 function App(){
 return (
@@ -18,6 +19,7 @@ return (
         <Route path= "/item" element={<Item/>}/>
         <Route path= "/sistema" element={<Sistema/>}/>
         <Route path= "/publications" element={<Publication/>}/>
+        <Route path= "/mycomments" element={<MyComments/>}/>
       </Routes>
     </Router>
   );
