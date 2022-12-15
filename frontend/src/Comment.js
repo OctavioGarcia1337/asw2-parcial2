@@ -1,11 +1,10 @@
 import CommentForm from "./CommentForm";
-import "./css/Comment.css";
+import "./css/Item.css";
 
 const Comment = ({
   comment,
   activeComment,
-  first_name,
-  item_id,
+
 
 }) => {
   const isEditing =
