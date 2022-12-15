@@ -1,8 +1,11 @@
 version: '3'
 
+volumes:
+  images:
 networks:
   k6:
   grafana:
+  front:
 services:
   users_db:
     build: ./db/users
@@ -75,6 +78,8 @@ services:
         condition: service_started
       rabbit:
         condition: service_healthy
+    volumes:
+      - images:/exports/images
     ports:
       - "8090:8090"
 
@@ -110,16 +115,19 @@ services:
       mode: replicated
       replicas: 2
 
-#
-#  frontend:
-#    container_name: frontend
-#    build: ./frontend
-#    depends_on:
-#      busqueda:
-#        condition: service_started
-#
-#    ports:
-#      - "3000:3000"
+
+  frontend:
+    networks:
+      - front
+    container_name: frontend
+    build: ./frontend
+    depends_on:
+      busqueda:
+        condition: service_started
+    volumes:
+      - images:/frontend/public/items
+    ports:
+      - "3000:3000"
 
 
   lbbusqueda:
@@ -175,4 +183,4 @@ services:
     environment:
       - K6_OUT=influxdb=http://influxdb:8086/k6
     volumes:
-      - ./scripts:/scripts
+      - ./load_tests/scripts:/scripts
