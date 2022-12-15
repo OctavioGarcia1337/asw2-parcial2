@@ -4,8 +4,7 @@ import logo from "./images/logo.svg"
 import Cookies from "universal-cookie";
 import "./css/Home.css";
 import { HOST, ITEMSPORT, USERSPORT } from "./config/config";
-import Comments from "./Comments";
-
+import Comment from "./Comment"
 
 const Cookie = new Cookies();
 const URLITEMS = `${HOST}:${ITEMSPORT}`
@@ -67,13 +66,11 @@ function showComments(comments) {
 
     return comments.map((comment) =>
         <div>
-            <div obj={comment} key={comment.id} className="comment" onClick={() => goToComment(comment.id)}>
             <div>
-                <Comments first_name={Cookie.get("first_name")} item={localStorage.getItem("id")} uid={Number(Cookie.get("user_id"))} />
-            </div>
-            </div>
+                <Comment/>
+            </div> 
             <div id="eliminar">
-                <button id="eliminar-boton" onClick={() => deleteComment(comment.id)}> X </button>
+                 <button id="eliminar-boton" onClick={() => deleteComment(comment.id)}> X </button>
             </div>
         </div>
     )
