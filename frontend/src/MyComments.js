@@ -33,7 +33,7 @@ async function deleteComment(id) {
             "Content-Type": "application/json"
         }
     }).then(response => {
-        response.status === 200 ? goto("/mycomments") : alert("error deleting comment");
+        response.status > 200 ? goto("/mycomments") : alert("error deleting comment");
     })
 }
 

@@ -7,7 +7,7 @@ import {
 } from "./CommentBD";
 import "./css/Item.css";
 
-const Comments = ({ uid, item}) => {
+const Comments = ({ uid, item, isLogged}) => {
   const [backendComments, setBackendComments] = useState([]);
   const [activeComment, setActiveComment] = useState(null);
   const rootComments = backendComments.filter((backendComment) => backendComment.item_id === item);
@@ -29,7 +29,7 @@ const Comments = ({ uid, item}) => {
     <div className="comments">
       <h3 className="comments-title">Comments</h3>
       <div className="comment-form-title">Write comment</div>
-      <CommentForm submitLabel="Write" handleSubmit={addComment} />
+      <CommentForm show={isLogged} submitLabel="Write" handleSubmit={addComment} />
       <div className="comments-container">
         {rootComments.map((rootComment) => (
           <Comment
