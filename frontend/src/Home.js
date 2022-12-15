@@ -57,7 +57,7 @@ function showItems(items){
   return items.map((item) =>
    <div obj={item} key={item.id} className="item" onClick={()=>goToItem(item.id)}>
     <div>
-      <img width="128px" height="128px" src={parseField(item.url_img)}  onError={(e) => (e.target.onerror = null, e.target.src = "./images/default.jpg")}/>
+      <img width="128px" height="128px" src={`/items/${parseField(item.url_img)}`}  onError={(e) => (e.target.onerror = null, e.target.src = "./images/default.jpg")}/>
     </div>
     <a className="title">{parseField(item.titulo)}</a>
     <a className="price"> {"$" + parseField(item.precio_base)}</a>
