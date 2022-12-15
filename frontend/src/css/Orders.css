@@ -118,19 +118,6 @@
     margin-top: 20px;
   }
   
-  #logout {
-    .transition: .5s;
-    min-width: 200px;
-    max-width: 350px;
-  }
-  
-  #logout:hover span {
-    display: none;
-  }
-  
-  #logout:hover:before {
-    content: "Logout?"
-  }
   
   .hidden {
     display: none;

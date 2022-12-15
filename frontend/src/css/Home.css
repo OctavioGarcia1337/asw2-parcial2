@@ -253,7 +253,7 @@
 }
 
 #logout:hover:before {
-  content: "Logout?";
+  content: "You wanna Logout?";
   color: red;
 }
 
