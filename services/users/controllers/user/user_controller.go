@@ -103,5 +103,5 @@ func DeleteUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
-	c.JSON(http.StatusCreated, userDto)
+	c.Status(http.StatusOK)
 }
