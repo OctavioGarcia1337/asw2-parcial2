@@ -3,14 +3,14 @@ import "./css/Orders.css";
 import logo from "./images/logo.svg"
 import Cookies from "universal-cookie";
 import "./css/Home.css";
-import { HOST, ITEMSPORT, USERSPORT, MESSAGESPORT} from "./config/config";
+import { ITEMSHOST, USERSHOST, MESSAGESHOST, ITEMSPORT, USERSPORT, MESSAGESPORT} from "./config/config";
 import Comment from "./Comment"
 import usersvg from "./images/user.svg"
 
 const Cookie = new Cookies();
-const URLITEMS = `${HOST}:${ITEMSPORT}`
-const URLUSERS = `${HOST}:${USERSPORT}`
-const URLMESSAGES = `${HOST}:${MESSAGESPORT}`
+const URLITEMS = `${ITEMSHOST}:${ITEMSPORT}`
+const URLUSERS = `${USERSHOST}:${USERSPORT}`
+const URLMESSAGES = `${MESSAGESHOST}:${MESSAGESPORT}`
 
 function logout() {
     Cookie.set("user_id", -1, { path: "/" })

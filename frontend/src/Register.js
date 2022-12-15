@@ -3,10 +3,10 @@ import "./css/Register.css";
 import Cookies from "universal-cookie";
 import logo from "./images/logo.svg";
 import usersvg from "./images/user.svg";
-import {HOST, PORT, USERSPORT} from "./config/config";
+import {HOST, PORT, USERSHOST,USERSPORT} from "./config/config";
 
 const Cookie = new Cookies();
-const URL = `${HOST}:${USERSPORT}`
+const URL = `${USERSHOST}:${USERSPORT}`
 
 async function register(username, password, first_name, last_name, email) {
   return await fetch(`${URL}/user`, {

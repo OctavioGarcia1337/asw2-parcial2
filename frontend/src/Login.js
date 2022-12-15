@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import "./css/Login.css";
 import Cookies from "universal-cookie";
 import logo from "./images/logo.svg"
-import {HOST, PORT, USERSPORT} from "./config/config";
+import {HOST, PORT, USERSHOST, USERSPORT} from "./config/config";
 
 const Cookie = new Cookies();
-const URL = `${HOST}:${USERSPORT}`
+const URL = `${USERSHOST}:${USERSPORT}`
 
 
 async function login(username, password) {

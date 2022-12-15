@@ -1,7 +1,7 @@
-import {HOST, MESSAGESPORT, USERSPORT} from "./config/config";
+import {MESSAGESHOST, USERSHOST, MESSAGESPORT, USERSPORT} from "./config/config";
 
-const URL = HOST + ":" + MESSAGESPORT
-const URLUSERS = HOST + ":" + USERSPORT
+const URL = MESSAGESHOST + ":" + MESSAGESPORT
+const URLUSERS = USERSHOST + ":" + USERSPORT
 
 async function getUserById(id){
   return await fetch(`${URLUSERS}/users/` + id, {

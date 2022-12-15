@@ -3,14 +3,14 @@ import "./css/Item.css";
 import logo from "./images/logo.svg"
 import loadinggif from "./images/loading.gif"
 import Cookies from "universal-cookie";
-import {HOST, PORT, ITEMSPORT, USERSPORT} from "./config/config";
+import { HOST, PORT, ITEMSHOST, USERSHOST, MESSAGESHOST, ITEMSPORT, USERSPORT, MESSAGESPORT} from "./config/config";
 import Comments from "./Comments";
 import usersvg from "./images/user.svg"
 
 
 const URL = HOST + ":" + PORT
-const ITEMSURL = HOST + ":" + ITEMSPORT
-const URLUSERS = `${HOST}:${USERSPORT}`
+const ITEMSURL = ITEMSHOST + ":" + ITEMSPORT
+const URLUSERS = `${USERSHOST}:${USERSPORT}`
 const Cookie = new Cookies();
 
 function goto(path){
@@ -41,7 +41,7 @@ function showItem(item){
   return (
    <div obj={item} key={item.id} className="item">
         <div>
-            <img width="240px" height="240px" src={parseField(item.url_img)}  onError={(e) => (e.target.onerror = null, e.target.src = "./images/default.jpg")}/>
+            <img width="240px" height="240px" src={`/items/${parseField(item.url_img)}`}  onError={(e) => (e.target.onerror = null, e.target.src = "./images/default.jpg")}/>
         </div>
             <a className="title">{parseField(item.titulo)}</a>
             <a className="price"> {"$" + parseField(item.precio_base)}</a>

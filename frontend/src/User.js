@@ -5,10 +5,10 @@ import cart from "./images/cart.svg"
 import loadinggif from "./images/loading.gif"
 import usersvg from "./images/user.svg"
 import Cookies from "universal-cookie";
-import { HOST, PORT, USERSPORT } from "./config/config";
+import { USERSHOST, PORT, USERSPORT } from "./config/config";
 
 const Cookie = new Cookies();
-const URL = `${HOST}:${USERSPORT}`
+const URL = `${USERSHOST}:${USERSPORT}`
 
 async function getUserById(id) {
   return await fetch(`${URL}/users/${id}`, {

@@ -4,11 +4,11 @@ import logo from "./images/logo.svg"
 import loadinggif from "./images/loading.gif"
 import Cookies from "universal-cookie";
 import usersvg from "./images/user.svg";
-import {HOST, PORT, USERSPORT} from "./config/config";
+import {HOST, USERSHOST, PORT, USERSPORT} from "./config/config";
 
 
 const URL = HOST + ":" + PORT
-const URLUSERS = `${HOST}:${USERSPORT}`
+const URLUSERS = `${USERSHOST}:${USERSPORT}`
 const Cookie = new Cookies();
 
 function logout(){
