@@ -8,6 +8,7 @@ import Item from "./Item"
 import Sistema from "./Sistema"
 import Publication from "./Publication"
 import MyComments from "./MyComments"
+import User from "./User.js"
 
 function App(){
 return (
@@ -20,6 +21,7 @@ return (
         <Route path= "/sistema" element={<Sistema/>}/>
         <Route path= "/publications" element={<Publication/>}/>
         <Route path= "/mycomments" element={<MyComments/>}/>
+        <Route path= "/user" element={<User/>}/>
       </Routes>
     </Router>
   );
