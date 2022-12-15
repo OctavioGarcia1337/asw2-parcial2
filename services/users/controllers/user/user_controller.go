@@ -95,7 +95,7 @@ func Login(c *gin.Context) {
 
 func DeleteUser(c *gin.Context) {
 	log.Debug("User id: " + c.Param("id"))
-	var userDto dto.UserDto
+
 	id, _ := strconv.Atoi(c.Param("id"))
 	err := userService.DeleteUser(id)
 	if err != nil {
