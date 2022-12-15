@@ -77,7 +77,7 @@ Ejemplo:  /item
 
 Body:
 
-    {
+    	{
 	    "titulo": "Pozo dpto. Las Venturas A-I",
 	    "tipo": "Departamento",
 	    "ubicacion": "Cordoba",
@@ -138,7 +138,7 @@ Response:
  Ejemplo: /messages/2 
  
  Response:
-***
+
     {
         "messages_id": 2,
         ...
@@ -149,8 +149,8 @@ Response:
  Ejemplo: /messages 
  
  Response:
-***
-      {
+
+    {
         "message_id":  2,
         "user_id": 3,
         "body": "...",
@@ -162,7 +162,7 @@ Response:
 Ejemplo: /users/:id/messages
 
 Response:
-***
+
     {
         "user_id": 3,
         ...
@@ -173,7 +173,7 @@ Response:
 Ejemplo: /message
 
 Body:
-***
+
     {
         "message_id":  2,
         "user_id": 3,
@@ -187,7 +187,7 @@ Body:
  Ejemplo: /users/2
  
  Response:
-***
+
     {
     "user_id": 2,
     "username": "pedro",
@@ -199,7 +199,7 @@ Body:
  Ejemplo: /users
  
  Response:
-***
+
     {
     "user_id": 2,
     "username": "pedro",
@@ -211,7 +211,7 @@ Body:
  Ejemplo: /user
  
  Body:
-***
+
     {
     "username": "pedro",
     "password": "1234",
@@ -227,7 +227,7 @@ Body:
 **Post**-/login
 Ejemplo: /login
 Body:
-***
+
     {
     "username": "juan",
     "password": "1234",
