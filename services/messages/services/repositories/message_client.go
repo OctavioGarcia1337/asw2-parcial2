@@ -6,6 +6,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	log "github.com/sirupsen/logrus"
 	"messages/model"
+	e "messages/utils/errors"
 )
 
 type MessageClient struct {
@@ -35,6 +36,11 @@ func (s *MessageClient) GetMessageById(id int) model.Message {
 	log.Debug("Message: ", message)
 
 	return message
+}
+
+func (s *MessageClient) DeleteMessageById(id int) e.ApiError {
+	s.Db.Delete(&model.Message{}).Where("id = ?", id)
+	return nil
 }
 
 func (s *MessageClient) GetMessagesByUserId(id int) (model.Messages, error) {

@@ -9,9 +9,12 @@ import (
 func mapUrls() {
 	// Messages Mapping
 	router.GET("/messages/:id", messageController.GetMessageById)
-	router.GET("/messages", messageController.GetMessages)
-	router.POST("/message", messageController.MessageInsert)
 	router.GET("/users/:id/messages", messageController.GetMessagesByUserId)
+	router.GET("/messages", messageController.GetMessages)
+
+	router.DELETE("/messages/:id", messageController.DeleteMessageById)
+
+	router.POST("/message", messageController.MessageInsert)
 
 	log.Info("Finishing mappings configurations")
 }

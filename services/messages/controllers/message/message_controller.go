@@ -35,6 +35,18 @@ func GetMessageById(c *gin.Context) {
 	c.JSON(http.StatusOK, messageDto)
 }
 
+func DeleteMessageById(c *gin.Context) {
+	log.Debug("Message id: " + c.Param("id"))
+	id, _ := strconv.Atoi(c.Param("id"))
+	err := messageService.DeleteMessageById(id)
+	if err != nil {
+		log.Error(err.Error())
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+	c.Status(http.StatusOK)
+}
+
 func GetMessagesByUserId(c *gin.Context) {
 	log.Debug("User id: " + c.Param("id"))
 

@@ -35,13 +35,19 @@ export const getComments = async () => {
     let users = await getUsersFirstNames(response)
     for(let i = 0; i < response.length; i++){
       response[i].first_name = users[response[i].user_id]
+      response[i].created_at = parseDate(response[i].created_at)
     }
     return response
   });
 }
 
 
+function parseDate(date){
 
+  let dateParts = date.split("-");
+  return `${dateParts[0]} ${dateParts[1] - 1} ${dateParts[2].substring(0, 2)}`;
+
+}
 
 export const createComment = async (text, uid, itemid) => { //cambiar por un POST
 
@@ -60,6 +66,7 @@ export const createComment = async (text, uid, itemid) => { //cambiar por un POS
       async (response) => {
         let user = await getUserById(response.user_id)
         response.first_name = user.first_name
+        response.created_at = parseDate(response.created_at)
         return response
       }
   )

@@ -4,15 +4,14 @@ import "./css/Item.css";
 const Comment = ({
   comment,
   activeComment,
-  first_name,
-  item_id,
+
 
 }) => {
   const isEditing =
     activeComment &&
     activeComment.id === comment.id &&
     activeComment.type === "editing";
-  const createdAt = new Date(comment.createdAt).toLocaleDateString();
+  const createdAt = new Date(comment.created_at).toDateString();
 
   return (
     <div key={comment.id} className="comment">
@@ -24,8 +23,8 @@ const Comment = ({
           <div className="comment-author">{comment.first_name}</div>
           <div>{createdAt}</div>
         </div>
-        {!isEditing && <div className="comment-text">{comment.body}</div>}
-        <div className="comment-actions">
+          {!isEditing && <div className="comment-text">{comment.body}</div>}
+          <div className="comment-actions">
 
         </div>
 

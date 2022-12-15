@@ -3,12 +3,13 @@ import "./css/Orders.css";
 import logo from "./images/logo.svg"
 import Cookies from "universal-cookie";
 import "./css/Home.css";
-import { HOST, ITEMSPORT, USERSPORT } from "./config/config";
+import { HOST, ITEMSPORT, USERSPORT, MESSAGESPORT} from "./config/config";
 import Comment from "./Comment"
 
 const Cookie = new Cookies();
 const URLITEMS = `${HOST}:${ITEMSPORT}`
 const URLUSERS = `${HOST}:${USERSPORT}`
+const URLMESSAGES = `${HOST}:${MESSAGESPORT}`
 
 function logout() {
     Cookie.set("user_id", -1, { path: "/" })
@@ -31,7 +32,7 @@ function goToComment(id) {
 
 
 async function getCommentById(id) {
-    return fetch(`${URLITEMS}/comment/` + id, {
+    return fetch(`${URLMESSAGES}/messages/${id}`, {
         method: "GET",
         headers: {
             "Content-Type": "comment/json"
@@ -40,7 +41,7 @@ async function getCommentById(id) {
 }
 
 async function deleteComment(id) {
-    return await fetch(`${URLITEMS}/comment/` + id, {
+    return await fetch(`${URLMESSAGES}/messages/${id}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json"
@@ -48,6 +49,15 @@ async function deleteComment(id) {
     }).then(response => {
         response.status === 200 ? goto("/comments") : alert("error deleting comment");
     })
+}
+
+async function getCommentsByUserId(id) {
+    return fetch(`${URLMESSAGES}/users/${id}/messages`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "comment/json"
+        }
+    }).then(response => response.json())
 }
 
 function parseField(field) {
@@ -67,7 +77,11 @@ function showComments(comments) {
     return comments.map((comment) =>
         <div>
             <div>
-                <Comment/>
+                <Comment
+                    key={comment.id}
+                    comment={comment}
+                    first_name={comment.first_name}
+                />
             </div> 
             <div id="eliminar">
                  <button id="eliminar-boton" onClick={() => deleteComment(comment.id)}> X </button>
@@ -75,16 +89,6 @@ function showComments(comments) {
         </div>
     )
 
-}
-
-
-async function getCommentsByUserId(id) {
-    return fetch(`${URLITEMS}/users/${id}/comments`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).then(response => response.json())
 }
 
 
