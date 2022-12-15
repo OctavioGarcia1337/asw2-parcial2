@@ -5,11 +5,14 @@ import (
 	"fmt"
 	json "github.com/json-iterator/go"
 	log "github.com/sirupsen/logrus"
+	"io"
 	"items/config"
 	"items/dto"
 	client "items/services/repositories"
 	e "items/utils/errors"
 	"net/http"
+	"os"
+	"strings"
 )
 
 type ItemServiceImpl struct {
@@ -182,6 +185,15 @@ func CheckQueue(processed chan string, total int, userid int) {
 	}
 }
 
+func DownloadImage(url string, name string) {
+	resp, _ := http.Get(url)
+	defer resp.Body.Close()
+	path := strings.Join([]string{"/exports/images", name}, "/")
+	file, _ := os.Create(path)
+	defer file.Close()
+	_, _ = io.Copy(file, resp.Body)
+}
+
 func (s *ItemServiceImpl) QueueItems(itemsDto dto.ItemsDto) e.ApiError {
 	total := len(itemsDto)
 	processed := make(chan string, total)
@@ -189,7 +201,11 @@ func (s *ItemServiceImpl) QueueItems(itemsDto dto.ItemsDto) e.ApiError {
 		var item dto.ItemDto
 		item = itemsDto[i]
 		go func() {
+			url := item.UrlImg
 			item, err := s.item.InsertItem(item)
+			go DownloadImage(url, item.UrlImg)
+			log.Debug(url)
+			log.Debug(item.UrlImg)
 			if err != nil {
 				processed <- "error"
 				log.Debug(err)

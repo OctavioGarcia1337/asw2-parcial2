@@ -11,6 +11,7 @@ import (
 	"items/dto"
 	"items/model"
 	e "items/utils/errors"
+	"strings"
 )
 
 type ItemClient struct {
@@ -118,8 +119,10 @@ func (s *ItemClient) GetItemsByUserId(id int) (dto.ItemsDto, e.ApiError) {
 
 func (s *ItemClient) InsertItem(item dto.ItemDto) (dto.ItemDto, e.ApiError) {
 
+	id := primitive.NewObjectID()
+	url := strings.Join([]string{id.Hex(), "png"}, ".")
 	result, err := s.Database.Collection(s.Collection).InsertOne(context.TODO(), model.Item{
-		ItemId:      primitive.NewObjectID(),
+		ItemId:      id,
 		Titulo:      item.Titulo,
 		Tipo:        item.Tipo,
 		Ubicacion:   item.Ubicacion,
@@ -131,7 +134,7 @@ func (s *ItemClient) InsertItem(item dto.ItemDto) (dto.ItemDto, e.ApiError) {
 		Banos:       item.Banos,
 		Mts2:        item.Mts2,
 		Ambientes:   item.Ambientes,
-		UrlImg:      item.UrlImg,
+		UrlImg:      url,
 		Expensas:    item.Expensas,
 		UsuarioId:   item.UsuarioId,
 	})
@@ -140,6 +143,7 @@ func (s *ItemClient) InsertItem(item dto.ItemDto) (dto.ItemDto, e.ApiError) {
 		return item, e.NewInternalServerApiError(fmt.Sprintf("error inserting to mongo %s", item.ItemId), err)
 	}
 	item.ItemId = fmt.Sprintf(result.InsertedID.(primitive.ObjectID).Hex())
+	item.UrlImg = url
 
 	return item, nil
 }
