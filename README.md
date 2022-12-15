@@ -114,7 +114,7 @@ Body:
 		    "tipo":"Departamento",
 		    ...
 		}
-	]
+    ]
 
 Response:
 
@@ -130,7 +130,7 @@ Response:
 		    "tipo":"Departamento",
 		    ...
 		}
-	]
+    ]
     
 ***
 
