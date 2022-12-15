@@ -5,14 +5,16 @@ import cart from "./images/cart.svg"
 import loadinggif from "./images/loading.gif"
 import usersvg from "./images/user.svg"
 import Cookies from "universal-cookie";
+import {HOST, PORT, USERSPORT} from "./config/config";
 
 const Cookie = new Cookies();
+const URL = `${HOST}:${USERSPORT}`
 
 async function getUserById(id){
-    return await fetch('http://localhost:8090/user/' + id, {
+    return await fetch(`${URL}/users/${id}`, {
         method: 'GET',
         headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'user/json'
         }
     }).then(response => response.json())
 
@@ -21,6 +23,17 @@ async function getUserById(id){
 
 function goto(path){
   window.location = window.location.origin + path
+}
+
+async function deleteUser(id) {
+    return await fetch(`${URL}/user/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(response => {
+        response.status === 200 ? goto("/") : alert("error deleting account");
+    })
 }
 
 
@@ -44,23 +57,25 @@ function User() {
   }
 
     const login = (
+        <span>
+            <img src={usersvg} onClick={()=>goto("/user")} id="user" width="48px" height="48px"/>
+        </span>
+    )
 
-    <span>
-    <img src={usersvg} onClick={()=>goto("/user")} id="user" width="48px" height="48px"/>
-    <img src={cart} onClick={()=>goto("/cart ")} id="cart" width="48px" height="48px"/>
-    <a id="logout" onClick={logout}> <span> Welcome in {user.first_name} </span> </a>
-    </span>
-  )
-
-  const showUserInfo = (
-    <div className="userInfo">
-      <img src={usersvg} width="128px" height="128px"/>
-      <div> {user.first_name} {user.last_name} </div>
-      <div> Username: {user.username} </div>
-      <div> {user.first_name}, {user.last_name} </div>
-      <div> Email: {user.email} </div>
-    </div>
-  )
+    const showUserInfo = (
+        <div>
+            <div className="userInfo">
+                <img src={usersvg} width="128px" height="128px"/>
+                <div> {user.first_name} {user.last_name} </div>
+                <div> Username: {user.username} </div>
+                <div> {user.first_name}, {user.last_name} </div>
+                <div> Email: {user.email} </div>
+            </div>
+            <div id="eliminar">
+                <button id="eliminar-cuenta" onClick={() => deleteUser(user.user_id)}> Eliminar Cuenta </button>
+            </div>
+        </div>
+    )
 
   const pleaseLogin = (
     <div> Nothing to show. Please login and maybe we'll get some info for ya </div>

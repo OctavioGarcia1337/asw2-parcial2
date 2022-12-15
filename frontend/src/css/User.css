@@ -377,3 +377,15 @@
   .userAddress .userAddressInfo {
     font-weight: bold;
   }
+
+
+  #eliminar-cuenta {
+    display: inline-block;
+    cursor: pointer;
+    position: initial;
+    width: 100px;
+    height: 50px;
+    background-color: red;
+    border: 2px solid black;
+    border-radius: 20px;
+  }
