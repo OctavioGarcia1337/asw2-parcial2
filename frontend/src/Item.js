@@ -5,6 +5,7 @@ import loadinggif from "./images/loading.gif"
 import Cookies from "universal-cookie";
 import {HOST, PORT, ITEMSPORT, USERSPORT} from "./config/config";
 import Comments from "./Comments";
+import usersvg from "./images/user.svg"
 
 
 const URL = HOST + ":" + PORT
@@ -32,6 +33,9 @@ function parseField(field){
   }
   return "Not available"
 }
+
+
+
 
 function showItem(item){
   return (
@@ -105,6 +109,11 @@ function Item() {
         setNeedItem(false);
     }
 
+    const login = (
+        <span>
+        <img src={usersvg} onClick={()=>goto("/user")} id="user" width="48px" height="48px"/>
+        </span>
+    )
 
   const loading = (<img id="loading" src={loadinggif}/>)
 

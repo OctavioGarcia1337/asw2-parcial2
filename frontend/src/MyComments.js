@@ -5,6 +5,7 @@ import Cookies from "universal-cookie";
 import "./css/Home.css";
 import { HOST, ITEMSPORT, USERSPORT, MESSAGESPORT} from "./config/config";
 import Comment from "./Comment"
+import usersvg from "./images/user.svg"
 
 const Cookie = new Cookies();
 const URLITEMS = `${HOST}:${ITEMSPORT}`
@@ -118,6 +119,12 @@ function MyComments() {
 
     }
 
+    const login = (
+        <span>
+            <img src={usersvg} onClick={()=>goto("/user")} id="user" width="48px" height="48px"/>
+        </span>
+    )
+
     useEffect(() => {
         if (userComments.length <= 0 && Cookie.get("user_id") > -1 && needComments) {
             setComments(setUserComments, Cookie.get("user_id"))
@@ -155,6 +162,7 @@ function MyComments() {
         <div className="comments">
             <div className="topnavHOME">
                 <img src={logo} width="80px" height="80px" id="logo" onClick={()=>goto("/")} /> <p> TuCasa.com </p>
+                {isLogged ? login : <a id="login" onClick={()=>goto("/login")}>Login</a>}
             </div>
 
             <div id="mySidenav" className="sidenav" >

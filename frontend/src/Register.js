@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./css/Register.css";
 import Cookies from "universal-cookie";
-import logo from "./images/logo.svg"
+import logo from "./images/logo.svg";
+import usersvg from "./images/user.svg";
 import {HOST, PORT, USERSPORT} from "./config/config";
 
 const Cookie = new Cookies();
@@ -39,6 +40,7 @@ function goto(path){
 }
 
 function Register() {
+
   // React States
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -62,6 +64,11 @@ function Register() {
     })
   };
 
+  const login = (
+    <span>
+        <img src={usersvg} onClick={()=>goto("/user")} id="user" width="48px" height="48px"/>
+    </span>
+  )
 
   // Generate JSX code for error message
   const renderErrorMessage = (name) =>

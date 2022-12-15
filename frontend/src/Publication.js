@@ -8,7 +8,6 @@ import "./css/Item.css";
 import PublicationForm from "./PublicationForm";
 import {HOST, ITEMSPORT, USERSPORT} from "./config/config";
 
-
 const Cookie = new Cookies();
 const URLITEMS = `${HOST}:${ITEMSPORT}`
 const URLUSERS = `${HOST}:${USERSPORT}`
@@ -176,6 +175,14 @@ function Item() {
         }
     }, [userItems.length])
 
+    
+    const login = (
+        <span>
+            <img src={usersvg} onClick={()=>goto("/user")} id="user" width="48px" height="48px"/>
+        </span>
+    )
+
+
 
     const addItem = (text) => {makeItem(text);};
 
@@ -203,6 +210,7 @@ function Item() {
         <div className="items">
             <div className="topnavHOME">
                 <img src={logo} width="80px" height="80px" id="logo" onClick={()=>goto("/")} /> <p> TuCasa.com </p>
+                {isLogged ? login : <a id="login" onClick={()=>goto("/login")}>Login</a>}
             </div>
 
             <div id="mySidenav" className="sidenav" >

@@ -3,6 +3,7 @@ import "./css/Home.css";
 import logo from "./images/logo.svg"
 import loadinggif from "./images/loading.gif"
 import Cookies from "universal-cookie";
+import usersvg from "./images/user.svg";
 import {HOST, PORT, USERSPORT} from "./config/config";
 
 
@@ -104,6 +105,11 @@ function System() {
     setNeedSystems(false)
   }
 
+  const login = (
+    <span>
+        <img src={usersvg} onClick={()=>goto("/user")} id="user" width="48px" height="48px"/>
+    </span>
+)
 
 async function searchQuery(field, query){
     if(query == ""){
@@ -165,6 +171,7 @@ async function searchQuery(field, query){
         <div className="topnavHOME">
             <div>
                 <img src={logo} width="80px" height="80px" id="logo" onClick={()=>goto("/")} /> <p> TuCasa.com </p>
+                {isLogged ? login : <a id="login" onClick={()=>goto("/login")}>Login</a>}
             </div>
         </div>
 
