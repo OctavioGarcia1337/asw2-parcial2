@@ -51,24 +51,27 @@ function goto(path) {
     window.location = window.location.origin + path
 }
 
-
-function showComments(comments) {
-
+function showComments(comments, titles) {
     return comments.map((comment) =>
-        <div>
-            <div>
+        <div id={comment.message_id} className="comentario">
+            <div className="comentario-texto">
                 <Comment
                     key={comment.message_id}
                     comment={comment}
                     first_name={comment.first_name}
                 />
-            </div> 
-            <div id="eliminar">
-                {!comment.system ? <button id="eliminar-boton" onClick={() => deleteComment(comment.message_id)}> X </button> : void(0)}
             </div>
+            
+            <div className="comentario-eliminar">
+                {!comment.system ? <button className="eliminar-comentario" onClick={() => deleteComment(comment.message_id)}> X </button> : void(0)}
+            </div>
+
+            <div className="comentario-donde">
+                {titles[comment.item_id] ? titles[comment.item_id] : "error"}
+            </div>
+
         </div>
     )
-
 }
 
 
@@ -79,13 +82,35 @@ async function setComments(setUserComments, userId) {
     })
 }
 
+async function getItemById(id, system = false){
+    if (system) return {titulo:"SYSTEM"}
+    return fetch(URLITEMS + "/items/" + id, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(response => response.json())
 
+}
+
+
+async function getTitles(comments){
+    let titles = [];
+    for(let i = 0; i < comments.length; i++){
+        let title = await getItemById(comments[i].item_id, comments[i].system).then(response=> {
+            return response.titulo
+        });
+        titles[comments[i].item_id] = title;
+    }
+    return titles
+}
 
 function MyComments() {
     const [user, setUser] = useState({});
     const [isLogged, setIsLogged] = useState(false);
     const [userComments, setUserComments] = useState([])
     const [needComments, setNeedComments] = useState(true)
+    const [titles, setTitles] = useState([])
 
     if (Cookie.get("user_id") > -1 && !isLogged) {
         getUserById(Cookie.get("user_id")).then(response => setUser(response))
@@ -99,14 +124,19 @@ function MyComments() {
         }
         setNeedComments(false);
     }, [userComments.length])
-
-
     const error = (
         <div>
             <div> BOO ERROR :(((( </div>
             <div> There's no comments yet :D </div>
         </div>
     )
+
+    useEffect(() =>
+    {
+        if(userComments.length > 0){
+            getTitles(userComments).then(response => setTitles(response))
+        }
+    }, [userComments.length])
 
     const logreg = (
         <div>
@@ -135,7 +165,7 @@ function MyComments() {
             </div>
 
             <div id="main">
-                {userComments.length > 0 ? showComments(userComments) : error}
+                {userComments.length > 0 ? showComments(userComments, titles) : error}
             </div>
         </div>
     );

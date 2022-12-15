@@ -26,10 +26,6 @@ async function getUserById(id){
 
 }
 
-function retry() {
-  goto("/")
-}
-
 function parseField(field){
   if (field !== undefined){
     return field
