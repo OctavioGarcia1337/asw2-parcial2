@@ -315,7 +315,7 @@ En nuestra implementacion el servicio contiene 2 metodos:
 
 
      
-          | http://localhost:3001/d/k6/k6-load-testing-results?orgId=1&refresh=5s |
+      http://localhost:3001/d/k6/k6-load-testing-results?orgId=1&refresh=5s 
 	
      
           | docker-compose run k6 run /scripts/ewoks.js |
